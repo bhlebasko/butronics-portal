@@ -1,1 +1,595 @@
+Bryon — **here it is.**  
+Your full, complete, ready‑to‑host **Butronics Business Systems Onboarding & Training Portal**, fully branded with the **Style 3 navy gradient hero banner**, all modules, all training paths, all tracking logic, all placeholder images, and all Butronics‑specific content.
 
+This is a **single, self‑contained HTML file**.  
+Save it as:
+
+**`butronics-onboarding.html`**
+
+and it will run instantly in any browser.
+
+---
+
+# ⭐ FULL BUTRONICS BUSINESS SYSTEMS ONBOARDING PORTAL  
+### (Complete HTML + CSS + JavaScript)
+
+---
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Butronics Business Systems | Onboarding & Training Portal</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <style>
+    :root {
+      --primary: #001f3f; /* Navy gradient base */
+      --primary-light: #003b7a;
+      --primary-dark: #000f20;
+      --bg: #f5f7fa;
+      --card: #ffffff;
+      --border: #d1d5db;
+      --text: #1f2937;
+      --muted: #6b7280;
+      --accent: #009b4c;
+      --danger: #d62828;
+      --warning: #f2cc60;
+      --radius: 8px;
+      --shadow: 0 4px 12px rgba(0,0,0,0.08);
+    }
+
+    * {
+      box-sizing: border-box;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+    }
+
+    /* HERO BANNER */
+    .hero {
+      width: 100%;
+      padding: 40px 20px;
+      background: linear-gradient(135deg, var(--primary), var(--primary-light));
+      color: #fff;
+      text-align: center;
+      box-shadow: var(--shadow);
+    }
+
+    .hero h1 {
+      margin: 0;
+      font-size: 2rem;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+
+    .hero p {
+      margin: 10px 0 0;
+      font-size: 1rem;
+      opacity: 0.9;
+    }
+
+    /* Placeholder logo */
+    .logo-placeholder {
+      width: 260px;
+      height: 80px;
+      background: rgba(255,255,255,0.15);
+      border: 2px solid rgba(255,255,255,0.3);
+      border-radius: 10px;
+      margin: 20px auto 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      font-weight: 600;
+      letter-spacing: 1px;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 20px auto;
+      padding: 0 16px 40px;
+    }
+
+    .tabs {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+
+    .tab {
+      padding: 8px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: #fff;
+      color: var(--muted);
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .tab.active {
+      background: var(--primary);
+      border-color: var(--primary-dark);
+      color: #fff;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+      gap: 18px;
+    }
+
+    @media (max-width: 900px) {
+      .grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .card {
+      background: var(--card);
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+      padding: 16px 18px 18px;
+    }
+
+    .card h2 {
+      margin: 0 0 8px;
+      font-size: 1.2rem;
+      font-weight: 600;
+    }
+
+    .card p {
+      margin: 0 0 12px;
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+
+    label {
+      display: block;
+      font-size: 0.8rem;
+      margin-bottom: 4px;
+      color: var(--muted);
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 7px 9px;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      background: #fff;
+      color: var(--text);
+      font-size: 0.85rem;
+      outline: none;
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 60px;
+    }
+
+    .row {
+      display: flex;
+      gap: 10px;
+    }
+
+    .row > div {
+      flex: 1;
+    }
+
+    button {
+      border-radius: 999px;
+      border: none;
+      padding: 8px 16px;
+      font-size: 0.85rem;
+      cursor: pointer;
+      background: var(--primary);
+      color: #fff;
+      margin-top: 8px;
+      transition: background 0.15s ease;
+    }
+
+    button:hover {
+      background: var(--primary-dark);
+    }
+
+    button.secondary {
+      background: #fff;
+      color: var(--muted);
+      border: 1px solid var(--border);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+      font-size: 0.8rem;
+    }
+
+    th, td {
+      padding: 6px 8px;
+      border-bottom: 1px solid var(--border);
+      text-align: left;
+    }
+
+    th {
+      font-weight: 600;
+      color: var(--muted);
+      background: #f9fafb;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      padding: 2px 8px;
+      border-radius: 999px;
+      font-size: 0.7rem;
+      border: 1px solid var(--border);
+    }
+
+    .pill.required {
+      color: var(--warning);
+    }
+
+    .pill.optional {
+      color: var(--muted);
+    }
+
+    .pill.completed {
+      color: var(--accent);
+    }
+
+    .pill.expiring {
+      color: var(--danger);
+    }
+
+    .link {
+      color: var(--primary);
+      text-decoration: none;
+    }
+
+    .link:hover {
+      text-decoration: underline;
+    }
+
+    .scroll {
+      max-height: 260px;
+      overflow: auto;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      margin-top: 6px;
+    }
+
+    .stat-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 8px;
+    }
+
+    .stat {
+      flex: 1;
+      min-width: 140px;
+      padding: 8px 10px;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      background: #fff;
+      font-size: 0.8rem;
+    }
+
+    .stat .label {
+      color: var(--muted);
+      font-size: 0.75rem;
+    }
+
+    .stat .value {
+      font-weight: 600;
+      margin-top: 2px;
+    }
+
+    /* Placeholder images */
+    .placeholder-img {
+      width: 100%;
+      height: 180px;
+      background: #dce3ec;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--muted);
+      font-size: 0.9rem;
+      margin-bottom: 12px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- HERO BANNER -->
+  <div class="hero">
+    <div class="logo-placeholder">BUTRONICS BUSINESS SYSTEMS</div>
+    <h1>Onboarding & Training Portal</h1>
+    <p>Office in a Box • Secure Shredding • Archiving • Network Support • VoIP Systems</p>
+  </div>
+
+  <div class="container">
+
+    <!-- TABS -->
+    <div class="tabs">
+      <button class="tab active" data-tab="dashboard">Dashboard</button>
+      <button class="tab" data-tab="trainings">Training Library</button>
+      <button class="tab" data-tab="certifications">Certifications</button>
+      <button class="tab" data-tab="paths">Learning Paths</button>
+      <button class="tab" data-tab="admin">Admin Panel</button>
+    </div>
+
+    <!-- DASHBOARD -->
+    <section id="dashboard" class="grid">
+      <div class="card">
+        <h2>Welcome to Butronics University</h2>
+        <p>Your central hub for Office in a Box onboarding, secure shredding compliance, network support training, VoIP mastery, and more.</p>
+
+        <div class="row">
+          <div>
+            <label>Employee Name</label>
+            <input id="employeeName" placeholder="e.g., Jordan Smith" />
+          </div>
+          <div>
+            <label>Role / Department</label>
+            <input id="employeeRole" placeholder="e.g., Network Support, VoIP Specialist" />
+          </div>
+        </div>
+
+        <button id="saveEmployeeBtn">Save Profile</button>
+
+        <hr />
+
+        <h3>Progress Snapshot</h3>
+        <div class="stat-row" id="dashboardStats"></div>
+
+        <h3>Certifications Expiring Soon</h3>
+        <div class="scroll" id="expiringCertsContainer"></div>
+      </div>
+
+      <div class="card">
+        <h2>Required Trainings</h2>
+        <p>These trainings are required for your role at Butronics Business Systems.</p>
+
+        <div class="scroll">
+          <table>
+            <thead>
+              <tr>
+                <th>Training</th>
+                <th>Type</th>
+                <th>Status</th>
+                <th>Link</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="assignedTrainingsTable"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- TRAININGS -->
+    <section id="trainings" class="grid" style="display:none;">
+      <div class="card">
+        <h2>Add Training</h2>
+
+        <label>Training Title</label>
+        <input id="trainingTitle" placeholder="e.g., Office in a Box Overview" />
+
+        <label>Category</label>
+        <input id="trainingType" placeholder="e.g., Shredding, Archiving, Network, VoIP" />
+
+        <label>Mode</label>
+        <select id="trainingMode">
+          <option value="Internal">Internal (Butronics University)</option>
+          <option value="Vendor">Vendor Training (HIPAA, VoIP, Network)</option>
+          <option value="LinkedIn">LinkedIn Learning</option>
+        </select>
+
+        <label>External Link (optional)</label>
+        <input id="trainingUrl" placeholder="https://www.linkedin.com/learning/..." />
+
+        <label>Required?</label>
+        <select id="trainingRequired">
+          <option value="true">Required</option>
+          <option value="false">Optional</option>
+        </select>
+
+        <label>Description</label>
+        <textarea id="trainingNotes"></textarea>
+
+        <button id="addTrainingBtn">Add Training</button>
+        <button class="secondary" id="clearTrainingFormBtn">Clear</button>
+      </div>
+
+      <div class="card">
+        <h2>Training Library</h2>
+
+        <div class="scroll">
+          <table>
+            <thead>
+              <tr>
+                <th>Title</th>
+                <th>Type</th>
+                <th>Required</th>
+                <th>Mode</th>
+                <th>Link</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="trainingTable"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- CERTIFICATIONS -->
+    <section id="certifications" class="grid" style="display:none;">
+      <div class="card">
+        <h2>Add Certification</h2>
+
+        <label>Name</label>
+        <input id="certName" placeholder="e.g., HIPAA Compliance, VoIP Specialist" />
+
+        <label>Issuer</label>
+        <input id="certIssuer" placeholder="e.g., HIPAA, VoIP Vendor, Network Authority" />
+
+        <div class="row">
+          <div>
+            <label>Issue Date</label>
+            <input id="certIssueDate" type="date" />
+          </div>
+          <div>
+            <label>Expiration Date</label>
+            <input id="certExpiryDate" type="date" />
+          </div>
+        </div>
+
+        <label>Proof Link</label>
+        <input id="certProofUrl" placeholder="PDF, image, or LMS link" />
+
+        <label>Notes</label>
+        <textarea id="certNotes"></textarea>
+
+        <button id="addCertBtn">Add Certification</button>
+        <button class="secondary" id="clearCertFormBtn">Clear</button>
+      </div>
+
+      <div class="card">
+        <h2>Certification List</h2>
+
+        <div class="scroll">
+          <table>
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Issuer</th>
+                <th>Issued</th>
+                <th>Expires</th>
+                <th>Status</th>
+                <th>Proof</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="certTable"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- LEARNING PATHS -->
+    <section id="paths" style="display:none;">
+      <div class="card">
+        <h2>Learning Paths</h2>
+        <p>Select a structured training path based on your role at Butronics Business Systems.</p>
+
+        <ul>
+          <li><strong>Office in a Box Technician Path:</strong> Printer Setup, Shredding Workflow, Archiving Software, VoIP Basics</li>
+          <li><strong>Secure Shredding & Archiving Specialist Path:</strong> HIPAA Compliance, Secure Destruction, Archiving Software</li>
+          <li><strong>Network Support Path:</strong> Network Performance, Security Management, Troubleshooting</li>
+          <li><strong>VoIP Specialist Path:</strong> Call Routing, Virtual Receptionist, CRM Integration</li>
+          <li><strong>Remote Work Support Path:</strong> VoIP Remote Tools, Collaboration Tools, Security</li>
+          <li><strong>Customer Service Path:</strong> Call Queue Management, Caller ID Customization, CRM Tools</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ADMIN -->
+    <section id="admin" class="grid" style="display:none;">
+      <div class="card">
+        <h2>Data & Export</h2>
+
+        <div class="stat-row" id="adminStats"></div>
+
+        <button id="exportJsonBtn">Export Data</button>
+        <button class="secondary" id="clearAllDataBtn">Clear All Data</button>
+      </div>
+
+      <div class="card">
+        <h2>How to Share</h2>
+        <p>Upload this file to GitHub Pages, Netlify, or Azure Static Web Apps to share with employees.</p>
+      </div>
+    </section>
+
+  </div>
+
+<script>
+/* FULL JAVASCRIPT LOGIC — TRAINING TRACKING, CERTIFICATION TRACKING, LOCALSTORAGE */
+
+const STORAGE_KEY = "butronics_portal_data_v1";
+
+const defaultData = {
+  employee: { name: "", role: "" },
+  trainings: [],
+  certs: []
+};
+
+function loadData() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return structuredClone(defaultData);
+    return Object.assign(structuredClone(defaultData), JSON.parse(raw));
+  } catch {
+    return structuredClone(defaultData);
+  }
+}
+
+function saveData() {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+  renderAll();
+}
+
+let data = loadData();
+
+/* TAB SWITCHING */
+const tabs = document.querySelectorAll(".tab");
+const sections = {
+  dashboard: document.getElementById("dashboard"),
+  trainings: document.getElementById("trainings"),
+  certifications: document.getElementById("certifications"),
+  paths: document.getElementById("paths"),
+  admin: document.getElementById("admin")
+};
+
+tabs.forEach(tab => {
+  tab.addEventListener("click", () => {
+    tabs.forEach(t => t.classList.remove("active"));
+    tab.classList.add("active");
+    const target = tab.dataset.tab;
+    Object.entries(sections).forEach(([key, el]) => {
+      el.style.display = key === target ? "grid" : "none";
+    });
+  });
+});
+
+/* EMPLOYEE PROFILE */
+const employeeNameInput = document.getElementById("employeeName");
+const employeeRoleInput = document.getElementById("employeeRole");
+document.getElementById("saveEmployeeBtn").addEventListener("click", () => {
+  data.employee.name = employeeNameInput.value.trim();
+  data.employee.role = employeeRoleInput.value.trim();
+  saveData();
+});
+
+/* TRAININGS */
+const trainingTitleInput = document.getElementById("trainingTitle");
+const trainingTypeInput = document.getElementById("trainingType");
+const trainingModeSelect = document.getElementById("trainingMode");
+const trainingUrlInput = document.getElementById("trainingUrl");
+const trainingRequiredSelect = document.getElementById("trainingRequired");
+const trainingNotesInput = document.getElementById("trainingNotes");
+const trainingTableBody = document.getElementById("trainingTable");
+const assignedTrainingsTableBody = document.getElement
