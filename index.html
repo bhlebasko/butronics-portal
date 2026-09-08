@@ -205,31 +205,6 @@
       background: #f9fafb;
     }
 
-    .pill {
-      display: inline-flex;
-      align-items: center;
-      padding: 2px 8px;
-      border-radius: 999px;
-      font-size: 0.7rem;
-      border: 1px solid var(--border);
-    }
-
-    .pill.required {
-      color: var(--warning);
-    }
-
-    .pill.optional {
-      color: var(--muted);
-    }
-
-    .pill.completed {
-      color: var(--accent);
-    }
-
-    .pill.expiring {
-      color: var(--danger);
-    }
-
     .link {
       color: var(--primary);
       text-decoration: none;
@@ -308,6 +283,7 @@
       <button class="tab" data-tab="admin">Admin Panel</button>
     </div>
 
+    <!-- DASHBOARD -->
     <section id="dashboard" class="grid">
       <div class="card">
         <h2>Welcome to Butronics University</h2>
@@ -356,6 +332,7 @@
       </div>
     </section>
 
+    <!-- TRAININGS -->
     <section id="trainings" class="grid" style="display:none;">
       <div class="card">
         <h2>Add Training</h2>
@@ -411,6 +388,7 @@
       </div>
     </section>
 
+    <!-- CERTIFICATIONS -->
     <section id="certifications" class="grid" style="display:none;">
       <div class="card">
         <h2>Add Certification</h2>
@@ -461,9 +439,59 @@
             <tbody id="certTable"></tbody>
           </table>
         </div>
+
+        <!-- ⭐ California Mandatory Training Section Added Here -->
+        <h2 style="margin-top:20px;">California Mandatory Training</h2>
+        <p>These programs are required for California employees under state law.</p>
+
+        <div class="scroll">
+          <table>
+            <thead>
+              <tr>
+                <th>Certification</th>
+                <th>Issuer</th>
+                <th>Link</th>
+                <th>Notes</th>
+              </tr>
+            </thead>
+            <tbody>
+
+              <tr>
+                <td>Sexual Harassment Prevention (SB 1343)</td>
+                <td>California Civil Rights Department</td>
+                <td><a class="link" href="https://calcivilrights.ca.gov/shpt/" target="_blank">Official Training</a></td>
+                <td>Required for all employees and supervisors.</td>
+              </tr>
+
+              <tr>
+                <td>Workplace Violence Prevention (SB 553)</td>
+                <td>Cal/OSHA</td>
+                <td><a class="link" href="https://www.dir.ca.gov/dosh/Workplace-Violence.html" target="_blank">Compliance Resources</a></td>
+                <td>Mandatory written plan + employee training.</td>
+              </tr>
+
+              <tr>
+                <td>Injury & Illness Prevention Program (IIPP)</td>
+                <td>Cal/OSHA</td>
+                <td><a class="link" href="https://www.dir.ca.gov/dosh/dosh_publications/iipp.html" target="_blank">IIPP Guide</a></td>
+                <td>Required for all employers in California.</td>
+              </tr>
+
+              <tr>
+                <td>Hazard Communication (HazCom / GHS)</td>
+                <td>Cal/OSHA</td>
+                <td><a class="link" href="https://www.dir.ca.gov/dosh/dosh_publications/hazcom.pdf" target="_blank">HazCom Standard</a></td>
+                <td>Required for workplaces with hazardous chemicals.</td>
+              </tr>
+
+            </tbody>
+          </table>
+        </div>
+
       </div>
     </section>
 
+    <!-- LEARNING PATHS -->
     <section id="paths" style="display:none;">
       <div class="card">
         <h2>Learning Paths</h2>
@@ -480,6 +508,7 @@
       </div>
     </section>
 
+    <!-- ADMIN -->
     <section id="admin" class="grid" style="display:none;">
       <div class="card">
         <h2>Data & Export</h2>
@@ -530,46 +559,4 @@ const sections = {
   trainings: document.getElementById("trainings"),
   certifications: document.getElementById("certifications"),
   paths: document.getElementById("paths"),
-  admin: document.getElementById("admin")
-};
 
-tabs.forEach(tab => {
-  tab.addEventListener("click", () => {
-    tabs.forEach(t => t.classList.remove("active"));
-    tab.classList.add("active");
-    const target = tab.dataset.tab;
-    Object.entries(sections).forEach(([key, el]) => {
-      el.style.display = key === target ? "grid" : "none";
-    });
-  });
-});
-
-const employeeNameInput = document.getElementById("employeeName");
-const employeeRoleInput = document.getElementById("employeeRole");
-document.getElementById("saveEmployeeBtn").addEventListener("click", () => {
-  data.employee.name = employeeNameInput.value.trim();
-  data.employee.role = employeeRoleInput.value.trim();
-  saveData();
-});
-
-const trainingTitleInput = document.getElementById("trainingTitle");
-const trainingTypeInput = document.getElementById("trainingType");
-const trainingModeSelect = document.getElementById("trainingMode");
-const trainingUrlInput = document.getElementById("trainingUrl");
-const trainingRequiredSelect = document.getElementById("trainingRequired");
-const trainingNotesInput = document.getElementById("trainingNotes");
-const trainingTableBody = document.getElementById("trainingTable");
-const assignedTrainingsTableBody = document.getElementById("assignedTrainingsTable");
-
-document.getElementById("addTrainingBtn").addEventListener("click", () => {
-  const title = trainingTitleInput.value.trim();
-  if (!title) return;
-
-  data.trainings.push({
-    id: crypto.randomUUID(),
-    title,
-    type: trainingTypeInput.value.trim(),
-    mode: trainingModeSelect.value,
-    url: trainingUrlInput.value.trim(),
-    required: trainingRequiredSelect.value === "true",
-    notes: trainingNotesInput.value.trim
