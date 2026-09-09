@@ -1,8 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Butronics Training Portal</title>
+</head>
+<body>
+
 <!-- ============================
      LOGIN PAGE
 ============================ -->
 <div id="loginPage" class="login-container">
-
     <div class="login-box">
         <h1 class="login-title">Training Portal Login</h1>
 
@@ -28,7 +35,6 @@
         justify-content: center;
         align-items: center;
     }
-
     .login-box {
         background: white;
         padding: 30px;
@@ -36,18 +42,15 @@
         border-radius: 10px;
         box-shadow: 0 0 15px rgba(0,0,0,0.1);
     }
-
     .login-title {
         text-align: center;
         margin-bottom: 20px;
     }
-
     .login-box label {
         font-weight: bold;
         margin-top: 10px;
         display: block;
     }
-
     .login-box input {
         width: 100%;
         padding: 10px;
@@ -56,7 +59,6 @@
         border-radius: 5px;
         border: 1px solid #ccc;
     }
-
     .login-btn {
         width: 100%;
         padding: 12px;
@@ -67,139 +69,313 @@
         cursor: pointer;
         font-size: 16px;
     }
-
     .login-btn:hover {
         background: #005fa3;
     }
-
     .login-error {
         color: red;
         text-align: center;
         margin-top: 10px;
     }
 </style>
+
 <!-- ============================
-     ADMIN ACCOUNT CREATION PANEL
+     MAIN APP CONTAINER
 ============================ -->
-<div class="admin-section">
+<div class="app" style="display:none; padding:20px;">
 
-    <h2>Administrator Control Panel</h2>
-    <p>Create and manage user accounts for the Training Portal.</p>
+    <!-- Top dashboard area -->
+    <h2 id="dashboardGreeting">Welcome</h2>
+    <p id="dashboardProgress">Overall Progress: 0/0 (0%)</p>
 
-    <div class="create-user-box">
-        <h3>Create New User</h3>
+    <button onclick="logout()" class="logout-btn">Logout</button>
 
-        <label>Email</label>
-        <input type="email" id="newUserEmail" placeholder="employee@company.com">
+    <style>
+        .logout-btn {
+            background: #d9534f;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 15px;
+            margin-top: 10px;
+        }
+        .logout-btn:hover {
+            background: #b52b27;
+        }
+    </style>
 
-        <label>Password</label>
-        <input type="password" id="newUserPassword" placeholder="Enter password">
-
-        <label>Role</label>
-        <select id="newUserRole">
-            <option>IT Account Executive / Outside Sales</option>
-            <option>Managed Print Services (MPS) Specialist</option>
-            <option>Strategic / Regional Account Manager</option>
-            <option>Sales Enablement & Support</option>
-
-            <option>Print and Image Service Technician</option>
-            <option>IT / Network Engineer</option>
-            <option>Field Service Technician</option>
-            <option>Delivery & Cable Specialist</option>
-
-            <option>Warehouse & Logistics Worker</option>
-            <option>Leasing & Billing Administrative Specialist</option>
-            <option>Administrative Assistant / Reception</option>
-
-            <option>Administrator</option>
-        </select>
-
-        <button id="createUserButton" class="admin-btn">Create User</button>
-        <p id="createUserMessage" class="admin-message"></p>
+    <!-- Certificate status box -->
+    <div id="certificateBox" class="certificate-box">
+        <h3>Certificate Status</h3>
+        <p>Complete all required modules to unlock your certificate.</p>
     </div>
 
-    <hr>
+    <style>
+        .certificate-box {
+            background: #fff;
+            padding: 20px;
+            margin-top: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .cert-btn {
+            background: #0078d4;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        .cert-btn:hover {
+            background: #005fa3;
+        }
+    </style>
 
-    <div class="user-list-box">
-        <h3>Existing Users</h3>
-        <div id="userList"></div>
+    <!-- ============================
+         SALES TRAINING
+    ============================ -->
+    <div id="salesTraining" class="section">
+        <h2>Sales Training</h2>
+
+        <div class="training-item" data-training-id="sales-101" data-required="true">
+            <h3>Sales Fundamentals 101</h3>
+            <button class="complete-training-btn">Mark as Complete</button>
+            <p class="training-status"></p>
+        </div>
+
+        <div class="training-item" data-training-id="sales-201" data-required="false">
+            <h3>Advanced Account Management</h3>
+            <button class="complete-training-btn">Mark as Complete</button>
+            <p class="training-status"></p>
+        </div>
     </div>
 
+    <!-- ============================
+         TECH TRAINING
+    ============================ -->
+    <div id="techTraining" class="section">
+        <h2>Technical Training</h2>
+
+        <div class="training-item" data-training-id="tech-101" data-required="true">
+            <h3>Print System Basics</h3>
+            <button class="complete-training-btn">Mark as Complete</button>
+            <p class="training-status"></p>
+        </div>
+    </div>
+
+    <!-- ============================
+         OPERATIONS TRAINING
+    ============================ -->
+    <div id="operationsTraining" class="section">
+        <h2>Operations Training</h2>
+
+        <div class="training-item" data-training-id="ops-101" data-required="true">
+            <h3>Warehouse & Logistics Fundamentals</h3>
+            <button class="complete-training-btn">Mark as Complete</button>
+            <p class="training-status"></p>
+        </div>
+    </div>
+
+    <!-- ============================
+         ADMIN PANEL
+    ============================ -->
+    <div id="adminPanel" class="section" style="display:none;">
+        <!-- ADMIN ACCOUNT CREATION PANEL -->
+        <div class="admin-section">
+            <h2>Administrator Control Panel</h2>
+            <p>Create and manage user accounts for the Training Portal.</p>
+
+            <div class="create-user-box">
+                <h3>Create New User</h3>
+
+                <label>Email</label>
+                <input type="email" id="newUserEmail" placeholder="employee@company.com">
+
+                <label>Password</label>
+                <input type="password" id="newUserPassword" placeholder="Enter password">
+
+                <label>Role</label>
+                <select id="newUserRole">
+                    <option>IT Account Executive / Outside Sales</option>
+                    <option>Managed Print Services (MPS) Specialist</option>
+                    <option>Strategic / Regional Account Manager</option>
+                    <option>Sales Enablement & Support</option>
+
+                    <option>Print and Image Service Technician</option>
+                    <option>IT / Network Engineer</option>
+                    <option>Field Service Technician</option>
+                    <option>Delivery & Cable Specialist</option>
+
+                    <option>Warehouse & Logistics Worker</option>
+                    <option>Leasing & Billing Administrative Specialist</option>
+                    <option>Administrative Assistant / Reception</option>
+
+                    <option>Administrator</option>
+                </select>
+
+                <button id="createUserButton" class="admin-btn">Create User</button>
+                <p id="createUserMessage" class="admin-message"></p>
+            </div>
+
+            <hr>
+
+            <div class="user-list-box">
+                <h3>Existing Users</h3>
+                <div id="userList"></div>
+            </div>
+        </div>
+
+        <!-- ADMIN TRAINING PROGRESS DASHBOARD -->
+        <div class="admin-section">
+            <h2>Training Progress Dashboard</h2>
+            <p>View employee progress, certificate status, and completion details.</p>
+
+            <div id="adminProgressList"></div>
+        </div>
+    </div>
+
+    <style>
+        /* ADMIN PANEL STYLES */
+        .admin-section {
+            padding: 20px;
+        }
+        .create-user-box, .user-list-box {
+            background: #fff;
+            padding: 20px;
+            margin-top: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .create-user-box label {
+            font-weight: bold;
+            margin-top: 10px;
+            display: block;
+        }
+        .create-user-box input, .create-user-box select {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        .admin-btn {
+            width: 100%;
+            padding: 12px;
+            background: #0078d4;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .admin-btn:hover {
+            background: #005fa3;
+        }
+        .admin-message {
+            margin-top: 10px;
+            font-weight: bold;
+        }
+        .user-card {
+            background: #f5f5f5;
+            padding: 15px;
+            margin-top: 10px;
+            border-radius: 8px;
+        }
+        .user-card h4 {
+            margin: 0;
+        }
+        .delete-user-btn {
+            margin-top: 10px;
+            background: #d9534f;
+            color: white;
+            padding: 8px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .delete-user-btn:hover {
+            background: #b52b27;
+        }
+        #adminProgressList {
+            margin-top: 20px;
+        }
+        .admin-progress-card {
+            background: #f5f5f5;
+            padding: 15px;
+            margin-top: 10px;
+            border-radius: 8px;
+        }
+        .admin-progress-card h4 {
+            margin: 0;
+        }
+        .admin-progress-card p {
+            margin: 5px 0;
+        }
+    </style>
+
+</div> <!-- end .app -->
+
+<!-- ============================
+     CERTIFICATE MODAL
+============================ -->
+<div id="certificateModal" class="cert-modal" style="display:none;">
+    <div class="cert-content">
+        <h1>Certificate of Completion</h1>
+        <p>This certifies that</p>
+        <h2 id="certName">[Employee Name]</h2>
+        <p>has successfully completed all required training for the role</p>
+        <h3 id="certRole">[Role]</h3>
+        <p id="certDate">Date: [Completion Date]</p>
+        <p>Certificate ID: <span id="certId">[ID]</span></p>
+
+        <button onclick="window.print()" class="cert-btn">Print / Save as PDF</button>
+        <button onclick="closeCertificate()" class="cert-btn" style="background:#d9534f;">Close</button>
+    </div>
 </div>
 
 <style>
-    /* ADMIN PANEL STYLES */
-    .admin-section {
-        padding: 20px;
+    .cert-modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0,0,0,0.5);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
     }
-
-    .create-user-box, .user-list-box {
+    .cert-content {
         background: #fff;
-        padding: 20px;
-        margin-top: 20px;
+        padding: 40px;
+        width: 600px;
         border-radius: 10px;
-        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        text-align: center;
+        box-shadow: 0 0 20px rgba(0,0,0,0.3);
     }
-
-    .create-user-box label {
-        font-weight: bold;
-        margin-top: 10px;
-        display: block;
+    .cert-content h1 {
+        margin-bottom: 10px;
     }
-
-    .create-user-box input, .create-user-box select {
-        width: 100%;
-        padding: 10px;
-        margin-top: 5px;
-        margin-bottom: 15px;
-        border-radius: 5px;
-        border: 1px solid #ccc;
+    .cert-content h2, .cert-content h3 {
+        margin: 5px 0;
     }
+</style>
 
-    .admin-btn {
-        width: 100%;
-        padding: 12px;
-        background: #0078d4;
-        color: white;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        font-size: 16px;
-    }
-
-    .admin-btn:hover {
-        background: #005fa3;
-    }
-
-    .admin-message {
-        margin-top: 10px;
-        font-weight: bold;
-    }
-
-    .user-card {
-        background: #f5f5f5;
-        padding: 15px;
-        margin-top: 10px;
-        border-radius: 8px;
-    }
-
-    .user-card h4 {
-        margin: 0;
-    }
-
-    .delete-user-btn {
-        margin-top: 10px;
-        background: #d9534f;
-        color: white;<script>
-// ============================
-// USER DATABASE + LOGIN LOGIC
-// ============================
-
-// LocalStorage keys
+<!-- ============================
+     SCRIPT BLOCK
+============================ -->
+<script>
+// KEYS
 const USERS_KEY = 'trainingPortalUsers';
 const SESSION_KEY = 'trainingPortalSession';
+const PROGRESS_KEY = 'trainingPortalProgress';
 
-// Get elements
+// ELEMENTS
 const loginPage = document.getElementById('loginPage');
 const loginEmail = document.getElementById('loginEmail');
 const loginPassword = document.getElementById('loginPassword');
@@ -213,39 +389,28 @@ const newUserRole = document.getElementById('newUserRole');
 const createUserMessage = document.getElementById('createUserMessage');
 const userList = document.getElementById('userList');
 
-// Your main app container (portal)
-const appContainer = document.querySelector('.app'); // adjust if your main wrapper has a different class/id
+const appContainer = document.querySelector('.app');
 
-// ============================
-// Helper functions
-// ============================
-
+// USERS / SESSION
 function getUsers() {
     const data = localStorage.getItem(USERS_KEY);
     return data ? JSON.parse(data) : [];
 }
-
 function saveUsers(users) {
     localStorage.setItem(USERS_KEY, JSON.stringify(users));
 }
-
 function getSession() {
     const data = localStorage.getItem(SESSION_KEY);
     return data ? JSON.parse(data) : null;
 }
-
 function saveSession(session) {
     localStorage.setItem(SESSION_KEY, JSON.stringify(session));
 }
-
 function clearSession() {
     localStorage.removeItem(SESSION_KEY);
 }
 
-// ============================
-// Render user list in Admin Panel
-// ============================
-
+// USER LIST RENDER
 function renderUserList() {
     if (!userList) return;
 
@@ -267,7 +432,6 @@ function renderUserList() {
         userList.appendChild(div);
     });
 
-    // Attach delete handlers
     const deleteButtons = userList.querySelectorAll('.delete-user-btn');
     deleteButtons.forEach(btn => {
         btn.addEventListener('click', () => {
@@ -276,7 +440,6 @@ function renderUserList() {
         });
     });
 }
-
 function deleteUser(index) {
     const users = getUsers();
     users.splice(index, 1);
@@ -284,10 +447,7 @@ function deleteUser(index) {
     renderUserList();
 }
 
-// ============================
-// Create user (Admin Panel)
-// ============================
-
+// CREATE USER
 if (createUserButton) {
     createUserButton.addEventListener('click', () => {
         const email = newUserEmail.value.trim();
@@ -301,20 +461,13 @@ if (createUserButton) {
         }
 
         let users = getUsers();
-
-        // Check if email already exists
         if (users.some(u => u.email.toLowerCase() === email.toLowerCase())) {
             createUserMessage.textContent = 'A user with this email already exists.';
             createUserMessage.style.color = 'red';
             return;
         }
 
-        const newUser = {
-            email,
-            password,
-            role
-        };
-
+        const newUser = { email, password, role };
         users.push(newUser);
         saveUsers(users);
 
@@ -326,13 +479,11 @@ if (createUserButton) {
         newUserRole.value = 'IT Account Executive / Outside Sales';
 
         renderUserList();
+        refreshAdminViewIfAdmin();
     });
 }
 
-// ============================
-// Login logic
-// ============================
-
+// LOGIN
 if (loginButton) {
     loginButton.addEventListener('click', () => {
         const email = loginEmail.value.trim();
@@ -353,25 +504,20 @@ if (loginButton) {
             return;
         }
 
-        // Save session
-        saveSession({
-            email: user.email,
-            role: user.role
-        });
+        saveSession({ email: user.email, role: user.role });
 
-        // Show portal, hide login
         if (loginPage) loginPage.style.display = 'none';
         if (appContainer) appContainer.style.display = 'block';
 
-        // Apply role-based behavior
         applyRoleAccess(user.role);
+        initTrainingButtons();
+        updateTrainingStatuses();
+        updateDashboardProgress();
+        checkCertificateUnlock();
     });
 }
 
-// ============================
-// Session restore on page load
-// ============================
-
+// SESSION RESTORE
 window.addEventListener('load', () => {
     const session = getSession();
 
@@ -385,48 +531,295 @@ window.addEventListener('load', () => {
     }
 
     renderUserList();
+    initTrainingButtons();
+    updateTrainingStatuses();
+    updateDashboardProgress();
+    checkCertificateUnlock();
+    refreshAdminViewIfAdmin();
 });
 
-// ============================
-// Logout function (you can wire this to a button)
-// ============================
-
+// LOGOUT
 function logout() {
     clearSession();
     if (loginPage) loginPage.style.display = 'flex';
     if (appContainer) appContainer.style.display = 'none';
 }
 
-// ============================
-// Role-based access
-// ============================
+// ROLE-BASED TRAINING MAP
+const roleTrainingMap = {
+    "IT Account Executive / Outside Sales": ["salesTraining"],
+    "Managed Print Services (MPS) Specialist": ["salesTraining"],
+    "Strategic / Regional Account Manager": ["salesTraining"],
+    "Sales Enablement & Support": ["salesTraining"],
 
+    "Print and Image Service Technician": ["techTraining"],
+    "IT / Network Engineer": ["techTraining"],
+    "Field Service Technician": ["techTraining"],
+    "Delivery & Cable Specialist": ["techTraining"],
+
+    "Warehouse & Logistics Worker": ["operationsTraining"],
+    "Leasing & Billing Administrative Specialist": ["operationsTraining"],
+    "Administrative Assistant / Reception": ["operationsTraining"],
+
+    "Administrator": ["salesTraining", "techTraining", "operationsTraining", "adminPanel"]
+};
+
+// REQUIRED TRAINING PER ROLE
+const requiredTrainingMap = {
+    "IT Account Executive / Outside Sales": ["sales-101", "sales-201"],
+    "Managed Print Services (MPS) Specialist": ["sales-101"],
+    "Strategic / Regional Account Manager": ["sales-101", "sales-201"],
+    "Sales Enablement & Support": ["sales-101"],
+
+    "Print and Image Service Technician": ["tech-101"],
+    "IT / Network Engineer": ["tech-101"],
+    "Field Service Technician": ["tech-101"],
+    "Delivery & Cable Specialist": ["tech-101"],
+
+    "Warehouse & Logistics Worker": ["ops-101"],
+    "Leasing & Billing Administrative Specialist": ["ops-101"],
+    "Administrative Assistant / Reception": ["ops-101"],
+
+    "Administrator": []
+};
+
+// ROLE ACCESS
 function applyRoleAccess(role) {
-    // Example: hide Admin Panel unless role is "Administrator"
-    const adminPanel = document.getElementById('adminPanel');
-    if (adminPanel) {
-        if (role === 'Administrator') {
-            adminPanel.style.display = 'block';
-        } else {
-            adminPanel.style.display = 'none';
-        }
+    const allSections = ["salesTraining", "techTraining", "operationsTraining", "adminPanel"];
+    allSections.forEach(sectionId => {
+        const el = document.getElementById(sectionId);
+        if (el) el.style.display = "none";
+    });
+
+    const allowedSections = roleTrainingMap[role] || [];
+    allowedSections.forEach(sectionId => {
+        const el = document.getElementById(sectionId);
+        if (el) el.style.display = "block";
+    });
+
+    const dashGreeting = document.getElementById("dashboardGreeting");
+    if (dashGreeting) {
+        dashGreeting.textContent = `Welcome, ${role}`;
     }
 
-    // Here you can add more role-based logic:
-    // - Show/hide certain training sections
-    // - Customize dashboard text
-    // - Restrict supervisor-only modules, etc.
+    if (role === 'Administrator') {
+        refreshAdminViewIfAdmin();
+    }
 }
 
+// PROGRESS
+function getCurrentUserEmail() {
+    const session = getSession();
+    return session ? session.email : null;
+}
+function getProgress() {
+    const data = localStorage.getItem(PROGRESS_KEY);
+    return data ? JSON.parse(data) : {};
+}
+function saveProgress(progress) {
+    localStorage.setItem(PROGRESS_KEY, JSON.stringify(progress));
+}
+function completeTraining(trainingId) {
+    const email = getCurrentUserEmail();
+    if (!email) return;
+
+    const progress = getProgress();
+
+    if (!progress[email]) {
+        progress[email] = { completed: [], certificateId: null };
+    }
+
+    if (!progress[email].completed.includes(trainingId)) {
+        progress[email].completed.push(trainingId);
+    }
+
+    saveProgress(progress);
+    updateTrainingStatuses();
+    updateDashboardProgress();
+    checkCertificateUnlock();
+    refreshAdminViewIfAdmin();
+}
+function updateTrainingStatuses() {
+    const email = getCurrentUserEmail();
+    if (!email) return;
+
+    const progress = getProgress();
+    const userProgress = progress[email] || { completed: [] };
+
+    const items = document.querySelectorAll('.training-item');
+    items.forEach(item => {
+        const id = item.getAttribute('data-training-id');
+        const statusEl = item.querySelector('.training-status');
+        if (!statusEl) return;
+
+        if (userProgress.completed.includes(id)) {
+            statusEl.textContent = 'Completed';
+            statusEl.style.color = 'green';
+        } else {
+            statusEl.textContent = 'Not completed';
+            statusEl.style.color = 'red';
+        }
+    });
+}
+function initTrainingButtons() {
+    const buttons = document.querySelectorAll('.complete-training-btn');
+    buttons.forEach(btn => {
+        btn.onclick = () => {
+            const parent = btn.closest('.training-item');
+            if (!parent) return;
+            const id = parent.getAttribute('data-training-id');
+            completeTraining(id);
+        };
+    });
+}
+function updateDashboardProgress() {
+    const email = getCurrentUserEmail();
+    if (!email) return;
+
+    const progress = getProgress();
+    const userProgress = progress[email] || { completed: [] };
+
+    const totalTrainings = document.querySelectorAll('.training-item').length;
+    const completedCount = userProgress.completed.length;
+
+    const dashProgress = document.getElementById('dashboardProgress');
+    if (dashProgress && totalTrainings > 0) {
+        const percent = Math.round((completedCount / totalTrainings) * 100);
+        dashProgress.textContent = `Overall Progress: ${completedCount}/${totalTrainings} (${percent}%)`;
+    }
+}
+
+// CERTIFICATE LOGIC
+function checkCertificateUnlock() {
+    const email = getCurrentUserEmail();
+    if (!email) return;
+
+    const session = getSession();
+    if (!session) return;
+    const role = session.role;
+
+    const requiredList = requiredTrainingMap[role] || [];
+    if (requiredList.length === 0) return;
+
+    const progress = getProgress();
+    const userProgress = progress[email] || { completed: [], certificateId: null };
+
+    const completedRequired = requiredList.every(id => userProgress.completed.includes(id));
+
+    const certBox = document.getElementById("certificateBox");
+
+    if (certBox) {
+        if (completedRequired) {
+            certBox.innerHTML = `
+                <h3 style="color: green;">🎉 Certificate Unlocked!</h3>
+                <p>You have completed all required training for your role.</p>
+                <button onclick="downloadCertificate()" class="cert-btn">Download Certificate</button>
+            `;
+        } else {
+            certBox.innerHTML = `
+                <h3>Certificate Status</h3>
+                <p>Complete all required modules to unlock your certificate.</p>
+            `;
+        }
+    }
+}
+
+function downloadCertificate() {
+    const session = getSession();
+    if (!session) return;
+
+    const email = session.email;
+    const role = session.role;
+
+    const name = email.split('@')[0];
+
+    const certNameEl = document.getElementById('certName');
+    const certRoleEl = document.getElementById('certRole');
+    const certDateEl = document.getElementById('certDate');
+    const certIdEl = document.getElementById('certId');
+    const certModal = document.getElementById('certificateModal');
+
+    const dateStr = new Date().toLocaleDateString();
+    const certId = `CERT-${Date.now()}`;
+
+    if (certNameEl) certNameEl.textContent = name;
+    if (certRoleEl) certRoleEl.textContent = role;
+    if (certDateEl) certDateEl.textContent = `Date: ${dateStr}`;
+    if (certIdEl) certIdEl.textContent = certId;
+
+    if (certModal) certModal.style.display = 'flex';
+
+    const emailKey = getCurrentUserEmail();
+    if (emailKey) {
+        const progress = getProgress();
+        if (!progress[emailKey]) progress[emailKey] = { completed: [], certificateId: null };
+        progress[emailKey].certificateId = certId;
+        saveProgress(progress);
+        refreshAdminViewIfAdmin();
+    }
+}
+
+function closeCertificate() {
+    const certModal = document.getElementById('certificateModal');
+    if (certModal) certModal.style.display = 'none';
+}
+
+// ADMIN PROGRESS DASHBOARD
+function renderAdminProgress() {
+    const adminProgressList = document.getElementById('adminProgressList');
+    if (!adminProgressList) return;
+
+    const users = getUsers();
+    const progress = getProgress();
+
+    adminProgressList.innerHTML = '';
+
+    if (users.length === 0) {
+        adminProgressList.innerHTML = '<p>No users found.</p>';
+        return;
+    }
+
+    users.forEach(user => {
+        const email = user.email;
+        const role = user.role;
+
+        const userProgress = progress[email] || { completed: [], certificateId: null };
+        const completedCount = userProgress.completed.length;
+
+        const requiredList = requiredTrainingMap[role] || [];
+        const requiredCount = requiredList.length;
+
+        const hasCertificate =
+            requiredCount > 0 &&
+            requiredList.every(id => userProgress.completed.includes(id));
+
+        const certId = userProgress.certificateId || 'Not issued';
+
+        const card = document.createElement('div');
+        card.className = 'admin-progress-card';
+
+        card.innerHTML = `
+            <h4>${email}</h4>
+            <p>Role: ${role}</p>
+            <p>Completed Modules: ${completedCount}</p>
+            <p>Required Modules: ${requiredCount}</p>
+            <p>Certificate Status: ${hasCertificate ? 'Unlocked' : 'Locked'}</p>
+            <p>Certificate ID: ${certId}</p>
+        `;
+
+        adminProgressList.appendChild(card);
+    });
+}
+
+function refreshAdminViewIfAdmin() {
+    const session = getSession();
+    if (!session) return;
+
+    if (session.role === 'Administrator') {
+        renderAdminProgress();
+    }
+}
 </script>
 
-        padding: 8px;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-    }
-
-    .delete-user-btn:hover {
-        background: #b52b27;
-    }
-</style>
+</body>
+</html>
