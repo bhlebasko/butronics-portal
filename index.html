@@ -1,190 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Butronics Business Systems</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<title>Butronics Business Systems Portal</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!-- CSS will be added in PART 2 -->
-    <link rel="stylesheet" href="styles.css">
-</head>
-
-<body>
-
-<!-- LOGIN SCREEN -->
-<div id="loginScreen" class="login-screen">
-    <div class="login-box">
-        <h1>Butronics Business Systems</h1>
-        <p class="login-subtitle">Employee Training & Certification Portal</p>
-
-        <input id="loginName" type="text" placeholder="Enter your name" class="login-input">
-
-        <select id="loginRole" class="login-input">
-            <option value="">Select your role</option>
-            <option value="office">Office in a Box Technician</option>
-            <option value="shredding">Secure Shredding & Archiving Specialist</option>
-            <option value="network">Network Support Technician</option>
-            <option value="voip">VoIP Specialist</option>
-            <option value="csr">Customer Service / Call Center</option>
-            <option value="remote">Remote Work Support</option>
-            <option value="admin">Admin / Manager</option>
-        </select>
-
-        <button id="loginBtn" class="login-btn">Enter Portal</button>
-    </div>
-</div>
-
-<!-- MAIN APP -->
-<div id="app" class="app hidden">
-
-    <!-- SIDEBAR -->
-    <aside class="sidebar">
-        <div class="sidebar-header">
-            <h2>BBS Portal</h2>
-        </div>
-
-        <nav class="sidebar-nav">
-            <button class="nav-item" data-section="dashboard">Dashboard</button>
-            <button class="nav-item" data-section="trainings">Trainings</button>
-            <button class="nav-item" data-section="certifications">Certifications</button>
-            <button class="nav-item" data-section="paths">Learning Paths</button>
-            <button class="nav-item" data-section="compliance">California Compliance</button>
-            <button class="nav-item" data-section="admin">Admin</button>
-        </nav>
-
-        <div class="sidebar-footer">
-            <button id="darkModeToggle" class="dark-toggle">Dark Mode</button>
-        </div>
-    </aside>
-
-    <!-- MAIN CONTENT -->
-    <main class="main-content">
-
-        <!-- DASHBOARD -->
-        <section id="dashboard" class="section">
-            <h1>Welcome, <span id="userNameDisplay"></span></h1>
-            <p>Your role: <span id="userRoleDisplay"></span></p>
-
-            <div class="dashboard-cards">
-                <div class="card">
-                    <h3>Total Trainings</h3>
-                    <p id="dashTotalTrainings">0</p>
-                </div>
-                <div class="card">
-                    <h3>Completed</h3>
-                    <p id="dashCompletedTrainings">0</p>
-                </div>
-                <div class="card">
-                    <h3>Expiring Soon</h3>
-                    <p id="dashExpiring">0</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- TRAININGS -->
-        <section id="trainings" class="section hidden">
-            <h1>Assigned Trainings</h1>
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>Training</th>
-                        <th>Type</th>
-                        <th>Mode</th>
-                        <th>Status</th>
-                        <th>Complete</th>
-                    </tr>
-                </thead>
-                <tbody id="trainingTable"></tbody>
-            </table>
-        </section>
-
-        <!-- CERTIFICATIONS -->
-        <section id="certifications" class="section hidden">
-            <h1>Certifications</h1>
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>Certification</th>
-                        <th>Expires</th>
-                        <th>Status</th>
-                    </tr>
-                </thead>
-                <tbody id="certTable"></tbody>
-            </table>
-        </section>
-
-        <!-- LEARNING PATHS -->
-        <section id="paths" class="section hidden">
-            <h1>Learning Paths</h1>
-            <p>Role‑based learning paths will appear here.</p>
-            <div id="pathsContainer"></div>
-        </section>
-
-        <!-- CALIFORNIA COMPLIANCE -->
-        <section id="compliance" class="section hidden">
-            <h1>California Mandatory Training</h1>
-
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>Training</th>
-                        <th>Required For</th>
-                        <th>Link</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Sexual Harassment Prevention (SB 1343)</td>
-                        <td>All Employees</td>
-                        <td><a href="https://www.dfeh.ca.gov/shpt/" target="_blank">DFEH Training</a></td>
-                    </tr>
-                    <tr>
-                        <td>Workplace Violence Prevention (SB 553)</td>
-                        <td>All Employees</td>
-                        <td><a href="https://www.dir.ca.gov/dosh/dosh_publications/WPV-Guide.pdf" target="_blank">Cal/OSHA Guide</a></td>
-                    </tr>
-                    <tr>
-                        <td>Hazard Communication (HazCom)</td>
-                        <td>All Employees</td>
-                        <td><a href="https://www.osha.gov/hazcom" target="_blank">OSHA HazCom</a></td>
-                    </tr>
-                    <tr>
-                        <td>IIPP (Injury & Illness Prevention Program)</td>
-                        <td>All Employees</td>
-                        <td><a href="https://www.dir.ca.gov/dosh/dosh_publications/iipp.html" target="_blank">Cal/OSHA IIPP</a></td>
-                    </tr>
-                </tbody>
-            </table>
-        </section>
-
-        <!-- ADMIN -->
-        <section id="admin" class="section hidden">
-            <h1>Admin Panel</h1>
-
-            <div class="admin-cards">
-                <div class="card">
-                    <h3>Total Trainings in System</h3>
-                    <p id="adminTotalTrainings">0</p>
-                </div>
-                <div class="card">
-                    <h3>Total Certifications</h3>
-                    <p id="adminTotalCerts">0</p>
-                </div>
-                <div class="card">
-                    <h3>Employees Completed All</h3>
-                    <p id="adminAllComplete">0</p>
-                </div>
-            </div>
-        </section>
-
-    </main>
-</div>
-
-<!-- JAVASCRIPT WILL BE ADDED IN PART 3 -->
-<script src="script.js"></script>
-
-</body>
-</html>
+<style>
 /* --------------------------------------------------
    GLOBAL RESET
 -------------------------------------------------- */
@@ -344,82 +165,82 @@ body {
 }
 
 /* --------------------------------------------------
-   DASHBOARD CARDS
+   TRAINING CARDS (Udemy / LinkedIn Style)
 -------------------------------------------------- */
-.dashboard-cards,
-.admin-cards {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+
+.training-card-container {
+    display: flex;
+    flex-direction: column;
     gap: 20px;
 }
 
-.card {
+.training-card {
     background: white;
     padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.08);
-    text-align: center;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    border-left: 6px solid #0074D9;
 }
 
-.card h3 {
-    margin-bottom: 10px;
+.training-card h3 {
+    margin: 0;
+    font-size: 1.3rem;
     color: #001f3f;
 }
 
-/* --------------------------------------------------
-   TABLES
--------------------------------------------------- */
-.table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 15px;
+.training-card p {
+    margin: 0;
+    color: #555;
 }
 
-.table th,
-.table td {
-    padding: 12px;
-    border-bottom: 1px solid #ddd;
+.training-card-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
 }
 
-.table th {
-    background: #001f3f;
+.training-btn {
+    padding: 10px 16px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.95rem;
+}
+
+.training-btn.view {
+    background: #0074D9;
     color: white;
 }
 
-.table tr:hover {
-    background: #f0f4ff;
+.training-btn.view:hover {
+    background: #005bb5;
 }
 
-/* --------------------------------------------------
-   STATUS PILLS
--------------------------------------------------- */
-.pill {
-    display: inline-flex;
-    align-items: center;
-    padding: 2px 8px;
-    border-radius: 999px;
-    font-size: 0.7rem;
-    border: 1px solid #ccc;
+.training-btn.complete {
+    background: #2ecc40;
+    color: white;
 }
 
-.pill.required {
-    color: #ff851b;
-    border-color: #ff851b;
+.training-btn.complete:hover {
+    background: #1f9e30;
 }
 
-.pill.optional {
-    color: #888;
-    border-color: #888;
+/* Dedicated training page */
+#trainingPage {
+    padding: 20px;
 }
 
-.pill.completed {
-    color: #2ecc40;
-    border-color: #2ecc40;
+.training-page-title {
+    font-size: 1.8rem;
+    margin-bottom: 10px;
 }
 
-.pill.expiring {
-    color: #ff4136;
-    border-color: #ff4136;
+.training-page-info {
+    margin-bottom: 20px;
+    color: #555;
 }
 
 /* --------------------------------------------------
@@ -430,25 +251,8 @@ body.dark {
     color: #eaeaea;
 }
 
-body.dark .card {
+body.dark .training-card {
     background: #1e1e1e;
-    color: #eaeaea;
-}
-
-body.dark .table th {
-    background: #003366;
-}
-
-body.dark .table tr:hover {
-    background: #1a1a1a;
-}
-
-body.dark .login-screen {
-    background: #1e1e1e;
-}
-
-body.dark .login-box {
-    background: #2a2a2a;
     color: #eaeaea;
 }
 
@@ -460,10 +264,112 @@ body.dark .nav-item:hover,
 body.dark .nav-item.active {
     background: #002244;
 }
-/* --------------------------------------------------
-   PART 3A — CORE DATA & UTILITIES
--------------------------------------------------- */
+</style>
+</head>
 
+<body>
+
+<!-- LOGIN SCREEN -->
+<div id="loginScreen" class="login-screen">
+    <div class="login-box">
+        <h1>Butronics Business Systems</h1>
+        <p class="login-subtitle">Employee Training & Certification Portal</p>
+
+        <input id="loginName" type="text" placeholder="Enter your name" class="login-input">
+        <select id="loginRole" class="login-input">
+            <option value="">Select your role</option>
+            <option value="office">Office in a Box Technician</option>
+            <option value="shredding">Secure Shredding & Archiving Specialist</option>
+            <option value="network">Network Support Technician</option>
+            <option value="voip">VoIP Specialist</option>
+            <option value="csr">Customer Service / Call Center</option>
+            <option value="remote">Remote Work Support</option>
+            <option value="admin">Admin / Manager</option>
+        </select>
+
+        <button id="loginBtn" class="login-btn">Enter Portal</button>
+    </div>
+</div>
+
+<!-- MAIN APP -->
+<div id="app" class="app hidden">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <h2>BBS Portal</h2>
+        </div>
+
+        <nav class="sidebar-nav">
+            <button class="nav-item" data-section="dashboard">Dashboard</button>
+            <button class="nav-item" data-section="trainings">Trainings</button>
+            <button class="nav-item" data-section="trainingPage">Training Page</button>
+            <button class="nav-item" data-section="certifications">Certifications</button>
+            <button class="nav-item" data-section="paths">Learning Paths</button>
+            <button class="nav-item" data-section="compliance">California Compliance</button>
+            <button class="nav-item" data-section="admin">Admin</button>
+        </nav>
+
+        <div class="sidebar-footer">
+            <button id="darkModeToggle" class="dark-toggle">Dark Mode</button>
+        </div>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+
+        <!-- DASHBOARD -->
+        <section id="dashboard" class="section">
+            <h1>Welcome, <span id="userNameDisplay"></span></h1>
+            <p>Your role: <span id="userRoleDisplay"></span></p>
+        </section>
+
+        <!-- TRAININGS -->
+        <section id="trainings" class="section hidden">
+            <h1>Assigned Trainings</h1>
+            <div id="trainingCards" class="training-card-container"></div>
+        </section>
+
+        <!-- TRAINING PAGE -->
+        <section id="trainingPage" class="section hidden">
+            <h1 class="training-page-title" id="trainingPageTitle"></h1>
+            <p class="training-page-info" id="trainingPageInfo"></p>
+
+            <button id="startTrainingBtn" class="training-btn view">Start Training</button>
+            <button id="completeTrainingBtn" class="training-btn complete">Mark Complete</button>
+        </section>
+
+        <!-- CERTIFICATIONS -->
+        <section id="certifications" class="section hidden">
+            <h1>Certifications</h1>
+            <div id="certTable"></div>
+        </section>
+
+        <!-- LEARNING PATHS -->
+        <section id="paths" class="section hidden">
+            <h1>Learning Paths</h1>
+            <div id="pathsContainer"></div>
+        </section>
+
+        <!-- COMPLIANCE -->
+        <section id="compliance" class="section hidden">
+            <h1>California Mandatory Training</h1>
+            <p>Links to required state training resources will appear here.</p>
+        </section>
+
+        <!-- ADMIN -->
+        <section id="admin" class="section hidden">
+            <h1>Admin Panel</h1>
+            <p>Admin analytics will appear here.</p>
+        </section>
+
+    </main>
+</div>
+
+<script>
+/* --------------------------------------------------
+   CORE DATA
+-------------------------------------------------- */
 let USER = {
     name: "",
     role: "",
@@ -519,34 +425,9 @@ const ROLE_TRAININGS = {
     ]
 };
 
-const ROLE_CERTIFICATIONS = {
-    office: [
-        { name: "Printer Setup Certification", expires: "2026-12-31" },
-        { name: "Shredding Workflow Certification", expires: "2026-10-15" }
-    ],
-    shredding: [
-        { name: "HIPAA Certification", expires: "2026-09-30" },
-        { name: "Secure Destruction Certification", expires: "2026-11-01" }
-    ],
-    network: [
-        { name: "Network Technician Certification", expires: "2026-12-01" },
-        { name: "Security Management Certification", expires: "2026-09-20" }
-    ],
-    voip: [
-        { name: "VoIP Specialist Certification", expires: "2026-10-10" }
-    ],
-    csr: [
-        { name: "Customer Service Certification", expires: "2026-11-20" }
-    ],
-    remote: [
-        { name: "Remote Support Certification", expires: "2026-12-05" }
-    ],
-    admin: [
-        { name: "Leadership Certification", expires: "2026-12-31" },
-        { name: "Supervisor Compliance Certification", expires: "2026-09-15" }
-    ]
-};
-
+/* --------------------------------------------------
+   UTILITIES
+-------------------------------------------------- */
 function daysUntil(dateStr) {
     const today = new Date();
     const target = new Date(dateStr);
@@ -554,216 +435,98 @@ function daysUntil(dateStr) {
     return Math.ceil(diff / (1000 * 60 * 60 * 24));
 }
 
-function createPill(type) {
-    const pill = document.createElement("span");
-    pill.classList.add("pill");
-
-    if (type === "required") {
-        pill.classList.add("required");
-        pill.textContent = "Required";
-    } else if (type === "optional") {
-        pill.classList.add("optional");
-        pill.textContent = "Optional";
-    } else if (type === "completed") {
-        pill.classList.add("completed");
-        pill.textContent = "Completed";
-    } else if (type === "expiring") {
-        pill.classList.add("expiring");
-        pill.textContent = "Expiring Soon";
-    }
-
-    return pill;
-}
-
 /* --------------------------------------------------
-   PART 3B — LOGIN SYSTEM, ROLE ASSIGNMENT, UI BOOT
+   LOGIN
 -------------------------------------------------- */
+document.getElementById("loginBtn").addEventListener("click", () => {
+    const name = document.getElementById("loginName").value.trim();
+    const role = document.getElementById("loginRole").value;
 
-const STORAGE_KEY = "bbs_user_v1";
-
-const loginScreen = document.getElementById("loginScreen");
-const loginName = document.getElementById("loginName");
-const loginRole = document.getElementById("loginRole");
-const loginBtn = document.getElementById("loginBtn");
-
-const appRoot = document.getElementById("app");
-const userNameDisplay = document.getElementById("userNameDisplay");
-const userRoleDisplay = document.getElementById("userRoleDisplay");
-
-const trainingTable = document.getElementById("trainingTable");
-const certTable = document.getElementById("certTable");
-const pathsContainer = document.getElementById("pathsContainer");
-
-const dashTotalTrainings = document.getElementById("dashTotalTrainings");
-const dashCompletedTrainings = document.getElementById("dashCompletedTrainings");
-const dashExpiring = document.getElementById("dashExpiring");
-
-const adminTotalTrainings = document.getElementById("adminTotalTrainings");
-const adminTotalCerts = document.getElementById("adminTotalCerts");
-const adminAllComplete = document.getElementById("adminAllComplete");
-
-const navItems = Array.from(document.querySelectorAll(".nav-item"));
-const sections = Array.from(document.querySelectorAll(".section"));
-const darkModeToggle = document.getElementById("darkModeToggle");
-
-function initApp() {
-    const saved = loadUserFromStorage();
-    if (saved && saved.name) {
-        USER = saved;
-        showAppForUser();
-    } else {
-        loginScreen.classList.remove("hidden");
-        appRoot.classList.add("hidden");
+    if (!name || !role) {
+        alert("Please enter your name and select your role.");
+        return;
     }
-
-    loginBtn.addEventListener("click", handleLogin);
-    darkModeToggle.addEventListener("click", toggleDarkMode);
-
-    navItems.forEach(btn => {
-        btn.addEventListener("click", () => {
-            switchSection(btn.getAttribute("data-section"));
-        });
-    });
-
-    switchSection("dashboard");
-}
-
-function handleLogin() {
-    const name = loginName.value.trim();
-    const role = loginRole.value;
-
-    if (!name) return alert("Please enter your name.");
-    if (!role) return alert("Please select your role.");
 
     USER.name = name;
     USER.role = role;
+    USER.trainings = ROLE_TRAININGS[role];
 
-    assignRoleTrainings(role);
-    assignRoleCertifications(role);
+    document.getElementById("userNameDisplay").textContent = name;
+    document.getElementById("userRoleDisplay").textContent = role;
 
-    saveUserToStorage(USER);
-    showAppForUser();
-}
+    document.getElementById("loginScreen").classList.add("hidden");
+    document.getElementById("app").classList.remove("hidden");
 
-function showAppForUser() {
-    loginScreen.classList.add("hidden");
-    appRoot.classList.remove("hidden");
+    renderTrainings();
+});
 
-    userNameDisplay.textContent = USER.name;
-    userRoleDisplay.textContent = roleLabel(USER.role);
+/* --------------------------------------------------
+   TRAINING CARDS
+-------------------------------------------------- */
+function renderTrainings() {
+    const container = document.getElementById("trainingCards");
+    container.innerHTML = "";
 
-    renderAll();
-}
-
-function assignRoleTrainings(role) {
-    const bundle = ROLE_TRAININGS[role] || [];
-    USER.trainings = bundle.map(t => ({
-        name: t.name,
-        type: t.type,
-        mode: t.mode,
-        status: "assigned",
-        assignedOn: new Date().toISOString(),
-        completedOn: null
-    }));
-}
-
-function assignRoleCertifications(role) {
-    const certs = ROLE_CERTIFICATIONS[role] || [];
-    USER.certifications = certs.map(c => ({
-        name: c.name,
-        expires: c.expires,
-        status: daysUntil(c.expires) <= 0 ? "expired" : "active"
-    }));
-}
-
-function renderAll() {
-    renderDashboard();
-    renderTrainingsTable();
-    renderCertTable();
-    renderPaths();
-    renderAdmin();
-}
-
-function renderDashboard() {
-    dashTotalTrainings.textContent = USER.trainings.length;
-    dashCompletedTrainings.textContent = USER.trainings.filter(t => t.status === "completed").length;
-    dashExpiring.textContent = USER.certifications.filter(c => daysUntil(c.expires) <= 30 && daysUntil(c.expires) > 0).length;
-}
-
-function renderTrainingsTable() {
-    trainingTable.innerHTML = "";
     USER.trainings.forEach((t, idx) => {
-        const tr = document.createElement("tr");
+        const card = document.createElement("div");
+        card.classList.add("training-card");
 
-        tr.innerHTML = `
-            <td>${t.name}</td>
-            <td>${t.type}</td>
-            <td>${t.mode}</td>
-            <td></td>
-            <td></td>
+        card.innerHTML = `
+            <h3>${t.name}</h3>
+            <p>Type: ${t.type}</p>
+            <p>Mode: ${t.mode}</p>
+            <div class="training-card-buttons">
+                <button class="training-btn view">View Training</button>
+                <button class="training-btn complete">Mark Complete</button>
+            </div>
         `;
 
-        const pill = createPill(t.status === "completed" ? "completed" : "required");
-        tr.children[3].appendChild(pill);
+        card.querySelector(".view").addEventListener("click", () => {
+            openTrainingPage(idx);
+        });
 
-        const btn = document.createElement("button");
-        btn.textContent = t.status === "completed" ? "Completed" : "Mark Complete";
-        btn.disabled = t.status === "completed";
-        btn.classList.add("login-btn");
-        btn.style.padding = "6px 10px";
-        btn.onclick = () => markTrainingComplete(idx);
+        card.querySelector(".complete").addEventListener("click", () => {
+            alert("Training marked complete.");
+        });
 
-        tr.children[4].appendChild(btn);
-
-        trainingTable.appendChild(tr);
+        container.appendChild(card);
     });
 }
 
-function renderCertTable() {
-    certTable.innerHTML = "";
-    USER.certifications.forEach(c => {
-        const tr = document.createElement("tr");
+/* --------------------------------------------------
+   TRAINING PAGE
+-------------------------------------------------- */
+function openTrainingPage(index) {
+    const t = USER.trainings[index];
 
-        tr.innerHTML = `
-            <td>${c.name}</td>
-            <td>${c.expires} (${daysUntil(c.expires)} days)</td>
-            <td></td>
-        `;
+    document.getElementById("trainingPageTitle").textContent = t.name;
+    document.getElementById("trainingPageInfo").textContent =
+        `Mode: ${t.mode} • Type: ${t.type}`;
 
-        const pillType = (c.status === "expired" || daysUntil(c.expires) <= 30) ? "expiring" : "required";
-        tr.children[2].appendChild(createPill(pillType));
+    document.getElementById("startTrainingBtn").onclick = () => {
+        alert("This is where your training content will go.");
+    };
 
-        certTable.appendChild(tr);
+    document.getElementById("completeTrainingBtn").onclick = () => {
+        alert("Training marked complete.");
+        switchSection("trainings");
+    };
+
+    switchSection("trainingPage");
+}
+
+/* --------------------------------------------------
+   NAVIGATION
+-------------------------------------------------- */
+const navItems = document.querySelectorAll(".nav-item");
+const sections = document.querySelectorAll(".section");
+
+navItems.forEach(btn => {
+    btn.addEventListener("click", () => {
+        const section = btn.getAttribute("data-section");
+        switchSection(section);
     });
-}
-
-function renderPaths() {
-    pathsContainer.innerHTML = "";
-    const title = document.createElement("h3");
-    title.textContent = `Learning Path for ${roleLabel(USER.role)}`;
-    pathsContainer.appendChild(title);
-
-    const ul = document.createElement("ul");
-    USER.trainings.forEach(t => {
-        const li = document.createElement("li");
-        li.textContent = `${t.name} — ${t.mode} — ${t.status}`;
-        ul.appendChild(li);
-    });
-    pathsContainer.appendChild(ul);
-}
-
-function renderAdmin() {
-    adminTotalTrainings.textContent = USER.trainings.length;
-    adminTotalCerts.textContent = USER.certifications.length;
-    adminAllComplete.textContent = USER.trainings.every(t => t.status === "completed") ? 1 : 0;
-}
-
-function markTrainingComplete(index) {
-    USER.trainings[index].status = "completed";
-    USER.trainings[index].completedOn = new Date().toISOString();
-    saveUserToStorage(USER);
-    renderAll();
-}
+});
 
 function switchSection(sectionId) {
     sections.forEach(s => {
@@ -775,35 +538,13 @@ function switchSection(sectionId) {
     });
 }
 
-function toggleDarkMode() {
+/* --------------------------------------------------
+   DARK MODE
+-------------------------------------------------- */
+document.getElementById("darkModeToggle").addEventListener("click", () => {
     document.body.classList.toggle("dark");
-    localStorage.setItem("bbs_theme", document.body.classList.contains("dark") ? "dark" : "light");
-}
-
-function saveUserToStorage(user) {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(user));
-}
-
-function loadUserFromStorage() {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    return raw ? JSON.parse(raw) : null;
-}
-
-function roleLabel(roleKey) {
-    const map = {
-        office: "Office in a Box Technician",
-        shredding: "Secure Shredding & Archiving Specialist",
-        network: "Network Support Technician",
-        voip: "VoIP Specialist",
-        csr: "Customer Service / Call Center",
-        remote: "Remote Work Support",
-        admin: "Admin / Manager"
-    };
-    return map[roleKey] || roleKey;
-}
-
-document.addEventListener("DOMContentLoaded", () => {
-    const theme = localStorage.getItem("bbs_theme");
-    if (theme === "dark") document.body.classList.add("dark");
-    initApp();
 });
+</script>
+
+</body>
+</html>
