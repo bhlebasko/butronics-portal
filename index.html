@@ -1,2233 +1,1389 @@
-<!DOCTYPE html>
-<html>
 <head>
-    <title>Training Portal – LinkedIn Learning Style</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BURTRONICS LMS</title>
+
+    <!-- ============================================================
+         GLOBAL BRAND VARIABLES
+    ============================================================ -->
     <style>
-    /* ============================
-       GLOBAL STYLES
-    ============================ */
-    body {
-        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-        background: #f3f6f9;
-        margin: 0;
-        padding: 0;
-        color: #1f2933;
-    }
-
-    a {
-        color: #0a66c2;
-        text-decoration: none;
-    }
-
-    a:hover {
-        text-decoration: underline;
-    }
-
-    /* ============================
-       LOGIN + PASSWORD SETUP
-    ============================ */
-    .center-screen {
-        width: 100%;
-        height: 100vh;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        background: radial-gradient(circle at top, #e6f0ff 0, #f3f6f9 45%, #e4ebf5 100%);
-    }
-
-    .auth-card {
-        background: #ffffff;
-        padding: 32px;
-        width: 380px;
-        border-radius: 12px;
-        box-shadow: 0 18px 40px rgba(15, 23, 42, 0.12);
-    }
-
-    .auth-title {
-        font-size: 22px;
-        font-weight: 600;
-        margin-bottom: 8px;
-        text-align: center;
-    }
-
-    .auth-subtitle {
-        font-size: 13px;
-        color: #6b7b93;
-        text-align: center;
-        margin-bottom: 20px;
-    }
-
-    .auth-card label {
-        font-size: 13px;
-        font-weight: 600;
-        margin-top: 10px;
-        display: block;
-        color: #364152;
-    }
-
-    .auth-card input {
-        width: 100%;
-        padding: 10px;
-        margin-top: 5px;
-        margin-bottom: 12px;
-        border-radius: 6px;
-        border: 1px solid #cbd2e1;
-        font-size: 14px;
-    }
-
-    .primary-btn {
-        width: 100%;
-        padding: 11px;
-        background: #0a66c2;
-        color: #ffffff;
-        border: none;
-        border-radius: 999px;
-        cursor: pointer;
-        font-size: 15px;
-        font-weight: 600;
-    }
-
-    .primary-btn:hover {
-        background: #004182;
-    }
-
-    .error-text {
-        color: #d93025;
-        font-size: 13px;
-        text-align: center;
-        margin-top: 8px;
-    }
-
-    /* ============================
-       MAIN APP LAYOUT
-    ============================ */
-    .app-shell {
-        display: none;
-        height: 100vh;
-        display: flex;
-        flex-direction: column;
-    }
-
-    .top-bar {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 10px 20px;
-        background: #ffffff;
-        border-bottom: 1px solid #d0d7e2;
-    }
-
-    .top-bar-left {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-    }
-
-    .logo-dot {
-        width: 28px;
-        height: 28px;
-        border-radius: 6px;
-        background: linear-gradient(135deg, #0a66c2, #004182);
-    }
-
-    .top-title {
-        font-size: 18px;
-        font-weight: 600;
-        color: #1f2933;
-    }
-
-    .top-bar-right {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        font-size: 13px;
-        color: #6b7b93;
-    }
-
-    .pill {
-        padding: 6px 12px;
-        border-radius: 999px;
-        background: #e6edf7;
-        font-size: 12px;
-        color: #364152;
-    }
-
-    .logout-btn {
-        padding: 7px 14px;
-        border-radius: 999px;
-        border: 1px solid #cbd2e1;
-        background: #ffffff;
-        cursor: pointer;
-        font-size: 13px;
-        font-weight: 500;
-        color: #364152;
-    }
-
-    .logout-btn:hover {
-        background: #f5f7fb;
-    }
-
-    /* ============================
-       ADMIN BUTTON (L2-A)
-    ============================ */
-    .admin-btn {
-        padding: 7px 16px;
-        border-radius: 999px;
-        background: #0a66c2;
-        color: #ffffff;
-        font-size: 13px;
-        font-weight: 600;
-        cursor: pointer;
-        border: none;
-    }
-
-    .admin-btn:hover {
-        background: #004182;
-    }
-
-    /* ============================
-       COURSE LIBRARY
-    ============================ */
-    .app-body {
-        display: flex;
-        flex: 1;
-        overflow: hidden;
-    }
-
-    .library-pane {
-        width: 320px;
-        border-right: 1px solid #d0d7e2;
-        background: #f8fafc;
-        padding: 16px;
-        overflow-y: auto;
-    }
-
-    .library-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 10px;
-    }
-
-    .library-title {
-        font-size: 15px;
-        font-weight: 600;
-        color: #1f2933;
-    }
-
-    .library-subtitle {
-        font-size: 12px;
-        color: #6b7b93;
-    }
-
-    .course-card {
-        background: #ffffff;
-        border-radius: 10px;
-        padding: 12px;
-        margin-bottom: 10px;
-        box-shadow: 0 4px 12px rgba(15, 23, 42, 0.06);
-        cursor: pointer;
-        border: 1px solid transparent;
-        transition: border-color 0.15s ease, box-shadow 0.15s ease, transform 0.05s ease;
-    }
-
-    .course-card:hover {
-        border-color: #0a66c2;
-        box-shadow: 0 8px 18px rgba(15, 23, 42, 0.12);
-        transform: translateY(-1px);
-    }
-
-    .course-title {
-        font-size: 14px;
-        font-weight: 600;
-        margin-bottom: 4px;
-        color: #1f2933;
-    }
-
-    .course-meta {
-        font-size: 11px;
-        color: #6b7b93;
-        margin-bottom: 6px;
-    }
-
-    .course-progress-bar {
-        width: 100%;
-        height: 6px;
-        border-radius: 999px;
-        background: #e1e7f0;
-        overflow: hidden;
-        margin-top: 4px;
-    }
-
-    .course-progress-fill {
-        height: 100%;
-        background: linear-gradient(90deg, #0a66c2, #00a0dc);
-        width: 0%;
-    }
-
-    .course-status-pill {
-        font-size: 11px;
-        padding: 3px 8px;
-        border-radius: 999px;
-        background: #e6f4ea;
-        color: #137333;
-        display: inline-block;
-        margin-top: 6px;
-    }
-
-    .course-status-pill.locked {
-        background: #fce8e6;
-        color: #d93025;
-    }
-
-    /* ============================
-       PLAYER + LESSON CONTENT
-    ============================ */
-    .player-pane {
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-        background: #f3f6f9;
-        overflow-y: auto;
-    }
-
-    .course-header {
-        padding: 16px 20px 8px 20px;
-        border-bottom: 1px solid #d0d7e2;
-        background: #ffffff;
-    }
-
-    .course-header-title {
-        font-size: 18px;
-        font-weight: 600;
-        margin-bottom: 4px;
-    }
-
-    .course-header-meta {
-        font-size: 12px;
-        color: #6b7b93;
-        display: flex;
-        gap: 10px;
-        align-items: center;
-    }
-
-    .course-progress-top {
-        margin-top: 10px;
-        display: flex;
-        align-items: center;
-        gap: 10px;
-    }
-
-    .course-progress-label {
-        font-size: 12px;
-        color: #6b7b93;
-    }
-
-    .course-progress-bar-top {
-        flex: 1;
-        height: 8px;
-        border-radius: 999px;
-        background: #e1e7f0;
-        overflow: hidden;
-    }
-
-    .course-progress-fill-top {
-        height: 100%;
-        background: linear-gradient(90deg, #0a66c2, #00a0dc);
-        width: 0%;
-    }
-
-    .video-pane {
-        background: #111827;
-        padding: 16px 20px;
-    }
-
-    .video-player {
-        width: 100%;
-        max-width: 960px;
-        margin: 0 auto;
-        border-radius: 12px;
-        background: #000000;
-        height: 320px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: #e5e7eb;
-        font-size: 14px;
-        position: relative;
-        overflow: hidden;
-    }
-
-    .video-placeholder-text {
-        text-align: center;
-        max-width: 80%;
-    }
-
-    .video-play-button {
-        position: absolute;
-        width: 64px;
-        height: 64px;
-        border-radius: 50%;
-        background: rgba(15, 23, 42, 0.85);
-        border: 2px solid #e5e7eb;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-    }
-
-    .video-play-button::before {
-        content: "";
-        border-style: solid;
-        border-width: 10px 0 10px 16px;
-        border-color: transparent transparent transparent #e5e7eb;
-        margin-left: 3px;
-    }
-
-    .content-pane {
-        padding: 20px;
-        max-width: 960px;
-        margin: 0 auto 40px auto;
-    }
-
-    .lesson-title {
-        font-size: 16px;
-        font-weight: 600;
-        margin-bottom: 6px;
-    }
-
-    .lesson-meta {
-        font-size: 12px;
-        color: #6b7b93;
-        margin-bottom: 12px;
-    }
-
-    .lesson-body {
-        font-size: 14px;
-        line-height: 1.6;
-        color: #1f2933;
-        margin-bottom: 20px;
-    }
-
-    .lesson-body ul {
-        margin-left: 18px;
-        margin-top: 6px;
-    }
-
-    .lesson-body li {
-        margin-bottom: 4px;
-    }
-
-    .quiz-block {
-        margin-top: 10px;
-        padding: 14px;
-        border-radius: 10px;
-        background: #f8fafc;
-        border: 1px solid #d0d7e2;
-    }
-
-    .quiz-question {
-        font-size: 14px;
-        font-weight: 600;
-        margin-bottom: 8px;
-    }
-
-    .quiz-options label {
-        display: block;
-        font-size: 13px;
-        margin-bottom: 6px;
-        cursor: pointer;
-    }
-
-    .quiz-options input {
-        margin-right: 6px;
-    }
-
-    .quiz-feedback {
-        font-size: 13px;
-        margin-top: 8px;
-        font-weight: 600;
-    }
-
-    .lesson-actions {
-        margin-top: 16px;
-        display: flex;
-        gap: 10px;
-        align-items: center;
-    }
-
-    .complete-lesson-btn {
-        padding: 8px 16px;
-        border-radius: 999px;
-        border: none;
-        background: #0a66c2;
-        color: #ffffff;
-        font-size: 13px;
-        font-weight: 600;
-        cursor: pointer;
-    }
-
-    .complete-lesson-btn:hover {
-        background: #004182;
-    }
-
-    .next-lesson-btn {
-        padding: 8px 16px;
-        border-radius: 999px;
-        border: 1px solid #cbd2e1;
-        background: #ffffff;
-        color: #364152;
-        font-size: 13px;
-        font-weight: 500;
-        cursor: pointer;
-    }
-
-    .next-lesson-btn:hover {
-        background: #f5f7fb;
-    }
-
-    /* ============================
-       LESSON DRAWER
-    ============================ */
-    .lesson-pane {
-        width: 280px;
-        border-left: 1px solid #d0d7e2;
-        background: #ffffff;
-        padding: 14px;
-        overflow-y: auto;
-    }
-
-    .lesson-pane-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 8px;
-    }
-
-    .lesson-pane-title {
-        font-size: 14px;
-        font-weight: 600;
-    }
-
-    .lesson-pane-subtitle {
-        font-size: 11px;
-        color: #6b7b93;
-    }
-
-    .lesson-item {
-        padding: 8px 10px;
-        border-radius: 8px;
-        margin-bottom: 6px;
-        cursor: pointer;
-        display: flex;
-        flex-direction: column;
-        gap: 2px;
-        border: 1px solid transparent;
-        transition: background 0.1s ease, border-color 0.1s ease;
-    }
-
-    .lesson-item:hover {
-        background: #f3f6fb;
-        border-color: #cbd2e1;
-    }
-
-    .lesson-item.active {
-        background: #e6f0ff;
-        border-color: #0a66c2;
-    }
-
-    .lesson-item-top {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
-
-    .lesson-item-title {
-        font-size: 13px;
-        font-weight: 600;
-    }
-
-    .lesson-item-duration {
-        font-size: 11px;
-        color: #6b7b93;
-    }
-
-    .lesson-item-bottom {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        font-size: 11px;
-        color: #6b7b93;
-    }
-
-    .lesson-status {
-        display: flex;
-        align-items: center;
-        gap: 4px;
-    }
-
-    .status-dot {
-        width: 8px;
-        height: 8px;
-        border-radius: 50%;
-        background: #cbd2e1;
-    }
-
-    .status-dot.completed {
-        background: #22c55e;
-    }
-
-    .status-dot.current {
-        background: #0a66c2;
-    }
-
-    .lesson-type-pill {
-        padding: 2px 6px;
-        border-radius: 999px;
-        background: #f3f4ff;
-        color: #4b5fc0;
-    }
-
-    /* ============================
-       CERTIFICATE MODAL
-    ============================ */
-    .cert-modal {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(15, 23, 42, 0.45);
-        display: none;
-        justify-content: center;
-        align-items: center;
-        z-index: 9999;
-    }
-
-    .cert-card {
-        background: #ffffff;
-        padding: 32px;
-        width: 520px;
-        border-radius: 16px;
-        box-shadow: 0 24px 60px rgba(15, 23, 42, 0.35);
-        text-align: center;
-    }
-
-    .cert-title {
-        font-size: 22px;
-        font-weight: 700;
-        margin-bottom: 6px;
-    }
-
-    .cert-subtitle {
-        font-size: 13px;
-        color: #6b7b93;
-        margin-bottom: 18px;
-    }
-
-    .cert-name {
-        font-size: 18px;
-        font-weight: 600;
-        margin-bottom: 4px;
-    }
-
-    .cert-role {
-        font-size: 14px;
-        color: #364152;
-        margin-bottom: 10px;
-    }
-
-    .cert-meta {
-        font-size: 12px;
-        color: #6b7b93;
-        margin-bottom: 4px;
-    }
-
-    .cert-actions {
-        margin-top: 18px;
-        display: flex;
-        justify-content: center;
-        gap: 10px;
-    }
-
-    .cert-btn {
-        padding: 8px 16px;
-        border-radius: 999px;
-        border: none;
-        cursor: pointer;
-        font-size: 13px;
-        font-weight: 600;
-    }
-
-    .cert-btn.primary {
-        background: #0a66c2;
-        color: #ffffff;
-    }
-
-    .cert-btn.primary:hover {
-        background: #004182;
-    }
-
-    .cert-btn.secondary {
-        background: #ffffff;
-        color: #364152;
-        border: 1px solid #cbd2e1;
-    }
-
-    .cert-btn.secondary:hover {
-        background: #f5f7fb;
-    }
-
-    @media (max-width: 1024px) {
-        .library-pane {
+        :root {
+            --brand-blue: #0A66C2;
+            --brand-blue-accent: #1D9BF0;
+            --brand-black: #111111;
+            --brand-dark: #111827;
+            --brand-white: #FFFFFF;
+            --brand-light-bg: #F3F6F9;
+            --brand-card-bg: #FFFFFF;
+            --brand-border: #D0D7E2;
+        }
+
+        /* ============================================================
+           GLOBAL BASE STYLES
+        ============================================================ */
+        body {
+            background: var(--brand-light-bg);
+            color: var(--brand-black);
+            font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        * {
+            transition: background 0.25s ease, color 0.25s ease, border-color 0.25s ease;
+        }
+
+        /* ============================================================
+           HEADER BAR
+        ============================================================ */
+        #burtronicsHeader {
+            width: 100%;
+            background: var(--brand-dark);
+            color: var(--brand-white);
+            padding: 16px 24px;
+            font-size: 18px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        #burtronicsHeaderLogo {
+            font-size: 20px;
+            font-weight: 800;
+        }
+
+        #burtronicsHeaderUser {
+            font-size: 14px;
+            opacity: 0.85;
+        }
+
+        /* ============================================================
+           BUTTONS
+        ============================================================ */
+        .btn,
+        button {
+            background: var(--brand-blue);
+            color: var(--brand-white);
+            border: none;
+            border-radius: 8px;
+            padding: 10px 16px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s ease;
+        }
+
+        .btn:hover,
+        button:hover {
+            background: var(--brand-blue-accent);
+        }
+
+        .btn-secondary {
+            background: var(--brand-dark);
+        }
+
+        .btn-secondary:hover {
+            background: var(--brand-black);
+        }
+
+        .btn-danger {
+            background: #d93025;
+        }
+
+        .btn-danger:hover {
+            background: #b1271b;
+        }
+
+        /* ============================================================
+           INPUTS
+        ============================================================ */
+        input, select, textarea {
+            border: 1px solid var(--brand-border);
+            border-radius: 8px;
+            padding: 12px;
+            font-size: 14px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        /* ============================================================
+           CARDS
+        ============================================================ */
+        .card,
+        .course-card,
+        .sectionCard {
+            background: var(--brand-card-bg);
+            border: 1px solid var(--brand-border);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+        }
+
+        /* ============================================================
+           LANDING PAGE
+        ============================================================ */
+        #landingPage {
+            padding: 30px;
             display: none;
         }
-        .lesson-pane {
+
+        #landingWelcome {
+            background: var(--brand-blue);
+            color: var(--brand-white);
+            padding: 30px;
+            border-radius: 16px;
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 30px;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+        }
+
+        .sectionTitle {
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--brand-blue);
+            margin-bottom: 16px;
+        }
+
+        /* ============================================================
+           COURSE LIST
+        ============================================================ */
+        #courseList {
+            padding: 30px;
             display: none;
         }
-        .app</style>
-</head>
-<body>
 
-<!-- ============================
-     LOGIN PAGE
-============================ -->
-<div id="loginPage" class="center-screen">
-    <div class="auth-card">
-        <div class="auth-title">Sign in to Training</div>
-        <div class="auth-subtitle">Modern LinkedIn Learning–style training portal</div>
-
-        <label>Email</label>
-        <input type="email" id="loginEmail" placeholder="employee@company.com">
-
-        <label>Password</label>
-        <input type="password" id="loginPassword" placeholder="Enter password">
-
-        <button id="loginButton" class="primary-btn">Sign in</button>
-
-        <div id="loginError" class="error-text"></div>
-    </div>
-</div>
-
-<!-- ============================
-     FIRST-TIME PASSWORD SETUP
-============================ -->
-<div id="passwordSetupPage" class="center-screen" style="display:none;">
-    <div class="auth-card">
-        <div class="auth-title">Create your password</div>
-        <div class="auth-subtitle">First-time setup for your training account</div>
-
-        <p id="setupEmailDisplay" style="font-size:13px; color:#364152; margin-bottom:10px;"></p>
-
-        <label>New password</label>
-        <input type="password" id="setupPassword" placeholder="Create a password">
-
-        <button id="setupPasswordButton" class="primary-btn">Save password & continue</button>
-
-        <div id="setupError" class="error-text"></div>
-    </div>
-</div>
-
-<!-- ============================
-     MAIN APP SHELL
-============================ -->
-<div id="appShell" class="app-shell">
-
-    <!-- Top bar -->
-    <div class="top-bar">
-        <div class="top-bar-left">
-            <div class="logo-dot"></div>
-            <div>
-                <div class="top-title">Learning Portal</div>
-                <div style="font-size:11px; color:#6b7b93;">LinkedIn Learning–style hybrid courses</div>
-            </div>
-        </div>
-
-        <!-- L2-A ADMIN BUTTON PLACEMENT -->
-        <div class="top-bar-right">
-            <button id="adminButton" class="admin-btn" style="display:none;"
-                onclick="window.open('admin.html','_blank')">
-                Admin Panel
-            </button>
-
-            <button class="logout-btn" onclick="logout()">Sign out</button>
-        </div>
-    </div>
-    <!-- Main body -->
-    <div class="app-body">
-
-        <!-- LEFT: Course Library -->
-        <div class="library-pane">
-            <div class="library-header">
-                <div>
-                    <div class="library-title">Your Courses</div>
-                    <div class="library-subtitle">Select a course to begin</div>
-                </div>
-            </div>
-            <div id="courseList"></div>
-        </div>
-
-        <!-- CENTER: Course Player -->
-        <div class="player-pane">
-            <div class="course-header">
-                <div class="course-header-title" id="currentCourseTitle">Select a course to start learning</div>
-                <div class="course-header-meta" id="currentCourseMeta">
-                    <span>Duration: —</span>
-                    <span>Lessons: —</span>
-                </div>
-                <div class="course-progress-top">
-                    <span class="course-progress-label" id="courseProgressLabel">Progress: 0%</span>
-                    <div class="course-progress-bar-top">
-                        <div class="course-progress-fill-top" id="courseProgressFillTop"></div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="video-pane">
-                <div class="video-player">
-                    <div class="video-placeholder-text" id="videoPlaceholderText">
-                        Select a lesson to load the training video, text, and quiz.
-                    </div>
-                    <div class="video-play-button" id="videoPlayButton" style="display:none;"></div>
-                </div>
-            </div>
-
-            <div class="content-pane">
-                <div class="lesson-title" id="lessonTitle">No lesson selected</div>
-                <div class="lesson-meta" id="lessonMeta">Choose a lesson from the right to begin.</div>
-                <div class="lesson-body" id="lessonBody"></div>
-
-                <div class="quiz-block" id="quizBlock" style="display:none;">
-                    <div class="quiz-question" id="quizQuestion"></div>
-                    <div class="quiz-options" id="quizOptions"></div>
-                    <div class="quiz-feedback" id="quizFeedback"></div>
-                </div>
-
-                <div class="lesson-actions" id="lessonActions" style="display:none;">
-                    <button class="complete-lesson-btn" id="completeLessonButton">Mark lesson complete</button>
-                    <button class="next-lesson-btn" id="nextLessonButton">Next lesson</button>
-                </div>
-            </div>
-        </div>
-
-        <!-- RIGHT: Lesson Drawer -->
-        <div class="lesson-pane">
-            <div class="lesson-pane-header">
-                <div>
-                    <div class="lesson-pane-title">Course lessons</div>
-                    <div class="lesson-pane-subtitle" id="lessonPaneSubtitle">Select a course to view lessons</div>
-                </div>
-            </div>
-            <div id="lessonList"></div>
-        </div>
-    </div>
-
-    <!-- ============================
-         CERTIFICATE MODAL
-    ============================ -->
-    <div id="certificateModal" class="cert-modal">
-        <div class="cert-card">
-            <div class="cert-title">Certificate of Completion</div>
-            <div class="cert-subtitle">This certifies that the learner has completed all required lessons in the selected course.</div>
-
-            <div class="cert-name" id="certName">[Name]</div>
-            <div class="cert-role" id="certRole">[Role]</div>
-
-            <div class="cert-meta" id="certCourse">Course: [Course]</div>
-            <div class="cert-meta" id="certDate">Date: [Date]</div>
-            <div class="cert-meta">Certificate ID: <span id="certId">[ID]</span></div>
-
-            <div class="cert-actions">
-                <button class="cert-btn primary" onclick="window.print()">Print / Save as PDF</button>
-                <button class="cert-btn secondary" onclick="closeCertificate()">Close</button>
-            </div>
-        </div>
-    </div>
-<script>
-/* ============================
-   STORAGE KEYS
-============================ */
-const USERS_KEY = 'llmsUsers';
-const SESSION_KEY = 'llmsSession';
-const PROGRESS_KEY = 'llmsProgress';
-
-/* ============================
-   COURSE & LESSON DATA
-============================ */
-const COURSES = [
-    /* Your full course list stays exactly the same.
-       (I am not repeating it here to avoid duplication.)
-       Keep the entire COURSES array exactly as it was in your previous version.
-    */
-];
-
-/* ============================
-   ELEMENT REFERENCES
-============================ */
-const loginPage = document.getElementById('loginPage');
-const loginEmail = document.getElementById('loginEmail');
-const loginPassword = document.getElementById('loginPassword');
-const loginButton = document.getElementById('loginButton');
-const loginError = document.getElementById('loginError');
-
-const passwordSetupPage = document.getElementById('passwordSetupPage');
-const setupEmailDisplay = document.getElementById('setupEmailDisplay');
-const setupPassword = document.getElementById('setupPassword');
-const setupPasswordButton = document.getElementById('setupPasswordButton');
-const setupError = document.getElementById('setupError');
-
-const appShell = document.getElementById('appShell');
-const adminButton = document.getElementById('adminButton');
-
-const courseList = document.getElementById('courseList');
-const lessonList = document.getElementById('lessonList');
-const lessonPaneSubtitle = document.getElementById('lessonPaneSubtitle');
-
-const currentCourseTitle = document.getElementById('currentCourseTitle');
-const currentCourseMeta = document.getElementById('currentCourseMeta');
-const courseProgressLabel = document.getElementById('courseProgressLabel');
-const courseProgressFillTop = document.getElementById('courseProgressFillTop');
-
-const videoPlaceholderText = document.getElementById('videoPlaceholderText');
-const videoPlayButton = document.getElementById('videoPlayButton');
-
-const lessonTitle = document.getElementById('lessonTitle');
-const lessonMeta = document.getElementById('lessonMeta');
-const lessonBody = document.getElementById('lessonBody');
-
-const quizBlock = document.getElementById('quizBlock');
-const quizQuestion = document.getElementById('quizQuestion');
-const quizOptions = document.getElementById('quizOptions');
-const quizFeedback = document.getElementById('quizFeedback');
-
-const lessonActions = document.getElementById('lessonActions');
-const completeLessonButton = document.getElementById('completeLessonButton');
-const nextLessonButton = document.getElementById('nextLessonButton');
-
-const certificateModal = document.getElementById('certificateModal');
-const certName = document.getElementById('certName');
-const certRole = document.getElementById('certRole');
-const certCourse = document.getElementById('certCourse');
-const certDate = document.getElementById('certDate');
-const certId = document.getElementById('certId');
-
-/* ============================
-   STATE
-============================ */
-let currentCourseId = null;
-let currentLessonId = null;
-
-/* ============================
-   STORAGE HELPERS
-============================ */
-function getUsers() {
-    const data = localStorage.getItem(USERS_KEY);
-    return data ? JSON.parse(data) : [];
-}
-
-function saveUsers(users) {
-    localStorage.setItem(USERS_KEY, JSON.stringify(users));
-}
-
-function getSession() {
-    const data = localStorage.getItem(SESSION_KEY);
-    return data ? JSON.parse(data) : null;
-}
-
-function saveSession(session) {
-    localStorage.setItem(SESSION_KEY, JSON.stringify(session));
-}
-
-function clearSession() {
-    localStorage.removeItem(SESSION_KEY);
-}
-
-function getProgress() {
-    const data = localStorage.getItem(PROGRESS_KEY);
-    return data ? JSON.parse(data) : {};
-}
-
-function saveProgress(progress) {
-    localStorage.setItem(PROGRESS_KEY, JSON.stringify(progress));
-}
-
-/* ============================
-   INITIAL ADMIN USER
-============================ */
-window.addEventListener('load', () => {
-    let users = getUsers();
-    if (users.length === 0) {
-        users.push({
-            email: 'bryon@company.com',
-            password: '',
-            role: 'Administrator'
-        });
-        saveUsers(users);
-    }
-    initializeSystem();
-});
-
-/* ============================
-   LOGIN LOGIC
-============================ */
-loginButton.addEventListener('click', () => {
-    const email = loginEmail.value.trim().toLowerCase();
-    const password = loginPassword.value.trim();
-
-    if (!email) {
-        loginError.textContent = 'Please enter your email.';
-        return;
-    }
-
-    const users = getUsers();
-    const user = users.find(u => u.email.toLowerCase() === email);
-
-    if (!user) {
-        loginError.textContent = 'No account found with that email.';
-        return;
-    }
-
-    if (!user.password) {
-        showPasswordSetup(user.email);
-        return;
-    }
-
-    if (user.password !== password) {
-        loginError.textContent = 'Incorrect password.';
-        return;
-    }
-
-    saveSession({ email: user.email, role: user.role });
-    initializeSystem();
-});
-
-function showPasswordSetup(email) {
-    loginPage.style.display = 'none';
-    passwordSetupPage.style.display = 'flex';
-    setupEmailDisplay.textContent = `Setting password for: ${email}`;
-    window.passwordSetupEmail = email;
-}
-
-setupPasswordButton.addEventListener('click', () => {
-    const newPass = setupPassword.value.trim();
-    if (!newPass) {
-        setupError.textContent = 'Password cannot be empty.';
-        return;
-    }
-
-    const email = window.passwordSetupEmail;
-    let users = getUsers();
-    const user = users.find(u => u.email.toLowerCase() === email.toLowerCase());
-
-    user.password = newPass;
-    saveUsers(users);
-    saveSession({ email: user.email, role: user.role });
-
-    passwordSetupPage.style.display = 'none';
-    initializeSystem();
-});
-
-/* ============================
-   LOGOUT
-============================ */
-function logout() {
-    clearSession();
-    appShell.style.display = 'none';
-    passwordSetupPage.style.display = 'none';
-    loginPage.style.display = 'flex';
-}
-
-/* ============================
-   ROLE-BASED COURSE FILTER
-============================ */
-function getCoursesForRole(role) {
-    return COURSES.filter(course => course.roleTags.includes(role));
-}
-
-/* ============================
-   RENDER COURSE LIST
-============================ */
-function renderCourseList(role) {
-    const courses = getCoursesForRole(role);
-    const progress = getProgress();
-    courseList.innerHTML = '';
-
-    courses.forEach(course => {
-        const courseProgress = getCourseProgress(course.id, progress);
-
-        const card = document.createElement('div');
-        card.className = 'course-card';
-        card.dataset.courseId = course.id;
-
-        card.innerHTML = `
-            <div class="course-title">${course.title}</div>
-            <div class="course-meta">
-                <span>${course.category}</span> •
-                <span>${course.duration}</span> •
-                <span>${courseProgress.completedLessons}/${courseProgress.totalLessons} lessons</span>
-            </div>
-            <div class="course-progress-bar">
-                <div class="course-progress-fill" style="width:${courseProgress.percent}%"></div>
-            </div>
-            <div class="course-status-pill ${courseProgress.percent === 100 ? '' : 'locked'}">
-                ${courseProgress.percent === 100 ? '✔ Completed' : 'In progress'}
-            </div>
-        `;
-
-        card.addEventListener('click', () => loadCourse(course.id));
-        courseList.appendChild(card);
-    });
-}
-
-/* ============================
-   COURSE PROGRESS CALC
-============================ */
-function getCourseProgress(courseId, progress) {
-    const course = COURSES.find(c => c.id === courseId);
-    const totalLessons = course.lessons.length;
-
-    let completedLessons = course.lessons.filter(l => progress[l.id]).length;
-    let percent = Math.round((completedLessons / totalLessons) * 100);
-
-    return { completedLessons, totalLessons, percent };
-}
-
-/* ============================
-   LOAD COURSE
-============================ */
-function loadCourse(courseId) {
-    const course = COURSES.find(c => c.id === courseId);
-    currentCourseId = courseId;
-    currentLessonId = null;
-
-    currentCourseTitle.textContent = course.title;
-    currentCourseMeta.innerHTML = `
-        <span>${course.category}</span>
-        <span>•</span>
-        <span>${course.duration}</span>
-        <span>•</span>
-        <span>${course.lessons.length} lessons</span>
-    `;
-
-    const progress = getProgress();
-    const courseProgress = getCourseProgress(courseId, progress);
-
-    courseProgressLabel.textContent = `Progress: ${courseProgress.percent}%`;
-    courseProgressFillTop.style.width = `${courseProgress.percent}%`;
-
-    videoPlaceholderText.textContent = 'Select a lesson from the right to begin.';
-    videoPlayButton.style.display = 'none';
-
-    lessonTitle.textContent = 'No lesson selected';
-    lessonMeta.textContent = '';
-    lessonBody.innerHTML = '';
-
-    quizBlock.style.display = 'none';
-    lessonActions.style.display = 'none';
-
-    lessonPaneSubtitle.textContent = `${course.lessons.length} lessons in this course`;
-
-    renderLessonList(course, progress);
-}
-
-/* ============================
-   RENDER LESSON LIST
-============================ */
-function renderLessonList(course, progress) {
-    lessonList.innerHTML = '';
-
-    course.lessons.forEach(lesson => {
-        const item = document.createElement('div');
-        item.className = 'lesson-item';
-        item.dataset.lessonId = lesson.id;
-
-        const isCompleted = progress[lesson.id];
-        const isCurrent = currentLessonId === lesson.id;
-
-        item.innerHTML = `
-            <div class="lesson-item-top">
-                <div class="lesson-item-title">${lesson.title}</div>
-                <div class="lesson-item-duration">${lesson.duration}</div>
-            </div>
-            <div class="lesson-item-bottom">
-                <div class="lesson-status">
-                    <div class="status-dot ${isCompleted ? 'completed' : isCurrent ? 'current' : ''}"></div>
-                    <span>${isCompleted ? 'Completed' : isCurrent ? 'In progress' : 'Not started'}</span>
-                </div>
-                <div class="lesson-type-pill">${lesson.type}</div>
-            </div>
-        `;
-
-        item.addEventListener('click', () => loadLesson(course.id, lesson.id));
-        lessonList.appendChild(item);
-    });
-
-    updateLessonActiveState();
-}
-
-/* ============================
-   LOAD LESSON
-============================ */
-function loadLesson(courseId, lessonId) {
-    const course = COURSES.find(c => c.id === courseId);
-    const lesson = course.lessons.find(l => l.id === lessonId);
-
-    currentLessonId = lessonId;
-
-    videoPlaceholderText.textContent = `Playing training video for: ${lesson.title}`;
-    videoPlayButton.style.display = 'block';
-
-    lessonTitle.textContent = lesson.title;
-    lessonMeta.textContent = `${course.title} • ${lesson.duration}`;
-    lessonBody.innerHTML = lesson.body;
-
-    quizBlock.style.display = 'block';
-    quizQuestion.textContent = lesson.quiz.question;
-    quizOptions.innerHTML = '';
-    quizFeedback.textContent = '';
-
-    lesson.quiz.options.forEach((opt, index) => {
-        const id = `quiz_${lesson.id}_${index}`;
-        const label = document.createElement('label');
-        const input = document.createElement('input');
-
-        input.type = 'radio';
-        input.name = 'quizOption';
-        input.value = opt.correct ? 'true' : 'false';
-        input.id = id;
-
-        label.htmlFor = id;
-        label.textContent = opt.text;
-        label.prepend(input);
-
-        quizOptions.appendChild(label);
-    });
-
-    lessonActions.style.display = 'flex';
-
-    completeLessonButton.onclick = () => {
-        const selected = document.querySelector('input[name="quizOption"]:checked');
-        if (!selected) {
-            quizFeedback.textContent = 'Please select an answer.';
-            quizFeedback.style.color = '#d93025';
-            return;
+        .course-card h3 {
+            margin-top: 0;
         }
 
-        if (selected.value === 'true') {
-            quizFeedback.textContent = 'Correct! Lesson marked complete.';
-            quizFeedback.style.color = '#137333';
-            markLessonComplete(lesson.id);
-        } else {
-            quizFeedback.textContent = 'Incorrect. Review the lesson and try again.';
-            quizFeedback.style.color = '#d93025';
+        /* ============================================================
+           COURSE PLAYER
+        ============================================================ */
+        #coursePlayer {
+            padding: 30px;
+            display: none;
         }
-    };
 
-    nextLessonButton.onclick = () => goToNextLesson(courseId, lessonId);
-
-    updateLessonActiveState();
-}
-
-/* ============================
-   NEXT LESSON
-============================ */
-function goToNextLesson(courseId, lessonId) {
-    const course = COURSES.find(c => c.id === courseId);
-    const index = course.lessons.findIndex(l => l.id === lessonId);
-
-    if (index + 1 < course.lessons.length) {
-        loadLesson(courseId, course.lessons[index + 1].id);
-    }
-}
-
-/* ============================
-   MARK LESSON COMPLETE
-============================ */
-function markLessonComplete(lessonId) {
-    const progress = getProgress();
-    progress[lessonId] = true;
-    saveProgress(progress);
-
-    const course = COURSES.find(c => c.id === currentCourseId);
-    const courseProgress = getCourseProgress(currentCourseId, progress);
-
-    courseProgressLabel.textContent = `Progress: ${courseProgress.percent}%`;
-    courseProgressFillTop.style.width = `${courseProgress.percent}%`;
-
-    renderLessonList(course, progress);
-    renderCourseList(getSession().role);
-
-    if (courseProgress.percent === 100) {
-        openCertificateForCourse(course);
-    }
-}
-
-/* ============================
-   UPDATE LESSON ACTIVE STATE
-============================ */
-function updateLessonActiveState() {
-    const items = document.querySelectorAll('.lesson-item');
-    const progress = getProgress();
-
-    items.forEach(item => {
-        const lessonId = item.dataset.lessonId;
-        const isCompleted = progress[lessonId];
-        const isCurrent = currentLessonId === lessonId;
-
-        item.classList.remove('active');
-
-        const dot = item.querySelector('.status-dot');
-        const statusText = item.querySelector('.lesson-status span');
-
-        dot.classList.remove('completed', 'current');
-
-        if (isCompleted) {
-            dot.classList.add('completed');
-            statusText.textContent = 'Completed';
-        } else if (isCurrent) {
-            dot.classList.add('current');
-            statusText.textContent = 'In progress';
-            item.classList.add('active');
-        } else {
-            statusText.textContent = 'Not started';
+        /* ============================================================
+           LOGIN SCREEN
+        ============================================================ */
+        #loginScreen {
+            max-width: 400px;
+            margin: 60px auto;
+            padding: 30px;
+            background: var(--brand-white);
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
         }
-    });
-}
 
-/* ============================
-   CERTIFICATE LOGIC
-============================ */
-function openCertificateForCourse(course) {
-    const session = getSession();
+        #passwordStrength {
+            margin-top: 8px;
+            font-size: 14px;
+            opacity: 0.8;
+        }
 
-    certName.textContent = session.email;
-    certRole.textContent = session.role;
-    certCourse.textContent = `Course: ${course.title}`;
+        /* ============================================================
+           DARK MODE
+        ============================================================ */
+        body.dark {
+            --brand-blue: #1D9BF0;
+            --brand-blue-accent: #4AB3F4;
+            --brand-black: #E5E7EB;
+            --brand-dark: #0D1117;
+            --brand-white: #1A1F24;
+            --brand-light-bg: #0D1117;
+            --brand-card-bg: #1A1F24;
+            --brand-border: #2D333B;
+            background: var(--brand-light-bg);
+            color: var(--brand-black);
+        }
 
-    const today = new Date();
-    certDate.textContent = `Date: ${today.toLocaleDateString()}`;
+        body.dark .card,
+        body.dark .course-card,
+        body.dark .sectionCard {
+            background: var(--brand-card-bg);
+            border-color: var(--brand-border);
+        }
 
-    const uniqueId = 'CERT-' + Math.floor(Math.random() * 1000000000);
-    certId.textContent = uniqueId;
+        body.dark input,
+        body.dark select,
+        body.dark textarea {
+            background: #111827;
+            color: var(--brand-black);
+            border-color: var(--brand-border);
+        }
 
-    certificateModal.style.display = 'flex';
-}
+        body.dark #burtronicsHeader {
+            background: #111827;
+            color: var(--brand-black);
+        }
 
-function closeCertificate() {
-    certificateModal.style.display = 'none';
-}
+        /* ============================================================
+           MOBILE OPTIMIZATION
+        ============================================================ */
+        @media (max-width: 768px) {
+            #burtronicsHeader {
+                flex-direction: column;
+                text-align: center;
+                padding: 12px;
+            }
 
-/* ============================
-   SYSTEM INITIALIZATION
-============================ */
-function initializeSystem() {
-    const session = getSession();
+            #landingPage {
+                padding: 16px;
+            }
 
-    if (!session) {
-        loginPage.style.display = 'flex';
-        passwordSetupPage.style.display = 'none';
-        appShell.style.display = 'none';
-        return;
-    }
+            .sectionCard {
+                padding: 16px;
+            }
 
-    loginPage.style.display = 'none';
-    passwordSetupPage.style.display = 'none';
-    appShell.style.display = 'flex';
+            .course-card {
+                padding: 16px;
+            }
 
-    // Show admin button only for admins
-    adminButton.style.display = session.role === 'Administrator' ? 'inline-block' : 'none';
+            .btn,
+            button {
+                width: 100%;
+                padding: 14px;
+                font-size: 16px;
+            }
 
-    renderCourseList(session.role);
-}
-</script>
+            input, select, textarea {
+                font-size: 16px;
+                padding: 14px;
+            }
 
-</body>
-</html>
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Admin Panel – Training LMS</title>
-    <style>
-    /* ============================
-       MICROSOFT BLUE ADMIN THEME (T3)
-    ============================ */
-    body {
-        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-        background: #f3f6f9;
-        margin: 0;
-        padding: 0;
-        color: #1f2933;
-    }
+            #landingWelcome {
+                font-size: 20px;
+                padding: 20px;
+            }
 
-    .admin-topbar {
-        background: #0a66c2;
-        color: #ffffff;
-        padding: 14px 20px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-    }
-
-    .admin-title {
-        font-size: 20px;
-        font-weight: 700;
-    }
-
-    .admin-subtitle {
-        font-size: 12px;
-        opacity: 0.9;
-    }
-
-    .admin-topbar-right {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-    }
-
-    .admin-pill {
-        background: rgba(255,255,255,0.2);
-        padding: 6px 12px;
-        border-radius: 999px;
-        font-size: 12px;
-    }
-
-    .admin-logout-btn {
-        background: #ffffff;
-        color: #0a66c2;
-        border: none;
-        padding: 7px 14px;
-        border-radius: 999px;
-        cursor: pointer;
-        font-weight: 600;
-    }
-
-    .admin-logout-btn:hover {
-        background: #e6edf7;
-    }
-
-    /* ============================
-       ADMIN PAGE GRID
-    ============================ */
-    .admin-container {
-        padding: 20px;
-        max-width: 1200px;
-        margin: 0 auto;
-    }
-
-    .admin-section-title {
-        font-size: 18px;
-        font-weight: 700;
-        margin-bottom: 10px;
-        color: #0a66c2;
-    }
-
-    .admin-grid {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 20px;
-        margin-bottom: 30px;
-    }
-
-    .admin-card {
-        background: #ffffff;
-        border-radius: 12px;
-        padding: 20px;
-        border: 1px solid #d0d7e2;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.06);
-    }
-
-    .admin-card h3 {
-        margin: 0 0 10px 0;
-        font-size: 16px;
-        font-weight: 700;
-        color: #0a66c2;
-    }
-
-    .admin-card label {
-        font-size: 13px;
-        font-weight: 600;
-        margin-top: 10px;
-        display: block;
-        color: #364152;
-    }
-
-    .admin-card input,
-    .admin-card select,
-    .admin-card textarea {
-        width: 100%;
-        padding: 10px;
-        margin-top: 5px;
-        border-radius: 6px;
-        border: 1px solid #cbd2e1;
-        font-size: 14px;
-    }
-
-    .admin-btn {
-        margin-top: 12px;
-        padding: 10px 16px;
-        background: #0a66c2;
-        color: #ffffff;
-        border: none;
-        border-radius: 999px;
-        cursor: pointer;
-        font-size: 14px;
-        font-weight: 600;
-    }
-
-    .admin-btn:hover {
-        background: #004182;
-    }
-
-    .admin-message {
-        margin-top: 8px;
-        font-size: 13px;
-    }
-
-    /* ============================
-       USER LIST
-    ============================ */
-    .user-card {
-        background: #f8fafc;
-        border-radius: 10px;
-        padding: 12px;
-        border: 1px solid #d0d7e2;
-        margin-bottom: 10px;
-    }
-
-    .user-card h4 {
-        margin: 0 0 6px 0;
-        font-size: 14px;
-        font-weight: 700;
-    }
-
-    .delete-user-btn {
-        margin-top: 8px;
-        padding: 6px 12px;
-        background: #d93025;
-        color: #ffffff;
-        border: none;
-        border-radius: 999px;
-        cursor: pointer;
-        font-size: 12px;
-    }
-
-    .delete-user-btn:hover {
-        background: #b31412;
-    }
-
-    /* ============================
-       PROGRESS CARDS
-    ============================ */
-    .progress-card {
-        background: #ffffff;
-        border-radius: 10px;
-        padding: 12px;
-        border: 1px solid #d0d7e2;
-        margin-bottom: 10px;
-    }
-
-    .progress-card h4 {
-        margin: 0 0 6px 0;
-        font-size: 14px;
-        font-weight: 700;
-    }
-
-    /* ============================
-       COURSE EDITOR
-    ============================ */
-    .course-editor-card {
-        background: #ffffff;
-        border-radius: 12px;
-        padding: 20px;
-        border: 1px solid #d0d7e2;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.06);
-        margin-bottom: 20px;
-    }
-
-    .course-editor-card h3 {
-        margin: 0 0 10px 0;
-        font-size: 16px;
-        font-weight: 700;
-        color: #0a66c2;
-    }
-
-    .course-list-item {
-        background: #f8fafc;
-        padding: 12px;
-        border-radius: 10px;
-        border: 1px solid #d0d7e2;
-        margin-bottom: 10px;
-    }
-
-    .course-list-item h4 {
-        margin: 0 0 6px 0;
-        font-size: 14px;
-        font-weight: 700;
-    }
-
-    .delete-course-btn {
-        margin-top: 8px;
-        padding: 6px 12px;
-        background: #d93025;
-        color: #ffffff;
-        border: none;
-        border-radius: 999px;
-        cursor: pointer;
-        font-size: 12px;
-    }
-
-    .delete-course-btn:hover {
-        background: #b31412;
-    }
-
+            .sectionTitle {
+                font-size: 18px;
+            }
+        }
     </style>
 </head>
 <body>
 
-<!-- ============================
-     ADMIN TOP BAR
-============================ -->
-<div class="admin-topbar">
-    <div>
-        <div class="admin-title">Admin Panel</div>
-        <div class="admin-subtitle">Full LMS Management Suite</div>
+    <!-- ============================================================
+         HEADER BAR
+    ============================================================ -->
+    <div id="burtronicsHeader">
+        <div id="burtronicsHeaderLogo">BURTRONICS LMS</div>
+        <div id="burtronicsHeaderUser"></div>
+        <button id="darkModeToggle" class="btn-secondary">Dark Mode</button>
     </div>
 
-    <div class="admin-topbar-right">
-        <span id="adminUserEmail" class="admin-pill"></span>
-        <button class="admin-logout-btn" onclick="logoutAdmin()">Sign out</button>
-    </div>
-</div>
 
-<!-- ============================
-     ADMIN MAIN CONTAINER
-============================ -->
-<div class="admin-container">
-    <!-- ============================
-         USER MANAGEMENT
-    ============================ -->
-    <div class="admin-section-title">User Management</div>
+    <!-- ============================================================
+         LOGIN SCREEN
+    ============================================================ -->
+    <div id="loginScreen">
+        <h2>Login</h2>
 
-    <div class="admin-grid">
-        <!-- Create User -->
-        <div class="admin-card">
-            <h3>Create New User</h3>
+        <label>Email</label>
+        <input id="loginEmail" type="email" placeholder="you@burtronics.com">
 
-            <label>Email</label>
-            <input type="email" id="newUserEmail" placeholder="employee@company.com">
+        <label>Password</label>
+        <input id="loginPassword" type="password" placeholder="Enter password">
+        <div id="passwordStrength"></div>
 
-            <label>Password (optional)</label>
-            <input type="password" id="newUserPassword" placeholder="Leave blank for first-time setup">
+        <button class="btn" onclick="login()">Login</button>
 
-            <label>Role</label>
-            <select id="newUserRole">
-                <option>IT Account Executive / Outside Sales</option>
-                <option>Managed Print Services (MPS) Specialist</option>
-                <option>Strategic / Regional Account Manager</option>
-                <option>Sales Enablement & Support</option>
-
-                <option>Print and Image Service Technician</option>
-                <option>Technical Troubleshooting & Diagnostics</option>
-                <option>IT / Network Engineer</option>
-                <option>Field Service Technician</option>
-                <option>Delivery & Cable Specialist</option>
-
-                <option>Warehouse & Logistics Worker</option>
-                <option>Leasing & Billing Administrative Specialist</option>
-                <option>Administrative Assistant / Reception</option>
-
-                <option>Customer Service & Support</option>
-                <option>Leadership & Management</option>
-
-                <option>Administrator</option>
-            </select>
-
-            <button class="admin-btn" id="createUserButton">Create User</button>
-            <div id="createUserMessage" class="admin-message"></div>
-        </div>
-
-        <!-- Existing Users -->
-        <div class="admin-card">
-            <h3>Existing Users</h3>
-            <div id="userList"></div>
+        <div style="margin-top:10px;">
+            <a href="#" onclick="forgotPassword()">Forgot Password?</a>
         </div>
     </div>
 
-    <!-- ============================
-         ROLE ASSIGNMENT
-    ============================ -->
-    <div class="admin-section-title">Role Assignment</div>
 
-    <div class="admin-card">
-        <h3>Change User Role</h3>
+    <!-- ============================================================
+         LANDING PAGE (after login)
+    ============================================================ -->
+    <div id="landingPage">
 
-        <label>Select User</label>
-        <select id="roleUserSelect"></select>
+        <!-- Welcome Banner -->
+        <div id="landingWelcome"></div>
 
-        <label>New Role</label>
-        <select id="roleChangeSelect">
-            <option>IT Account Executive / Outside Sales</option>
-            <option>Managed Print Services (MPS) Specialist</option>
-            <option>Strategic / Regional Account Manager</option>
-            <option>Sales Enablement & Support</option>
+        <!-- Continue Learning -->
+        <div id="continueLearningSection"></div>
 
-            <option>Print and Image Service Technician</option>
-            <option>Technical Troubleshooting & Diagnostics</option>
-            <option>IT / Network Engineer</option>
-            <option>Field Service Technician</option>
-            <option>Delivery & Cable Specialist</option>
+        <!-- Recommended for You -->
+        <div id="recommendedSection"></div>
 
-            <option>Warehouse & Logistics Worker</option>
-            <option>Leasing & Billing Administrative Specialist</option>
-            <option>Administrative Assistant / Reception</option>
+        <!-- Role Shortcuts -->
+        <div id="roleShortcutsSection"></div>
 
-            <option>Customer Service & Support</option>
-            <option>Leadership & Management</option>
-
-            <option>Administrator</option>
-        </select>
-
-        <button class="admin-btn" id="changeRoleButton">Update Role</button>
-        <div id="roleChangeMessage" class="admin-message"></div>
     </div>
 
-    <!-- ============================
-         PASSWORD RESET
-    ============================ -->
-    <div class="admin-section-title">Password Reset</div>
 
-    <div class="admin-card">
-        <h3>Reset User Password</h3>
-
-        <label>Select User</label>
-        <select id="passwordResetUserSelect"></select>
-
-        <label>New Password</label>
-        <input type="password" id="passwordResetInput" placeholder="Enter new password">
-
-        <button class="admin-btn" id="resetPasswordButton">Reset Password</button>
-        <div id="passwordResetMessage" class="admin-message"></div>
-    </div>
-    <!-- ============================
-         COURSE EDITOR
-    ============================ -->
-    <div class="admin-section-title">Course Editor</div>
-
-    <!-- Add New Course -->
-    <div class="course-editor-card">
-        <h3>Add New Course</h3>
-
-        <label>Course Title</label>
-        <input type="text" id="newCourseTitle" placeholder="Example: Sales Fundamentals 101">
-
-        <label>Category</label>
-        <input type="text" id="newCourseCategory" placeholder="Example: Sales">
-
-        <label>Duration</label>
-        <input type="text" id="newCourseDuration" placeholder="Example: 2h 30m">
-
-        <label>Roles Allowed (comma separated)</label>
-        <input type="text" id="newCourseRoles" placeholder="Example: IT Account Executive / Outside Sales, Administrator">
-
-        <button class="admin-btn" id="addCourseButton">Add Course</button>
-        <div id="addCourseMessage" class="admin-message"></div>
+    <!-- ============================================================
+         COURSE LIST
+    ============================================================ -->
+    <div id="courseList">
+        <h2>All Courses</h2>
+        <div id="courseListContainer"></div>
     </div>
 
-    <!-- Existing Courses -->
-    <div class="course-editor-card">
-        <h3>Existing Courses</h3>
-        <div id="courseEditorList"></div>
+
+    <!-- ============================================================
+         COURSE PLAYER
+    ============================================================ -->
+    <div id="coursePlayer">
+        <h2 id="coursePlayerTitle"></h2>
+
+        <div id="coursePlayerContent"></div>
+
+        <div id="coursePlayerQuiz"></div>
+
+        <button class="btn-secondary" onclick="exitCoursePlayer()">Back</button>
     </div>
 
-    <!-- ============================
-         LESSON EDITOR
-    ============================ -->
-    <div class="admin-section-title">Lesson Editor</div>
-
-    <div class="course-editor-card">
-        <h3>Add Lesson to Course</h3>
-
-        <label>Select Course</label>
-        <select id="lessonCourseSelect"></select>
-
-        <label>Lesson Title</label>
-        <input type="text" id="newLessonTitle" placeholder="Example: Introduction to Consultative Selling">
-
-        <label>Duration</label>
-        <input type="text" id="newLessonDuration" placeholder="Example: 12m">
-
-        <label>Lesson Type</label>
-        <input type="text" id="newLessonType" placeholder="Example: Video + Text + Quiz">
-
-        <label>Lesson Body (HTML allowed)</label>
-        <textarea id="newLessonBody" rows="6" placeholder="<p>Lesson content here...</p>"></textarea>
-
-        <label>Quiz Question</label>
-        <input type="text" id="newLessonQuizQuestion" placeholder="Example: What is the primary focus of consultative selling?">
-
-        <label>Quiz Options (mark correct with *)</label>
-        <textarea id="newLessonQuizOptions" rows="4" placeholder="Understanding customer needs*&#10;Closing fast&#10;Offering discounts"></textarea>
-
-        <button class="admin-btn" id="addLessonButton">Add Lesson</button>
-        <div id="addLessonMessage" class="admin-message"></div>
-    </div>
-
-    <!-- Existing Lessons -->
-    <div class="course-editor-card">
-        <h3>Existing Lessons</h3>
-
-        <label>Select Course</label>
-        <select id="existingLessonCourseSelect"></select>
-
-        <div id="existingLessonList"></div>
-    </div>
-
-    <!-- ============================
-         ROLE-BASED COURSE ASSIGNMENT
-    ============================ -->
-    <div class="admin-section-title">Role-Based Course Assignment</div>
-
-    <div class="admin-card">
-        <h3>Assign Course to Role</h3>
-
-        <label>Select Course</label>
-        <select id="assignCourseSelect"></select>
-
-        <label>Select Role</label>
-        <select id="assignRoleSelect">
-            <option>IT Account Executive / Outside Sales</option>
-            <option>Managed Print Services (MPS) Specialist</option>
-            <option>Strategic / Regional Account Manager</option>
-            <option>Sales Enablement & Support</option>
-
-            <option>Print and Image Service Technician</option>
-            <option>Technical Troubleshooting & Diagnostics</option>
-            <option>IT / Network Engineer</option>
-            <option>Field Service Technician</option>
-            <option>Delivery & Cable Specialist</option>
-
-            <option>Warehouse & Logistics Worker</option>
-            <option>Leasing & Billing Administrative Specialist</option>
-            <option>Administrative Assistant / Reception</option>
-
-            <option>Customer Service & Support</option>
-            <option>Leadership & Management</option>
-
-            <option>Administrator</option>
-        </select>
-
-        <button class="admin-btn" id="assignCourseButton">Assign Course</button>
-        <div id="assignCourseMessage" class="admin-message"></div>
-    </div>
+</body>
 <script>
-/* ============================
-   STORAGE KEYS
-============================ */
-const USERS_KEY = 'llmsUsers';
-const SESSION_KEY = 'llmsSession';
-const PROGRESS_KEY = 'llmsProgress';
-const COURSES_KEY = 'llmsCourses'; // Admin can modify courses
+/* ============================================================
+   STORAGE HELPERS
+============================================================ */
 
-/* ============================
-   LOAD COURSES (from index.html or admin edits)
-============================ */
-function getCourses() {
-    const stored = localStorage.getItem(COURSES_KEY);
-    if (stored) return JSON.parse(stored);
-    return COURSES; // fallback to default (from index.html)
+function saveUsers(users) {
+    localStorage.setItem("users", JSON.stringify(users));
+}
+
+function getUsers() {
+    return JSON.parse(localStorage.getItem("users") || "[]");
 }
 
 function saveCourses(courses) {
-    localStorage.setItem(COURSES_KEY, JSON.stringify(courses));
+    localStorage.setItem("courses", JSON.stringify(courses));
 }
 
-/* ============================
-   USERS
-============================ */
-function getUsers() {
-    const data = localStorage.getItem(USERS_KEY);
-    return data ? JSON.parse(data) : [];
+function getCourses() {
+    return JSON.parse(localStorage.getItem("courses") || "[]");
 }
 
-function saveUsers(users) {
-    localStorage.setItem(USERS_KEY, JSON.stringify(users));
+function saveProgress(progress) {
+    localStorage.setItem("progress", JSON.stringify(progress));
 }
 
-/* ============================
-   SESSION
-============================ */
-function getSession() {
-    const data = localStorage.getItem(SESSION_KEY);
-    return data ? JSON.parse(data) : null;
-}
-
-function logoutAdmin() {
-    localStorage.removeItem(SESSION_KEY);
-    window.location.href = "index.html";
-}
-
-/* ============================
-   PROGRESS
-============================ */
 function getProgress() {
-    const data = localStorage.getItem(PROGRESS_KEY);
-    return data ? JSON.parse(data) : {};
+    return JSON.parse(localStorage.getItem("progress") || "{}");
 }
 
-/* ============================
-   AUTH CHECK
-============================ */
-window.addEventListener('load', () => {
-    const session = getSession();
-    if (!session || session.role !== "Administrator") {
-        alert("Administrator access required.");
-        window.location.href = "index.html";
+
+/* ============================================================
+   SESSION LOGIC
+============================================================ */
+
+function setSession(user) {
+    localStorage.setItem("session", JSON.stringify(user));
+}
+
+function getSession() {
+    return JSON.parse(localStorage.getItem("session") || "null");
+}
+
+function logout() {
+    localStorage.removeItem("session");
+    location.reload();
+}
+
+
+/* ============================================================
+   LOGIN LOGIC
+============================================================ */
+
+function login() {
+    const email = loginEmail.value.trim();
+    const password = loginPassword.value.trim();
+
+    const users = getUsers();
+    const user = users.find(u => u.email === email && u.password === password);
+
+    if (!user) {
+        alert("Invalid email or password.");
         return;
     }
 
-    document.getElementById("adminUserEmail").textContent = session.email;
+    setSession(user);
+    loginScreen.style.display = "none";
+    showLandingPage();
+}
 
-    loadUserList();
-    loadRoleUserSelect();
-    loadPasswordResetSelect();
-    loadCourseEditorList();
-    loadLessonCourseSelect();
-    loadExistingLessonCourseSelect();
-    loadAssignCourseSelect();
+
+/* ============================================================
+   PASSWORD STRENGTH METER
+============================================================ */
+
+loginPassword.addEventListener("input", () => {
+    const val = loginPassword.value;
+
+    let score = 0;
+    if (val.length >= 8) score++;
+    if (/[A-Z]/.test(val)) score++;
+    if (/[0-9]/.test(val)) score++;
+    if (/[^A-Za-z0-9]/.test(val)) score++;
+
+    const levels = ["Very Weak", "Weak", "Medium", "Strong", "Very Strong"];
+    passwordStrength.textContent = "Strength: " + levels[score];
 });
 
-/* ============================
-   USER MANAGEMENT
-============================ */
-document.getElementById("createUserButton").onclick = () => {
-    const email = document.getElementById("newUserEmail").value.trim().toLowerCase();
-    const password = document.getElementById("newUserPassword").value.trim();
-    const role = document.getElementById("newUserRole").value;
 
-    if (!email) {
-        showMessage("createUserMessage", "Email required.", true);
-        return;
+/* ============================================================
+   DARK MODE LOGIC
+============================================================ */
+
+function applyDarkModeSetting() {
+    const mode = localStorage.getItem("darkMode");
+    if (mode === "on") {
+        document.body.classList.add("dark");
+        darkModeToggle.textContent = "Light Mode";
+    } else {
+        document.body.classList.remove("dark");
+        darkModeToggle.textContent = "Dark Mode";
     }
-
-    let users = getUsers();
-    if (users.find(u => u.email === email)) {
-        showMessage("createUserMessage", "User already exists.", true);
-        return;
-    }
-
-    users.push({ email, password, role });
-    saveUsers(users);
-
-    showMessage("createUserMessage", "User created successfully.");
-    loadUserList();
-    loadRoleUserSelect();
-    loadPasswordResetSelect();
-};
-
-function loadUserList() {
-    const users = getUsers();
-    const container = document.getElementById("userList");
-    container.innerHTML = "";
-
-    users.forEach(user => {
-        const div = document.createElement("div");
-        div.className = "user-card";
-
-        div.innerHTML = `
-            <h4>${user.email}</h4>
-            <div>Role: ${user.role}</div>
-            <button class="delete-user-btn" onclick="deleteUser('${user.email}')">Delete User</button>
-        `;
-
-        container.appendChild(div);
-    });
 }
 
-function deleteUser(email) {
-    let users = getUsers().filter(u => u.email !== email);
-    saveUsers(users);
+darkModeToggle.addEventListener("click", () => {
+    const isDark = document.body.classList.toggle("dark");
+    localStorage.setItem("darkMode", isDark ? "on" : "off");
+    darkModeToggle.textContent = isDark ? "Light Mode" : "Dark Mode";
+});
 
-    loadUserList();
-    loadRoleUserSelect();
-    loadPasswordResetSelect();
+applyDarkModeSetting();
+
+
+/* ============================================================
+   LANDING PAGE
+============================================================ */
+
+function showLandingPage() {
+    const session = getSession();
+    if (!session) return;
+
+    burtronicsHeaderUser.textContent = session.displayName;
+
+    landingPage.style.display = "block";
+    courseList.style.display = "none";
+    coursePlayer.style.display = "none";
+
+    landingWelcome.textContent = `Welcome back, ${session.displayName}!`;
+
+    renderContinueLearning();
+    renderRecommendedForYou();
+    renderRoleShortcuts();
 }
 
-/* ============================
-   ROLE ASSIGNMENT
-============================ */
-function loadRoleUserSelect() {
-    const users = getUsers();
-    const select = document.getElementById("roleUserSelect");
-    select.innerHTML = "";
 
-    users.forEach(u => {
-        const opt = document.createElement("option");
-        opt.value = u.email;
-        opt.textContent = u.email;
-        select.appendChild(opt);
-    });
-}
+/* ============================================================
+   CONTINUE LEARNING
+============================================================ */
 
-document.getElementById("changeRoleButton").onclick = () => {
-    const email = document.getElementById("roleUserSelect").value;
-    const newRole = document.getElementById("roleChangeSelect").value;
+function renderContinueLearning() {
+    const session = getSession();
+    const email = session.email;
 
-    let users = getUsers();
-    const user = users.find(u => u.email === email);
-    user.role = newRole;
-
-    saveUsers(users);
-    showMessage("roleChangeMessage", "Role updated successfully.");
-};
-
-/* ============================
-   PASSWORD RESET
-============================ */
-function loadPasswordResetSelect() {
-    const users = getUsers();
-    const select = document.getElementById("passwordResetUserSelect");
-    select.innerHTML = "";
-
-    users.forEach(u => {
-        const opt = document.createElement("option");
-        opt.value = u.email;
-        opt.textContent = u.email;
-        select.appendChild(opt);
-    });
-}
-
-document.getElementById("resetPasswordButton").onclick = () => {
-    const email = document.getElementById("passwordResetUserSelect").value;
-    const newPass = document.getElementById("passwordResetInput").value.trim();
-
-    if (!newPass) {
-        showMessage("passwordResetMessage", "Password cannot be empty.", true);
-        return;
-    }
-
-    let users = getUsers();
-    const user = users.find(u => u.email === email);
-    user.password = newPass;
-
-    saveUsers(users);
-    showMessage("passwordResetMessage", "Password reset successfully.");
-};
-
-/* ============================
-   COURSE EDITOR
-============================ */
-document.getElementById("addCourseButton").onclick = () => {
-    const title = document.getElementById("newCourseTitle").value.trim();
-    const category = document.getElementById("newCourseCategory").value.trim();
-    const duration = document.getElementById("newCourseDuration").value.trim();
-    const roles = document.getElementById("newCourseRoles").value.split(",").map(r => r.trim());
-
-    if (!title || !category || !duration || roles.length === 0) {
-        showMessage("addCourseMessage", "All fields required.", true);
-        return;
-    }
-
-    let courses = getCourses();
-    const id = "course_" + Math.floor(Math.random() * 999999);
-
-    courses.push({
-        id,
-        title,
-        category,
-        duration,
-        roleTags: roles,
-        lessons: []
-    });
-
-    saveCourses(courses);
-    showMessage("addCourseMessage", "Course added successfully.");
-    loadCourseEditorList();
-    loadLessonCourseSelect();
-    loadExistingLessonCourseSelect();
-    loadAssignCourseSelect();
-};
-
-function loadCourseEditorList() {
+    const progress = getProgress()[email] || { courses: {}, externalCourses: {} };
     const courses = getCourses();
-    const container = document.getElementById("courseEditorList");
-    container.innerHTML = "";
+
+    let html = `<div class="sectionTitle">Continue Learning</div>`;
+    let found = false;
 
     courses.forEach(course => {
-        const div = document.createElement("div");
-        div.className = "course-list-item";
+        let pct = 0;
 
-        div.innerHTML = `
-            <h4>${course.title}</h4>
-            <div>Category: ${course.category}</div>
-            <div>Duration: ${course.duration}</div>
-            <div>Roles: ${course.roleTags.join(", ")}</div>
-            <button class="delete-course-btn" onclick="deleteCourse('${course.id}')">Delete Course</button>
-        `;
+        if (course.courseType === "internal") {
+            pct = progress.courses?.[course.id]?.percent || 0;
+        } else {
+            const ext = progress.externalCourses?.[course.id];
+            if (ext && !ext.completed) pct = 50; // placeholder
+        }
 
-        container.appendChild(div);
-    });
-}
-
-function deleteCourse(courseId) {
-    let courses = getCourses().filter(c => c.id !== courseId);
-    saveCourses(courses);
-
-    loadCourseEditorList();
-    loadLessonCourseSelect();
-    loadExistingLessonCourseSelect();
-    loadAssignCourseSelect();
-}
-
-/* ============================
-   LESSON EDITOR
-============================ */
-function loadLessonCourseSelect() {
-    const courses = getCourses();
-    const select = document.getElementById("lessonCourseSelect");
-    select.innerHTML = "";
-
-    courses.forEach(course => {
-        const opt = document.createElement("option");
-        opt.value = course.id;
-        opt.textContent = course.title;
-        select.appendChild(opt);
-    });
-}
-
-document.getElementById("addLessonButton").onclick = () => {
-    const courseId = document.getElementById("lessonCourseSelect").value;
-    const title = document.getElementById("newLessonTitle").value.trim();
-    const duration = document.getElementById("newLessonDuration").value.trim();
-    const type = document.getElementById("newLessonType").value.trim();
-    const body = document.getElementById("newLessonBody").value.trim();
-    const quizQ = document.getElementById("newLessonQuizQuestion").value.trim();
-    const quizOptsRaw = document.getElementById("newLessonQuizOptions").value.trim();
-
-    if (!title || !duration || !type || !body || !quizQ || !quizOptsRaw) {
-        showMessage("addLessonMessage", "All fields required.", true);
-        return;
-    }
-
-    const quizOptions = quizOptsRaw.split("\n").map(line => ({
-        text: line.replace("*", "").trim(),
-        correct: line.includes("*")
-    }));
-
-    let courses = getCourses();
-    const course = courses.find(c => c.id === courseId);
-
-    const lessonId = "lesson_" + Math.floor(Math.random() * 999999);
-
-    course.lessons.push({
-        id: lessonId,
-        title,
-        duration,
-        type,
-        body,
-        quiz: {
-            question: quizQ,
-            options: quizOptions
+        if (pct > 0 && pct < 100) {
+            found = true;
+            html += `
+                <div class="sectionCard">
+                    <div><strong>${course.title}</strong></div>
+                    <div>Progress: ${pct}%</div>
+                    <button class="btn" onclick="openCourse('${course.id}')">Resume</button>
+                </div>
+            `;
         }
     });
 
-    saveCourses(courses);
-    showMessage("addLessonMessage", "Lesson added successfully.");
-    loadExistingLessonCourseSelect();
-};
-
-function loadExistingLessonCourseSelect() {
-    const courses = getCourses();
-    const select = document.getElementById("existingLessonCourseSelect");
-    select.innerHTML = "";
-
-    courses.forEach(course => {
-        const opt = document.createElement("option");
-        opt.value = course.id;
-        opt.textContent = course.title;
-        select.appendChild(opt);
-    });
-
-    loadExistingLessonList();
-}
-
-document.getElementById("existingLessonCourseSelect").onchange = loadExistingLessonList;
-
-function loadExistingLessonList() {
-    const courseId = document.getElementById("existingLessonCourseSelect").value;
-    const courses = getCourses();
-    const course = courses.find(c => c.id === courseId);
-
-    const container = document.getElementById("existingLessonList");
-    container.innerHTML = "";
-
-    course.lessons.forEach(lesson => {
-        const div = document.createElement("div");
-        div.className = "course-list-item";
-
-        div.innerHTML = `
-            <h4>${lesson.title}</h4>
-            <div>Duration: ${lesson.duration}</div>
-            <div>Type: ${lesson.type}</div>
-            <button class="delete-course-btn" onclick="deleteLesson('${courseId}','${lesson.id}')">Delete Lesson</button>
+    if (!found) {
+        html += `
+            <div class="sectionCard">
+                <div>No courses in progress.</div>
+            </div>
         `;
+    }
 
-        container.appendChild(div);
-    });
+    continueLearningSection.innerHTML = html;
 }
 
-function deleteLesson(courseId, lessonId) {
-    let courses = getCourses();
-    const course = courses.find(c => c.id === courseId);
 
-    course.lessons = course.lessons.filter(l => l.id !== lessonId);
+/* ============================================================
+   RECOMMENDED FOR YOU
+============================================================ */
 
-    saveCourses(courses);
-    loadExistingLessonList();
-}
+function renderRecommendedForYou() {
+    const session = getSession();
+    const user = getUsers().find(u => u.email === session.email);
 
-/* ============================
-   ROLE-BASED COURSE ASSIGNMENT
-============================ */
-function loadAssignCourseSelect() {
+    const role = user.role;
+
+    const roleMap = {
+        "IT Account Executive / Outside Sales": rec_IT_Sales,
+        "Managed Print Services (MPS) Specialist": rec_MPS,
+        "Strategic / Regional Account Manager": rec_AccountManager,
+        "Sales Enablement & Support": rec_SalesSupport,
+        "Customer Service & Support": rec_CustomerService,
+        "Warehouse & Logistics": rec_Warehouse,
+        "Field Service Technician": rec_FieldTech,
+        "Leadership & Management": rec_Leadership,
+        "Administrator": rec_Admin
+    };
+
+    const rec = roleMap[role];
+
+    let html = `<div class="sectionTitle">Recommended for You</div>`;
+
+    if (!rec) {
+        html += `<div class="sectionCard">No recommendations available.</div>`;
+        recommendedSection.innerHTML = html;
+        return;
+    }
+
     const courses = getCourses();
-    const select = document.getElementById("assignCourseSelect");
-    select.innerHTML = "";
+
+    rec.internal.forEach(title => {
+        const course = courses.find(c => c.title === title);
+        if (course) {
+            html += `
+                <div class="sectionCard">
+                    <div><strong>${course.title}</strong></div>
+                    <div>Internal Course</div>
+                    <button class="btn" onclick="openCourse('${course.id}')">Start</button>
+                </div>
+            `;
+        }
+    });
+
+    rec.external.forEach(title => {
+        const course = courses.find(c => c.title === title);
+        if (course) {
+            html += `
+                <div class="sectionCard">
+                    <div><strong>${course.title}</strong></div>
+                    <div>External Course (${course.provider})</div>
+                    <button class="btn" onclick="openCourse('${course.id}')">Start</button>
+                </div>
+            `;
+        }
+    });
+
+    recommendedSection.innerHTML = html;
+}
+
+
+/* ============================================================
+   ROLE SHORTCUTS
+============================================================ */
+
+function renderRoleShortcuts() {
+    const session = getSession();
+    const user = getUsers().find(u => u.email === session.email);
+
+    roleShortcutsSection.innerHTML = `
+        <div class="sectionTitle">Your Role: ${user.role}</div>
+        <div class="sectionCard">
+            <button class="btn" onclick="loadCourseList()">View All Courses</button>
+            <button class="btn-secondary" onclick="showLandingPage()">Home</button>
+        </div>
+    `;
+}
+
+
+/* ============================================================
+   COURSE LIST RENDERING
+============================================================ */
+
+function loadCourseList() {
+    landingPage.style.display = "none";
+    courseList.style.display = "block";
+    coursePlayer.style.display = "none";
+
+    const courses = getCourses();
+    let html = "";
 
     courses.forEach(course => {
-        const opt = document.createElement("option");
-        opt.value = course.id;
-        opt.textContent = course.title;
-        select.appendChild(opt);
+        html += `
+            <div class="course-card">
+                <h3>${course.title}</h3>
+                <p>${course.description}</p>
+                <button class="btn" onclick="openCourse('${course.id}')">Open</button>
+            </div>
+        `;
     });
-}
 
-document.getElementById("assignCourseButton").onclick = () => {
-    const courseId = document.getElementById("assignCourseSelect").value;
-    const role = document.getElementById("assignRoleSelect").value;
-
-    let courses = getCourses();
-    const course = courses.find(c => c.id === courseId);
-
-    if (!course.roleTags.includes(role)) {
-        course.roleTags.push(role);
-        saveCourses(courses);
-        showMessage("assignCourseMessage", "Course assigned to role.");
-    } else {
-        showMessage("assignCourseMessage", "Role already assigned.", true);
-    }
-};
-
-/* ============================
-   MESSAGE HELPER
-============================ */
-function showMessage(id, text, error = false) {
-    const el = document.getElementById(id);
-    el.style.color = error ? "#d93025" : "#137333";
-    el.textContent = text;
+    courseListContainer.innerHTML = html;
 }
 </script>
+<script>
+/* ============================================================
+   COURSE PLAYER — OPEN COURSE
+============================================================ */
+
+function openCourse(courseId) {
+    const courses = getCourses();
+    const course = courses.find(c => c.id === courseId);
+
+    if (!course) {
+        alert("Course not found.");
+        return;
+    }
+
+    landingPage.style.display = "none";
+    courseList.style.display = "none";
+    coursePlayer.style.display = "block";
+
+    coursePlayerTitle.textContent = course.title;
+
+    renderCourseLesson(courseId, 0);
+}
+
+
+/* ============================================================
+   COURSE PLAYER — RENDER LESSON
+============================================================ */
+
+function renderCourseLesson(courseId, lessonIndex) {
+    const courses = getCourses();
+    const course = courses.find(c => c.id === courseId);
+
+    const lesson = course.lessons[lessonIndex];
+
+    coursePlayerContent.innerHTML = `
+        <h3>${lesson.title}</h3>
+        <p>${lesson.body}</p>
+        <div><strong>Duration:</strong> ${lesson.duration}</div>
+    `;
+
+    renderLessonQuiz(courseId, lessonIndex);
+}
+
+
+/* ============================================================
+   COURSE PLAYER — QUIZ
+============================================================ */
+
+function renderLessonQuiz(courseId, lessonIndex) {
+    const courses = getCourses();
+    const course = courses.find(c => c.id === courseId);
+    const lesson = course.lessons[lessonIndex];
+
+    const quiz = lesson.quiz;
+
+    let html = `
+        <h3>Quiz</h3>
+        <p>${quiz.question}</p>
+    `;
+
+    quiz.options.forEach((opt, i) => {
+        html += `
+            <button class="btn" onclick="submitQuiz('${courseId}', ${lessonIndex}, ${i})">
+                ${opt.text}
+            </button><br><br>
+        `;
+    });
+
+    coursePlayerQuiz.innerHTML = html;
+}
+
+
+/* ============================================================
+   COURSE PLAYER — SUBMIT QUIZ ANSWER
+============================================================ */
+
+function submitQuiz(courseId, lessonIndex, optionIndex) {
+    const courses = getCourses();
+    const course = courses.find(c => c.id === courseId);
+    const lesson = course.lessons[lessonIndex];
+
+    const correct = lesson.quiz.options[optionIndex].correct;
+
+    if (!correct) {
+        alert("Incorrect. Try again.");
+        return;
+    }
+
+    // Mark lesson complete
+    const session = getSession();
+    const email = session.email;
+
+    const progress = getProgress();
+    if (!progress[email]) progress[email] = { courses: {}, externalCourses: {} };
+
+    if (!progress[email].courses[courseId]) {
+        progress[email].courses[courseId] = { percent: 0 };
+    }
+
+    const totalLessons = course.lessons.length;
+    const completedLessons = lessonIndex + 1;
+
+    const pct = Math.round((completedLessons / totalLessons) * 100);
+    progress[email].courses[courseId].percent = pct;
+
+    saveProgress(progress);
+
+    if (pct === 100) {
+        alert("Course completed!");
+        openCertificate(courseId);
+        exitCoursePlayer();
+        return;
+    }
+
+    renderCourseLesson(courseId, lessonIndex + 1);
+}
+
+
+/* ============================================================
+   EXIT COURSE PLAYER
+============================================================ */
+
+function exitCoursePlayer() {
+    coursePlayer.style.display = "none";
+    showLandingPage();
+}
+
+
+/* ============================================================
+   EXTERNAL COURSE TRACKING (Placeholder)
+============================================================ */
+
+function markExternalCourseComplete(courseId) {
+    const session = getSession();
+    const email = session.email;
+
+    const progress = getProgress();
+    if (!progress[email]) progress[email] = { courses: {}, externalCourses: {} };
+
+    progress[email].externalCourses[courseId] = {
+        completed: true
+    };
+
+    saveProgress(progress);
+}
+
+
+/* ============================================================
+   CERTIFICATE LAUNCHER
+============================================================ */
+
+function openCertificate(courseId) {
+    const session = getSession();
+    const user = session.displayName;
+
+    const courses = getCourses();
+    const course = courses.find(c => c.id === courseId);
+
+    const certId = "CERT-" + Math.floor(Math.random() * 999999);
+
+    const date = new Date().toLocaleDateString("en-US", {
+        year: "numeric",
+        month: "long",
+        day: "numeric"
+    });
+
+    const url = `certificate.html?user=${encodeURIComponent(user)}&course=${encodeURIComponent(course.title)}&date=${encodeURIComponent(date)}&id=${encodeURIComponent(certId)}`;
+
+    window.open(url, "_blank");
+}
+
+
+/* ============================================================
+   FORGOT PASSWORD
+============================================================ */
+
+function forgotPassword() {
+    const email = prompt("Enter your email:");
+
+    const users = getUsers();
+    const user = users.find(u => u.email === email);
+
+    if (!user) {
+        alert("No account found.");
+        return;
+    }
+
+    const newPass = Math.random().toString(36).slice(2, 10);
+    user.password = newPass;
+
+    saveUsers(users);
+
+    alert("Your temporary password is: " + newPass + "\nPlease log in and change it.");
+}
+
+
+/* ============================================================
+   SESSION TIMEOUT
+============================================================ */
+
+let sessionTimer;
+
+function resetSessionTimer() {
+    clearTimeout(sessionTimer);
+    sessionTimer = setTimeout(() => {
+        alert("Session expired. Please log in again.");
+        logout();
+    }, 30 * 60 * 1000); // 30 minutes
+}
+
+document.addEventListener("mousemove", resetSessionTimer);
+document.addEventListener("keydown", resetSessionTimer);
+
+resetSessionTimer();
+
+
+/* ============================================================
+   OPTIONAL ENCRYPTION LAYER (Disabled by default)
+============================================================ */
+
+const ENC_KEY = "BURTRONICS_KEY_2026";
+
+function encrypt(data) {
+    return btoa(JSON.stringify(data + ENC_KEY));
+}
+
+function decrypt(data) {
+    try {
+        const decoded = JSON.parse(atob(data));
+        return decoded.replace(ENC_KEY, "");
+    } catch {
+        return null;
+    }
+}
+
+
+/* ============================================================
+   INITIALIZATION
+============================================================ */
+
+(function init() {
+    const session = getSession();
+    if (session) {
+        loginScreen.style.display = "none";
+        showLandingPage();
+    }
+})();
+</script>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BURTRONICS LMS — Admin Panel</title>
+
+    <!-- ============================================================
+         GLOBAL BRAND VARIABLES
+    ============================================================ -->
+    <style>
+        :root {
+            --brand-blue: #0A66C2;
+            --brand-blue-accent: #1D9BF0;
+            --brand-black: #111111;
+            --brand-dark: #111827;
+            --brand-white: #FFFFFF;
+            --brand-light-bg: #F3F6F9;
+            --brand-card-bg: #FFFFFF;
+            --brand-border: #D0D7E2;
+        }
+
+        * {
+            transition: background 0.25s ease, color 0.25s ease, border-color 0.25s ease;
+        }
+
+        body {
+            background: var(--brand-light-bg);
+            color: var(--brand-black);
+            font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* ============================================================
+           HEADER BAR
+        ============================================================ */
+        #burtronicsHeader {
+            width: 100%;
+            background: var(--brand-dark);
+            color: var(--brand-white);
+            padding: 16px 24px;
+            font-size: 18px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        #burtronicsHeaderLogo {
+            font-size: 20px;
+            font-weight: 800;
+        }
+
+        #burtronicsHeaderUser {
+            font-size: 14px;
+            opacity: 0.85;
+        }
+
+        /* ============================================================
+           BUTTONS
+        ============================================================ */
+        .btn,
+        button {
+            background: var(--brand-blue);
+            color: var(--brand-white);
+            border: none;
+            border-radius: 8px;
+            padding: 10px 16px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .btn:hover,
+        button:hover {
+            background: var(--brand-blue-accent);
+        }
+
+        .btn-secondary {
+            background: var(--brand-dark);
+        }
+
+        .btn-secondary:hover {
+            background: var(--brand-black);
+        }
+
+        .btn-danger {
+            background: #d93025;
+        }
+
+        .btn-danger:hover {
+            background: #b1271b;
+        }
+
+        /* ============================================================
+           INPUTS
+        ============================================================ */
+        input, select, textarea {
+            border: 1px solid var(--brand-border);
+            border-radius: 8px;
+            padding: 12px;
+            font-size: 14px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        /* ============================================================
+           ADMIN LAYOUT
+        ============================================================ */
+        #adminShell {
+            display: grid;
+            grid-template-columns: 260px 1fr;
+            height: calc(100vh - 70px);
+        }
+
+        #adminSidebar {
+            background: var(--brand-white);
+            border-right: 1px solid var(--brand-border);
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .admin-nav-item {
+            padding: 12px;
+            margin-bottom: 8px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .admin-nav-item:hover {
+            background: var(--brand-light-bg);
+        }
+
+        #adminMain {
+            padding: 30px;
+            overflow-y: auto;
+        }
+
+        .admin-section {
+            display: none;
+        }
+
+        /* ============================================================
+           CARDS
+        ============================================================ */
+        .card,
+        .dashboardCard,
+        .editorLessonCard {
+            background: var(--brand-card-bg);
+            border: 1px solid var(--brand-border);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+        }
+
+        /* ============================================================
+           ADVANCED COURSE EDITOR
+        ============================================================ */
+        .editorLessonCard h3 {
+            margin-top: 0;
+        }
+
+        .editorQuizCard {
+            background: var(--brand-light-bg);
+            border-radius: 8px;
+            padding: 12px;
+            margin-top: 10px;
+        }
+
+        .dragHandle {
+            cursor: grab;
+            font-size: 20px;
+            margin-right: 10px;
+            color: var(--brand-blue);
+        }
+
+        /* ============================================================
+           REPORTING DASHBOARD
+        ============================================================ */
+        .chartBar {
+            height: 20px;
+            background: var(--brand-blue);
+            border-radius: 6px;
+            margin: 6px 0;
+        }
+
+        .chartLabel {
+            font-size: 14px;
+            margin-bottom: 4px;
+            color: var(--brand-dark);
+        }
+
+        .chartRow {
+            margin-bottom: 12px;
+        }
+
+        /* ============================================================
+           DARK MODE
+        ============================================================ */
+        body.dark {
+            --brand-blue: #1D9BF0;
+            --brand-blue-accent: #4AB3F4;
+            --brand-black: #E5E7EB;
+            --brand-dark: #0D1117;
+            --brand-white: #1A1F24;
+            --brand-light-bg: #0D1117;
+            --brand-card-bg: #1A1F24;
+            --brand-border: #2D333B;
+            background: var(--brand-light-bg);
+            color: var(--brand-black);
+        }
+
+        body.dark #adminSidebar {
+            background: #1A1F24;
+            border-color: var(--brand-border);
+        }
+
+        body.dark .card,
+        body.dark .dashboardCard,
+        body.dark .editorLessonCard {
+            background: var(--brand-card-bg);
+            border-color: var(--brand-border);
+        }
+
+        /* ============================================================
+           MOBILE SIDEBAR
+        ============================================================ */
+        @media (max-width: 768px) {
+            #adminShell {
+                grid-template-columns: 1fr;
+            }
+
+            #adminSidebar {
+                position: fixed;
+                top: 0;
+                left: -260px;
+                width: 240px;
+                height: 100vh;
+                background: var(--brand-white);
+                border-right: 1px solid var(--brand-border);
+                padding: 20px;
+                transition: left 0.3s ease;
+                z-index: 999;
+            }
+
+            #adminSidebar.open {
+                left: 0;
+            }
+
+            #mobileMenuBtn {
+                position: fixed;
+                top: 16px;
+                left: 16px;
+                background: var(--brand-blue);
+                color: var(--brand-white);
+                border: none;
+                border-radius: 8px;
+                padding: 10px 14px;
+                z-index: 1000;
+                font-size: 16px;
+                font-weight: 700;
+            }
+
+            #adminMain {
+                padding: 16px;
+            }
+
+            table {
+                font-size: 12px;
+            }
+
+            th, td {
+                padding: 8px;
+            }
+
+            .btn,
+            .btn-secondary,
+            .btn-danger {
+                width: 100%;
+                margin-top: 6px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ============================================================
+         MOBILE MENU BUTTON (for small screens)
+    ============================================================ -->
+    <button id="mobileMenuBtn" onclick="toggleAdminSidebar()">☰ Menu</button>
+
+    <!-- ============================================================
+         HEADER BAR
+    ============================================================ -->
+    <div id="burtronicsHeader">
+        <div id="burtronicsHeaderLogo">BURTRONICS ADMIN</div>
+        <div id="burtronicsHeaderUser"></div>
+        <button id="darkModeToggle" class="btn-secondary">Dark Mode</button>
+    </div>
+
+    <!-- ============================================================
+         ADMIN SHELL (Sidebar + Main)
+    ============================================================ -->
+    <div id="adminShell">
+
+        <!-- ============================================================
+             SIDEBAR NAVIGATION
+        ============================================================ -->
+        <div id="adminSidebar">
+
+            <div class="admin-nav-item" onclick="showAdminSection('dashboardHome')">
+                Dashboard Home
+            </div>
+
+            <div class="admin-nav-item" onclick="showAdminSection('userManager')">
+                User Manager
+            </div>
+
+            <div class="admin-nav-item" onclick="showAdminSection('courseManager')">
+                Internal Courses
+            </div>
+
+            <div class="admin-nav-item" onclick="showAdminSection('externalCourseManager')">
+                External Courses
+            </div>
+
+            <div class="admin-nav-item" onclick="showAdminSection('roleAssignment')">
+                Role Assignment
+            </div>
+
+            <div class="admin-nav-item" onclick="showAdminSection('reportingDashboard')">
+                Reporting Dashboard
+            </div>
+
+            <div class="admin-nav-item" onclick="logout()">
+                Logout
+            </div>
+
+        </div>
+
+        <!-- ============================================================
+             MAIN ADMIN CONTENT
+        ============================================================ -->
+        <div id="adminMain">
+
+            <!-- ============================================================
+                 DASHBOARD HOME
+            ============================================================ -->
+            <div id="dashboardHome" class="admin-section">
+                <h1>Admin Dashboard</h1>
+                <div class="card">
+                    <p>Welcome to the BURTRONICS LMS Admin Panel.</p>
+                    <p>Use the navigation menu to manage users, courses, roles, and reporting.</p>
+                </div>
+            </div>
+
+            <!-- ============================================================
+                 USER MANAGER
+            ============================================================ -->
+            <div id="userManager" class="admin-section">
+                <h1>User Manager</h1>
+
+                <div class="card">
+                    <h2>Add User</h2>
+                    <input id="newUserName" placeholder="Full Name">
+                    <input id="newUserEmail" placeholder="Email">
+                    <input id="newUserPassword" placeholder="Password">
+                    <select id="newUserRole">
+                        <option>IT Account Executive / Outside Sales</option>
+                        <option>Managed Print Services (MPS) Specialist</option>
+                        <option>Strategic / Regional Account Manager</option>
+                        <option>Sales Enablement & Support</option>
+                        <option>Customer Service & Support</option>
+                        <option>Warehouse & Logistics</option>
+                        <option>Field Service Technician</option>
+                        <option>Leadership & Management</option>
+                        <option>Administrator</option>
+                    </select>
+                    <button class="btn" onclick="addUser()">Add User</button>
+                </div>
+
+                <div class="card">
+                    <h2>All Users</h2>
+                    <table id="userTable" border="1" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Role</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="userTableBody"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- ============================================================
+                 INTERNAL COURSE MANAGER
+            ============================================================ -->
+            <div id="courseManager" class="admin-section">
+                <h1>Internal Courses</h1>
+
+                <div class="card">
+                    <h2>Add Internal Course</h2>
+                    <input id="courseTitle" placeholder="Course Title">
+                    <textarea id="courseDescription" placeholder="Course Description"></textarea>
+                    <input id="courseCategory" placeholder="Category">
+                    <input id="courseDuration" placeholder="Duration (e.g., 45 minutes)">
+                    <button class="btn" onclick="addInternalCourse()">Add Course</button>
+                </div>
+
+                <div class="card">
+                    <h2>All Internal Courses</h2>
+                    <table id="courseTable" border="1" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th>Title</th>
+                                <th>Category</th>
+                                <th>Duration</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="courseTableBody"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- ============================================================
+                 EXTERNAL COURSE MANAGER
+            ============================================================ -->
+            <div id="externalCourseManager" class="admin-section">
+                <h1>External Courses</h1>
+
+                <div class="card">
+                    <h2>Add External Course</h2>
+                    <input id="extCourseTitle" placeholder="Course Title">
+                    <input id="extCourseProvider" placeholder="Provider (e.g., Alison)">
+                    <input id="extCourseURL" placeholder="Course URL">
+                    <button class="btn" onclick="addExternalCourse()">Add External Course</button>
+                </div>
+
+                <div class="card">
+                    <h2>All External Courses</h2>
+                    <table id="externalCourseTable" border="1" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th>Title</th>
+                                <th>Provider</th>
+                                <th>URL</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="externalCourseTableBody"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- ============================================================
+                 ROLE ASSIGNMENT
+            ============================================================ -->
+            <div id="roleAssignment" class="admin-section">
+                <h1>Role Assignment</h1>
+
+                <div class="card">
+                    <h2>Assign Courses to Roles</h2>
+                    <table id="roleAssignmentTable" border="1" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th>Course</th>
+                                <th>Roles</th>
+                            </tr>
+                        </thead>
+                        <tbody id="roleAssignmentBody"></tbody>
+                    </table>
+
+                    <button class="btn" onclick="autoAssignRecommendedCourses()">
+                        Auto‑Assign Recommended Courses
+                    </button>
+                </div>
+            </div>
+
+            <!-- ============================================================
+                 REPORTING DASHBOARD
+            ============================================================ -->
+            <div id="reportingDashboard" class="admin-section">
+                <h1>Reporting Dashboard</h1>
+                <div id="dashboardContainer"></div>
+            </div>
+
+            <!-- ============================================================
+                 ADVANCED COURSE EDITOR
+            ============================================================ -->
+            <div id="advancedCourseEditor" class="admin-section">
+                <h1>Advanced Course Editor</h1>
+
+                <div id="editorCourseHeader"></div>
+                <div id="editorLessonList"></div>
+                <div id="editorAddLesson"></div>
+                <div id="editorPublishControls"></div>
+            </div>
+
+        </div> <!-- end adminMain -->
+
+    </div> <!-- end adminShell -->
 
 </body>
-</html>
-
