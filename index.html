@@ -1,550 +1,458 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Butronics Business Systems Portal</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Training Portal">
 
 <style>
-/* --------------------------------------------------
-   GLOBAL RESET
--------------------------------------------------- */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: "Segoe UI", Arial, sans-serif;
-}
 
+/* ============================
+   GLOBAL STYLES
+============================ */
 body {
-    background: #f5f7fa;
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f4f4f4;
     color: #222;
-    transition: background 0.3s, color 0.3s;
 }
 
-.hidden {
-    display: none !important;
-}
-
-/* --------------------------------------------------
-   LOGIN SCREEN
--------------------------------------------------- */
-.login-screen {
-    position: fixed;
-    inset: 0;
-    background: #ffffff;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.login-box {
-    width: 350px;
-    padding: 40px;
-    background: #ffffff;
-    border-radius: 12px;
-    box-shadow: 0 0 20px rgba(0,0,0,0.1);
-    text-align: center;
-}
-
-.login-box h1 {
-    font-size: 1.8rem;
-    margin-bottom: 10px;
-    color: #001f3f;
-}
-
-.login-subtitle {
-    margin-bottom: 25px;
-    color: #555;
-}
-
-.login-input {
-    width: 100%;
-    padding: 12px;
-    margin-bottom: 15px;
-    border: 1px solid #ccc;
-    border-radius: 6px;
-    font-size: 1rem;
-}
-
-.login-btn {
-    width: 100%;
-    padding: 12px;
-    background: #0074D9;
-    color: white;
-    border: none;
-    border-radius: 6px;
-    font-size: 1rem;
-    cursor: pointer;
-}
-
-.login-btn:hover {
-    background: #005bb5;
-}
-
-/* --------------------------------------------------
-   APP LAYOUT
--------------------------------------------------- */
 .app {
     display: flex;
     height: 100vh;
 }
 
-/* --------------------------------------------------
+/* ============================
    SIDEBAR
--------------------------------------------------- */
+============================ */
 .sidebar {
     width: 260px;
-    background: #001f3f;
+    background: #1e1e1e;
     color: white;
+    padding: 20px;
     display: flex;
     flex-direction: column;
-    padding: 20px 0;
 }
 
-.sidebar-header {
-    text-align: center;
-    margin-bottom: 30px;
+.sidebar-title {
+    font-size: 22px;
+    margin-bottom: 20px;
 }
 
-.sidebar-header h2 {
-    font-size: 1.4rem;
-    color: #ffffff;
+.sidebar-menu {
+    list-style: none;
+    padding: 0;
 }
 
-.sidebar-nav {
-    flex-grow: 1;
-}
-
-.nav-item {
-    width: 100%;
-    padding: 15px 25px;
-    background: transparent;
-    border: none;
-    color: #ffffff;
-    text-align: left;
-    font-size: 1rem;
+.sidebar-menu li {
+    padding: 12px;
+    margin-bottom: 8px;
+    background: #2b2b2b;
     cursor: pointer;
+    border-radius: 6px;
+    transition: 0.2s;
 }
 
-.nav-item:hover,
-.nav-item.active {
-    background: #003366;
+.sidebar-menu li:hover {
+    background: #3a3a3a;
 }
 
-.sidebar-footer {
-    padding: 20px;
-    text-align: center;
-}
-
-.dark-toggle {
-    width: 100%;
+.dark-btn {
+    margin-top: auto;
     padding: 10px;
-    background: #0074D9;
+    background: #444;
+    color: white;
     border: none;
     border-radius: 6px;
-    color: white;
     cursor: pointer;
 }
 
-.dark-toggle:hover {
-    background: #005bb5;
-}
-
-/* --------------------------------------------------
+/* ============================
    MAIN CONTENT
--------------------------------------------------- */
-.main-content {
-    flex-grow: 1;
+============================ */
+.main {
+    flex: 1;
     padding: 30px;
     overflow-y: auto;
 }
 
-.section h1 {
-    margin-bottom: 20px;
+.section {
+    display: none;
 }
 
-/* --------------------------------------------------
-   TRAINING CARDS (Udemy / LinkedIn Style)
--------------------------------------------------- */
-
-.training-card-container {
-    display: flex;
-    flex-direction: column;
+.section.active {
+    display: block;
+}
+/* ============================
+   TRAINING CARDS
+============================ */
+.training-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
     gap: 20px;
 }
 
 .training-card {
     background: white;
     padding: 20px;
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    border-left: 6px solid #0074D9;
+    border-radius: 10px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
 }
 
 .training-card h3 {
-    margin: 0;
-    font-size: 1.3rem;
-    color: #001f3f;
+    margin-top: 0;
 }
 
-.training-card p {
-    margin: 0;
-    color: #555;
-}
-
-.training-card-buttons {
-    display: flex;
-    gap: 10px;
+.start-btn {
     margin-top: 10px;
-}
-
-.training-btn {
-    padding: 10px 16px;
+    padding: 10px;
+    width: 100%;
+    background: #0078ff;
+    color: white;
     border: none;
     border-radius: 6px;
     cursor: pointer;
-    font-size: 0.95rem;
 }
 
-.training-btn.view {
-    background: #0074D9;
-    color: white;
+.start-btn:hover {
+    background: #005fcc;
 }
 
-.training-btn.view:hover {
-    background: #005bb5;
+/* ============================
+   CERTIFICATIONS
+============================ */
+.cert-list {
+    list-style: none;
+    padding: 0;
 }
 
-.training-btn.complete {
-    background: #2ecc40;
-    color: white;
-}
-
-.training-btn.complete:hover {
-    background: #1f9e30;
-}
-
-/* Dedicated training page */
-#trainingPage {
-    padding: 20px;
-}
-
-.training-page-title {
-    font-size: 1.8rem;
+.cert-list li {
+    background: white;
+    padding: 12px;
     margin-bottom: 10px;
+    border-radius: 6px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
 }
 
-.training-page-info {
+/* ============================
+   TRAINING PAGE
+============================ */
+#trainingPage {
+    text-align: center;
+}
+
+#trainingTitle {
+    font-size: 28px;
     margin-bottom: 20px;
-    color: #555;
 }
 
-/* --------------------------------------------------
+.back-btn {
+    padding: 10px 20px;
+    background: #444;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.back-btn:hover {
+    background: #333;
+}
+
+/* ============================
    DARK MODE
--------------------------------------------------- */
-body.dark {
+============================ */
+.dark body {
     background: #121212;
     color: #eaeaea;
 }
 
-body.dark .training-card {
+.dark .sidebar {
+    background: #000;
+}
+
+.dark .sidebar-menu li {
+    background: #222;
+}
+
+.dark .sidebar-menu li:hover {
+    background: #333;
+}
+
+.dark .training-card {
     background: #1e1e1e;
     color: #eaeaea;
 }
 
-body.dark .sidebar {
-    background: #000f1f;
+.dark .cert-list li {
+    background: #1e1e1e;
+    color: #eaeaea;
 }
 
-body.dark .nav-item:hover,
-body.dark .nav-item.active {
-    background: #002244;
+.dark .start-btn {
+    background: #0099ff;
 }
+
+.dark .back-btn {
+    background: #666;
+}
+
 </style>
 </head>
 
 <body>
 
-<!-- LOGIN SCREEN -->
-<div id="loginScreen" class="login-screen">
-    <div class="login-box">
-        <h1>Butronics Business Systems</h1>
-        <p class="login-subtitle">Employee Training & Certification Portal</p>
+<div class="app">
 
-        <input id="loginName" type="text" placeholder="Enter your name" class="login-input">
-        <select id="loginRole" class="login-input">
-            <option value="">Select your role</option>
-            <option value="office">Office in a Box Technician</option>
-            <option value="shredding">Secure Shredding & Archiving Specialist</option>
-            <option value="network">Network Support Technician</option>
-            <option value="voip">VoIP Specialist</option>
-            <option value="csr">Customer Service / Call Center</option>
-            <option value="remote">Remote Work Support</option>
-            <option value="admin">Admin / Manager</option>
-        </select>
+    <!-- ============================
+         SIDEBAR
+    ============================ -->
+    <div class="sidebar">
+        <h2 class="sidebar-title">Training Portal</h2>
 
-        <button id="loginBtn" class="login-btn">Enter Portal</button>
+        <ul class="sidebar-menu">
+            <li data-section="dashboard">Dashboard</li>
+            <li data-section="trainings">Trainings</li>
+            <li data-section="california">California Mandatory Training</li>
+            <li data-section="certifications">Certifications</li>
+            <li data-section="paths">Learning Paths</li>
+            <li data-section="admin">Admin Panel</li>
+        </ul>
+
+        <button id="darkModeToggle" class="dark-btn">Dark Mode</button>
     </div>
-</div>
 
-<!-- MAIN APP -->
-<div id="app" class="app hidden">
+    <!-- ============================
+         MAIN CONTENT
+    ============================ -->
+    <div class="main">
 
-    <!-- SIDEBAR -->
-    <aside class="sidebar">
-        <div class="sidebar-header">
-            <h2>BBS Portal</h2>
-        </div>
-
-        <nav class="sidebar-nav">
-            <button class="nav-item" data-section="dashboard">Dashboard</button>
-            <button class="nav-item" data-section="trainings">Trainings</button>
-            <button class="nav-item" data-section="trainingPage">Training Page</button>
-            <button class="nav-item" data-section="certifications">Certifications</button>
-            <button class="nav-item" data-section="paths">Learning Paths</button>
-            <button class="nav-item" data-section="compliance">California Compliance</button>
-            <button class="nav-item" data-section="admin">Admin</button>
-        </nav>
-
-        <div class="sidebar-footer">
-            <button id="darkModeToggle" class="dark-toggle">Dark Mode</button>
-        </div>
-    </aside>
-
-    <!-- MAIN CONTENT -->
-    <main class="main-content">
-
-        <!-- DASHBOARD -->
-        <section id="dashboard" class="section">
-            <h1>Welcome, <span id="userNameDisplay"></span></h1>
-            <p>Your role: <span id="userRoleDisplay"></span></p>
+        <!-- ============================
+             DASHBOARD
+        ============================ -->
+        <section id="dashboard" class="section active">
+            <h1>Welcome to the Training Portal</h1>
+            <p>Select a section from the sidebar to begin.</p>
         </section>
-
-        <!-- TRAININGS -->
-        <section id="trainings" class="section hidden">
-            <h1>Assigned Trainings</h1>
-            <div id="trainingCards" class="training-card-container"></div>
-        </section>
-
-        <!-- TRAINING PAGE -->
-        <section id="trainingPage" class="section hidden">
-            <h1 class="training-page-title" id="trainingPageTitle"></h1>
-            <p class="training-page-info" id="trainingPageInfo"></p>
-
-            <button id="startTrainingBtn" class="training-btn view">Start Training</button>
-            <button id="completeTrainingBtn" class="training-btn complete">Mark Complete</button>
-        </section>
-
-        <!-- CERTIFICATIONS -->
-        <section id="certifications" class="section hidden">
-            <h1>Certifications</h1>
-            <div id="certTable"></div>
-        </section>
-
-        <!-- LEARNING PATHS -->
-        <section id="paths" class="section hidden">
-            <h1>Learning Paths</h1>
-            <div id="pathsContainer"></div>
-        </section>
-
-        <!-- COMPLIANCE -->
-        <section id="compliance" class="section hidden">
-            <h1>California Mandatory Training</h1>
-            <p>Links to required state training resources will appear here.</p>
-        </section>
-
-        <!-- ADMIN -->
-        <section id="admin" class="section hidden">
-            <h1>Admin Panel</h1>
-            <p>Admin analytics will appear here.</p>
-        </section>
-
-    </main>
-</div>
-
-<script>
-/* --------------------------------------------------
-   CORE DATA
--------------------------------------------------- */
-let USER = {
-    name: "",
-    role: "",
-    trainings: [],
-    certifications: []
-};
-
-const ROLE_TRAININGS = {
-    office: [
-        { name: "Printer Setup", type: "Technical", mode: "Video" },
-        { name: "Shredding Workflow", type: "Operations", mode: "PDF" },
-        { name: "Archiving Software", type: "Software", mode: "Interactive" },
-        { name: "VoIP Basics", type: "Technical", mode: "Video" }
-    ],
-    shredding: [
-        { name: "HIPAA Compliance", type: "Compliance", mode: "Video" },
-        { name: "Secure Destruction", type: "Operations", mode: "PDF" },
-        { name: "Archiving Software", type: "Software", mode: "Interactive" },
-        { name: "Hazard Communication (HazCom)", type: "Compliance", mode: "Video" },
-        { name: "IIPP", type: "Compliance", mode: "PDF" }
-    ],
-    network: [
-        { name: "Network Performance", type: "Technical", mode: "Video" },
-        { name: "Security Management", type: "Technical", mode: "PDF" },
-        { name: "Troubleshooting", type: "Technical", mode: "Interactive" },
-        { name: "VoIP Networking", type: "Technical", mode: "Video" },
-        { name: "Workplace Violence Prevention (SB 553)", type: "Compliance", mode: "Video" }
-    ],
-    voip: [
-        { name: "Call Routing", type: "Technical", mode: "Video" },
-        { name: "Virtual Receptionist", type: "Technical", mode: "Interactive" },
-        { name: "CRM Integration", type: "Software", mode: "PDF" },
-        { name: "VoIP Remote Tools", type: "Technical", mode: "Video" }
-    ],
-    csr: [
-        { name: "Call Queue Management", type: "Operations", mode: "Video" },
-        { name: "Caller ID Customization", type: "Technical", mode: "PDF" },
-        { name: "CRM Tools", type: "Software", mode: "Interactive" },
-        { name: "Sexual Harassment Prevention (SB 1343)", type: "Compliance", mode: "Video" }
-    ],
-    remote: [
-        { name: "VoIP Remote Tools", type: "Technical", mode: "Video" },
-        { name: "Collaboration Tools", type: "Software", mode: "Interactive" },
-        { name: "Security Awareness", type: "Compliance", mode: "PDF" },
-        { name: "Hazard Communication (HazCom)", type: "Compliance", mode: "Video" }
-    ],
-    admin: [
-        { name: "Leadership Essentials", type: "Management", mode: "Video" },
-        { name: "Admin Analytics Overview", type: "Management", mode: "Interactive" },
-        { name: "Workplace Violence Prevention (SB 553)", type: "Compliance", mode: "Video" },
-        { name: "Sexual Harassment Prevention (Supervisor)", type: "Compliance", mode: "Video" },
-        { name: "IIPP", type: "Compliance", mode: "PDF" }
-    ]
-};
-
-/* --------------------------------------------------
-   UTILITIES
--------------------------------------------------- */
-function daysUntil(dateStr) {
-    const today = new Date();
-    const target = new Date(dateStr);
-    const diff = target - today;
-    return Math.ceil(diff / (1000 * 60 * 60 * 24));
-}
-
-/* --------------------------------------------------
-   LOGIN
--------------------------------------------------- */
-document.getElementById("loginBtn").addEventListener("click", () => {
-    const name = document.getElementById("loginName").value.trim();
-    const role = document.getElementById("loginRole").value;
-
-    if (!name || !role) {
-        alert("Please enter your name and select your role.");
-        return;
-    }
-
-    USER.name = name;
-    USER.role = role;
-    USER.trainings = ROLE_TRAININGS[role];
-
-    document.getElementById("userNameDisplay").textContent = name;
-    document.getElementById("userRoleDisplay").textContent = role;
-
-    document.getElementById("loginScreen").classList.add("hidden");
-    document.getElementById("app").classList.remove("hidden");
-
-    renderTrainings();
-});
-
-/* --------------------------------------------------
-   TRAINING CARDS
--------------------------------------------------- */
-function renderTrainings() {
-    const container = document.getElementById("trainingCards");
-    container.innerHTML = "";
-
-    USER.trainings.forEach((t, idx) => {
-        const card = document.createElement("div");
-        card.classList.add("training-card");
-
-        card.innerHTML = `
-            <h3>${t.name}</h3>
-            <p>Type: ${t.type}</p>
-            <p>Mode: ${t.mode}</p>
-            <div class="training-card-buttons">
-                <button class="training-btn view">View Training</button>
-                <button class="training-btn complete">Mark Complete</button>
+        <!-- ============================
+             TRAININGS SECTION
+        ============================ -->
+        <section id="trainings" class="section">
+            <h1>All Trainings</h1>
+            <div class="training-grid" id="trainingList">
+                <!-- JS will populate all trainings here -->
             </div>
-        `;
+        </section>
 
-        card.querySelector(".view").addEventListener("click", () => {
-            openTrainingPage(idx);
-        });
+        <!-- ============================
+             CALIFORNIA MANDATORY TRAINING
+        ============================ -->
+        <section id="california" class="section">
+            <h1>California Mandatory Training</h1>
+            <p>These links open the official California state training websites.</p>
 
-        card.querySelector(".complete").addEventListener("click", () => {
-            alert("Training marked complete.");
-        });
+            <div class="training-grid">
 
-        container.appendChild(card);
-    });
-}
+                <div class="training-card">
+                    <h3>SB 1343 — Sexual Harassment (Employee)</h3>
+                    <button class="start-btn" data-link="https://calcivilrights.ca.gov/shpt/" data-newtab="true">
+                        Start Training
+                    </button>
+                </div>
 
-/* --------------------------------------------------
-   TRAINING PAGE
--------------------------------------------------- */
-function openTrainingPage(index) {
-    const t = USER.trainings[index];
+                <div class="training-card">
+                    <h3>SB 1343 — Sexual Harassment (Supervisor)</h3>
+                    <button class="start-btn" data-link="https://calcivilrights.ca.gov/shpt/supervisors/" data-newtab="true">
+                        Start Training
+                    </button>
+                </div>
 
-    document.getElementById("trainingPageTitle").textContent = t.name;
-    document.getElementById("trainingPageInfo").textContent =
-        `Mode: ${t.mode} • Type: ${t.type}`;
+                <div class="training-card">
+                    <h3>SB 553 — Workplace Violence Prevention</h3>
+                    <button class="start-btn" data-link="https://www.dir.ca.gov/dosh/Workplace-Violence-Prevention.html" data-newtab="true">
+                        Start Training
+                    </button>
+                </div>
 
-    document.getElementById("startTrainingBtn").onclick = () => {
-        alert("This is where your training content will go.");
-    };
+                <div class="training-card">
+                    <h3>Hazard Communication (HazCom)</h3>
+                    <button class="start-btn" data-link="https://www.dir.ca.gov/dosh/dosh_publications/hazcom.pdf" data-newtab="true">
+                        Start Training
+                    </button>
+                </div>
 
-    document.getElementById("completeTrainingBtn").onclick = () => {
-        alert("Training marked complete.");
-        switchSection("trainings");
-    };
+                <div class="training-card">
+                    <h3>HIPAA Privacy & Security</h3>
+                    <button class="start-btn" data-link="https://www.hhs.gov/hipaa/for-professionals/training/index.html" data-newtab="true">
+                        Start Training
+                    </button>
+                </div>
 
-    switchSection("trainingPage");
-}
+            </div>
+        </section>
 
-/* --------------------------------------------------
-   NAVIGATION
--------------------------------------------------- */
-const navItems = document.querySelectorAll(".nav-item");
+        <!-- ============================
+             CERTIFICATIONS SECTION
+        ============================ -->
+        <section id="certifications" class="section">
+            <h1>Certifications</h1>
+            <p>All employees are required to complete the following certifications:</p>
+
+            <ul class="cert-list">
+                <li>SB 1343 — Sexual Harassment (Employee)</li>
+                <li>SB 1343 — Sexual Harassment (Supervisor — Admin Only)</li>
+                <li>SB 553 — Workplace Violence Prevention</li>
+                <li>Hazard Communication (HazCom)</li>
+                <li>HIPAA Privacy & Security</li>
+            </ul>
+        </section>
+
+        <!-- ============================
+             LEARNING PATHS SECTION
+        ============================ -->
+        <section id="paths" class="section">
+            <h1>Learning Paths</h1>
+            <p>Structured training paths will be added soon.</p>
+        </section>
+
+        <!-- ============================
+             ADMIN PANEL
+        ============================ -->
+        <section id="admin" class="section">
+            <h1>Admin Panel</h1>
+            <p>Admin tools will be added here.</p>
+        </section>
+
+        <!-- ============================
+             INTERNAL TRAINING PLACEHOLDER PAGE
+        ============================ -->
+        <section id="trainingPage" class="section">
+            <h1 id="trainingTitle"></h1>
+            <p>Training content coming soon.</p>
+            <button id="backToTrainings" class="back-btn">Back to Trainings</button>
+        </section>
+
+    </div> <!-- end main -->
+</div> <!-- end app -->
+
+<!-- ============================
+     JAVASCRIPT
+============================ -->
+<script>
+
+// ============================
+// SECTION SWITCHING
+// ============================
 const sections = document.querySelectorAll(".section");
+const menuItems = document.querySelectorAll(".sidebar-menu li");
 
-navItems.forEach(btn => {
-    btn.addEventListener("click", () => {
-        const section = btn.getAttribute("data-section");
-        switchSection(section);
+menuItems.forEach(item => {
+    item.addEventListener("click", () => {
+        const target = item.getAttribute("data-section");
+
+        sections.forEach(sec => sec.classList.remove("active"));
+        document.getElementById(target).classList.add("active");
     });
 });
 
-function switchSection(sectionId) {
-    sections.forEach(s => {
-        s.classList.toggle("hidden", s.id !== sectionId);
-    });
-
-    navItems.forEach(btn => {
-        btn.classList.toggle("active", btn.getAttribute("data-section") === sectionId);
-    });
-}
-
-/* --------------------------------------------------
-   DARK MODE
--------------------------------------------------- */
+// ============================
+// DARK MODE TOGGLE
+// ============================
 document.getElementById("darkModeToggle").addEventListener("click", () => {
     document.body.classList.toggle("dark");
 });
-</script>
 
+// ============================
+// INTERNAL TRAININGS LIST
+// ============================
+const internalTrainings = [
+    "Printer Setup",
+    "Network Performance",
+    "VoIP Basics",
+    "CRM Tools",
+    "Archiving Software",
+    "Troubleshooting Essentials",
+    "Leadership Essentials",
+    "Customer Service Excellence",
+    "Warehouse Operations",
+    "Shredding Workflow",
+    "Office Technology Overview",
+    "Remote Work Tools",
+    "Cybersecurity Basics",
+    "Data Entry Accuracy",
+    "Document Handling Procedures"
+];
+
+// ============================
+// POPULATE TRAININGS SECTION
+// ============================
+const trainingList = document.getElementById("trainingList");
+
+internalTrainings.forEach(name => {
+    const card = document.createElement("div");
+    card.classList.add("training-card");
+
+    card.innerHTML = `
+        <h3>${name}</h3>
+        <button class="start-btn" data-internal="${name}">
+            Start Training
+        </button>
+    `;
+
+    trainingList.appendChild(card);
+});
+
+// ============================
+// START TRAINING BUTTON LOGIC
+// ============================
+document.addEventListener("click", (e) => {
+    if (e.target.classList.contains("start-btn")) {
+
+        // External compliance training (opens in new tab)
+        const link = e.target.getAttribute("data-link");
+        const newTab = e.target.getAttribute("data-newtab");
+
+        if (link) {
+            if (newTab === "true") {
+                window.open(link, "_blank");
+            } else {
+                window.location.href = link;
+            }
+            return;
+        }
+
+        // Internal training (placeholder page)
+        const internalName = e.target.getAttribute("data-internal");
+        if (internalName) {
+            document.getElementById("trainingTitle").innerText = internalName;
+
+            sections.forEach(sec => sec.classList.remove("active"));
+            document.getElementById("trainingPage").classList.add("active");
+        }
+    }
+});
+
+// ============================
+// BACK TO TRAININGS
+// ============================
+document.getElementById("backToTrainings").addEventListener("click", () => {
+    sections.forEach(sec => sec.classList.remove("active"));
+    document.getElementById("trainings").classList.add("active");
+});
+
+// ============================
+// ADMIN PANEL LOGIC
+// ============================
+const isAdmin = true;
+
+if (!isAdmin) {
+    const supervisorCard = document.querySelector(
+        'button[data-link="https://calcivilrights.ca.gov/shpt/supervisors/"]'
+    ).parentElement;
+
+    supervisorCard.style.display = "none";
+}
+
+</script>
 </body>
 </html>
