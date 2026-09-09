@@ -464,17 +464,12 @@ body.dark .nav-item.active {
    PART 3A — CORE DATA & UTILITIES
 -------------------------------------------------- */
 
-/* GLOBAL USER OBJECT */
 let USER = {
     name: "",
     role: "",
     trainings: [],
     certifications: []
 };
-
-/* --------------------------------------------------
-   ROLE-BASED TRAINING BUNDLES
--------------------------------------------------- */
 
 const ROLE_TRAININGS = {
     office: [
@@ -483,7 +478,6 @@ const ROLE_TRAININGS = {
         { name: "Archiving Software", type: "Software", mode: "Interactive" },
         { name: "VoIP Basics", type: "Technical", mode: "Video" }
     ],
-
     shredding: [
         { name: "HIPAA Compliance", type: "Compliance", mode: "Video" },
         { name: "Secure Destruction", type: "Operations", mode: "PDF" },
@@ -491,7 +485,6 @@ const ROLE_TRAININGS = {
         { name: "Hazard Communication (HazCom)", type: "Compliance", mode: "Video" },
         { name: "IIPP", type: "Compliance", mode: "PDF" }
     ],
-
     network: [
         { name: "Network Performance", type: "Technical", mode: "Video" },
         { name: "Security Management", type: "Technical", mode: "PDF" },
@@ -499,28 +492,24 @@ const ROLE_TRAININGS = {
         { name: "VoIP Networking", type: "Technical", mode: "Video" },
         { name: "Workplace Violence Prevention (SB 553)", type: "Compliance", mode: "Video" }
     ],
-
     voip: [
         { name: "Call Routing", type: "Technical", mode: "Video" },
         { name: "Virtual Receptionist", type: "Technical", mode: "Interactive" },
         { name: "CRM Integration", type: "Software", mode: "PDF" },
         { name: "VoIP Remote Tools", type: "Technical", mode: "Video" }
     ],
-
     csr: [
         { name: "Call Queue Management", type: "Operations", mode: "Video" },
         { name: "Caller ID Customization", type: "Technical", mode: "PDF" },
         { name: "CRM Tools", type: "Software", mode: "Interactive" },
         { name: "Sexual Harassment Prevention (SB 1343)", type: "Compliance", mode: "Video" }
     ],
-
     remote: [
         { name: "VoIP Remote Tools", type: "Technical", mode: "Video" },
         { name: "Collaboration Tools", type: "Software", mode: "Interactive" },
         { name: "Security Awareness", type: "Compliance", mode: "PDF" },
         { name: "Hazard Communication (HazCom)", type: "Compliance", mode: "Video" }
     ],
-
     admin: [
         { name: "Leadership Essentials", type: "Management", mode: "Video" },
         { name: "Admin Analytics Overview", type: "Management", mode: "Interactive" },
@@ -530,47 +519,33 @@ const ROLE_TRAININGS = {
     ]
 };
 
-/* --------------------------------------------------
-   CERTIFICATION DATA
--------------------------------------------------- */
-
 const ROLE_CERTIFICATIONS = {
     office: [
         { name: "Printer Setup Certification", expires: "2026-12-31" },
         { name: "Shredding Workflow Certification", expires: "2026-10-15" }
     ],
-
     shredding: [
         { name: "HIPAA Certification", expires: "2026-09-30" },
         { name: "Secure Destruction Certification", expires: "2026-11-01" }
     ],
-
     network: [
         { name: "Network Technician Certification", expires: "2026-12-01" },
         { name: "Security Management Certification", expires: "2026-09-20" }
     ],
-
     voip: [
         { name: "VoIP Specialist Certification", expires: "2026-10-10" }
     ],
-
     csr: [
         { name: "Customer Service Certification", expires: "2026-11-20" }
     ],
-
     remote: [
         { name: "Remote Support Certification", expires: "2026-12-05" }
     ],
-
     admin: [
         { name: "Leadership Certification", expires: "2026-12-31" },
         { name: "Supervisor Compliance Certification", expires: "2026-09-15" }
     ]
 };
-
-/* --------------------------------------------------
-   UTILITY FUNCTIONS
--------------------------------------------------- */
 
 function daysUntil(dateStr) {
     const today = new Date();
@@ -599,28 +574,13 @@ function createPill(type) {
 
     return pill;
 }
+
 /* --------------------------------------------------
    PART 3B — LOGIN SYSTEM, ROLE ASSIGNMENT, UI BOOT
-   Paste this AFTER PART 3A in script.js
-
-   This section is the beating heart of your portal’s
-   user experience. It handles:
-
-   - Authenticating the user (name + role)
-   - Loading saved profiles from localStorage
-   - Assigning role-based trainings & certifications
-   - Booting the UI and rendering all sections
-   - Managing navigation, dark mode, and persistence
-
-   Once this part is active, your portal becomes a
-   living system that remembers the user, updates
-   dynamically, and behaves like a true enterprise LMS.
 -------------------------------------------------- */
 
-/* LOCAL STORAGE KEY */
 const STORAGE_KEY = "bbs_user_v1";
 
-/* DOM ELEMENTS — These connect your JS to the HTML UI */
 const loginScreen = document.getElementById("loginScreen");
 const loginName = document.getElementById("loginName");
 const loginRole = document.getElementById("loginRole");
@@ -646,76 +606,44 @@ const navItems = Array.from(document.querySelectorAll(".nav-item"));
 const sections = Array.from(document.querySelectorAll(".section"));
 const darkModeToggle = document.getElementById("darkModeToggle");
 
-/* --------------------------------------------------
-   BOOTSTRAP / INIT
-   This function runs automatically when the page loads.
-   It checks if the user already exists, loads their data,
-   and prepares the UI. If no user is found, it shows the
-   login screen.
--------------------------------------------------- */
-
 function initApp() {
-    // Load saved user if present
     const saved = loadUserFromStorage();
     if (saved && saved.name) {
         USER = saved;
         showAppForUser();
     } else {
-        // show login screen
         loginScreen.classList.remove("hidden");
         appRoot.classList.add("hidden");
     }
 
-    // Attach event listeners
     loginBtn.addEventListener("click", handleLogin);
     darkModeToggle.addEventListener("click", toggleDarkMode);
 
     navItems.forEach(btn => {
-        btn.addEventListener("click", (e) => {
-            const section = btn.getAttribute("data-section");
-            switchSection(section);
+        btn.addEventListener("click", () => {
+            switchSection(btn.getAttribute("data-section"));
         });
     });
 
-    // Default section
     switchSection("dashboard");
 }
-
-/* --------------------------------------------------
-   LOGIN HANDLING
-   This is where the user enters their name and role.
-   Once validated, the system assigns all trainings and
-   certifications automatically.
--------------------------------------------------- */
 
 function handleLogin() {
     const name = loginName.value.trim();
     const role = loginRole.value;
 
-    if (!name) {
-        alert("Please enter your name.");
-        return;
-    }
-    if (!role) {
-        alert("Please select your role.");
-        return;
-    }
+    if (!name) return alert("Please enter your name.");
+    if (!role) return alert("Please select your role.");
 
     USER.name = name;
     USER.role = role;
 
-    // Assign trainings & certs based on role
     assignRoleTrainings(role);
     assignRoleCertifications(role);
 
     saveUserToStorage(USER);
     showAppForUser();
 }
-
-/* --------------------------------------------------
-   SHOW APP FOR USER
-   This hides the login screen and loads the full portal.
--------------------------------------------------- */
 
 function showAppForUser() {
     loginScreen.classList.add("hidden");
@@ -727,19 +655,13 @@ function showAppForUser() {
     renderAll();
 }
 
-/* --------------------------------------------------
-   ROLE ASSIGNMENT
-   These functions take the role and map it to the
-   training and certification bundles defined in Part 3A.
--------------------------------------------------- */
-
 function assignRoleTrainings(role) {
     const bundle = ROLE_TRAININGS[role] || [];
     USER.trainings = bundle.map(t => ({
         name: t.name,
         type: t.type,
         mode: t.mode,
-        status: "assigned", // assigned | completed
+        status: "assigned",
         assignedOn: new Date().toISOString(),
         completedOn: null
     }));
@@ -754,18 +676,6 @@ function assignRoleCertifications(role) {
     }));
 }
 
-/* --------------------------------------------------
-   RENDERING ENGINE
-   This section updates every part of the UI based on
-   the user's data. It powers:
-
-   - Dashboard metrics
-   - Training tables
-   - Certification tables
-   - Learning paths
-   - Admin analytics
--------------------------------------------------- */
-
 function renderAll() {
     renderDashboard();
     renderTrainingsTable();
@@ -774,97 +684,58 @@ function renderAll() {
     renderAdmin();
 }
 
-/* --------------------------------------------------
-   DASHBOARD
--------------------------------------------------- */
-
 function renderDashboard() {
-    const total = USER.trainings.length;
-    const completed = USER.trainings.filter(t => t.status === "completed").length;
-    const expiring = USER.certifications.filter(c => daysUntil(c.expires) <= 30 && daysUntil(c.expires) > 0).length;
-
-    dashTotalTrainings.textContent = total;
-    dashCompletedTrainings.textContent = completed;
-    dashExpiring.textContent = expiring;
+    dashTotalTrainings.textContent = USER.trainings.length;
+    dashCompletedTrainings.textContent = USER.trainings.filter(t => t.status === "completed").length;
+    dashExpiring.textContent = USER.certifications.filter(c => daysUntil(c.expires) <= 30 && daysUntil(c.expires) > 0).length;
 }
-
-/* --------------------------------------------------
-   TRAININGS TABLE
--------------------------------------------------- */
 
 function renderTrainingsTable() {
     trainingTable.innerHTML = "";
     USER.trainings.forEach((t, idx) => {
         const tr = document.createElement("tr");
 
-        const tdName = document.createElement("td");
-        tdName.textContent = t.name;
+        tr.innerHTML = `
+            <td>${t.name}</td>
+            <td>${t.type}</td>
+            <td>${t.mode}</td>
+            <td></td>
+            <td></td>
+        `;
 
-        const tdType = document.createElement("td");
-        tdType.textContent = t.type;
-
-        const tdMode = document.createElement("td");
-        tdMode.textContent = t.mode;
-
-        const tdStatus = document.createElement("td");
         const pill = createPill(t.status === "completed" ? "completed" : "required");
-        tdStatus.appendChild(pill);
+        tr.children[3].appendChild(pill);
 
-        const tdAction = document.createElement("td");
         const btn = document.createElement("button");
         btn.textContent = t.status === "completed" ? "Completed" : "Mark Complete";
         btn.disabled = t.status === "completed";
         btn.classList.add("login-btn");
         btn.style.padding = "6px 10px";
-        btn.addEventListener("click", () => {
-            markTrainingComplete(idx);
-        });
-        tdAction.appendChild(btn);
+        btn.onclick = () => markTrainingComplete(idx);
 
-        tr.appendChild(tdName);
-        tr.appendChild(tdType);
-        tr.appendChild(tdMode);
-        tr.appendChild(tdStatus);
-        tr.appendChild(tdAction);
+        tr.children[4].appendChild(btn);
 
         trainingTable.appendChild(tr);
     });
 }
-
-/* --------------------------------------------------
-   CERTIFICATIONS TABLE
--------------------------------------------------- */
 
 function renderCertTable() {
     certTable.innerHTML = "";
     USER.certifications.forEach(c => {
         const tr = document.createElement("tr");
 
-        const tdName = document.createElement("td");
-        tdName.textContent = c.name;
+        tr.innerHTML = `
+            <td>${c.name}</td>
+            <td>${c.expires} (${daysUntil(c.expires)} days)</td>
+            <td></td>
+        `;
 
-        const tdExpires = document.createElement("td");
-        tdExpires.textContent = c.expires + " (" + daysUntil(c.expires) + " days)";
-
-        const tdStatus = document.createElement("td");
-        let pillType = "required";
-        if (c.status === "expired") pillType = "expiring";
-        else if (daysUntil(c.expires) <= 30) pillType = "expiring";
-
-        const pill = createPill(pillType);
-        tdStatus.appendChild(pill);
-
-        tr.appendChild(tdName);
-        tr.appendChild(tdExpires);
-        tr.appendChild(tdStatus);
+        const pillType = (c.status === "expired" || daysUntil(c.expires) <= 30) ? "expiring" : "required";
+        tr.children[2].appendChild(createPill(pillType));
 
         certTable.appendChild(tr);
     });
 }
-
-/* --------------------------------------------------
-   LEARNING PATHS
--------------------------------------------------- */
 
 function renderPaths() {
     pathsContainer.innerHTML = "";
@@ -881,90 +752,42 @@ function renderPaths() {
     pathsContainer.appendChild(ul);
 }
 
-/* --------------------------------------------------
-   ADMIN PANEL
--------------------------------------------------- */
-
 function renderAdmin() {
     adminTotalTrainings.textContent = USER.trainings.length;
     adminTotalCerts.textContent = USER.certifications.length;
     adminAllComplete.textContent = USER.trainings.every(t => t.status === "completed") ? 1 : 0;
 }
 
-/* --------------------------------------------------
-   ACTIONS
--------------------------------------------------- */
-
 function markTrainingComplete(index) {
-    if (!USER.trainings[index]) return;
     USER.trainings[index].status = "completed";
     USER.trainings[index].completedOn = new Date().toISOString();
     saveUserToStorage(USER);
     renderAll();
 }
 
-/* --------------------------------------------------
-   NAVIGATION
--------------------------------------------------- */
-
 function switchSection(sectionId) {
     sections.forEach(s => {
-        if (s.id === sectionId) {
-            s.classList.remove("hidden");
-        } else {
-            s.classList.add("hidden");
-        }
+        s.classList.toggle("hidden", s.id !== sectionId);
     });
 
-    setActiveNav(sectionId);
-}
-
-function setActiveNav(sectionId) {
     navItems.forEach(btn => {
-        if (btn.getAttribute("data-section") === sectionId) {
-            btn.classList.add("active");
-        } else {
-            btn.classList.remove("active");
-        }
+        btn.classList.toggle("active", btn.getAttribute("data-section") === sectionId);
     });
 }
-
-/* --------------------------------------------------
-   DARK MODE
--------------------------------------------------- */
 
 function toggleDarkMode() {
     document.body.classList.toggle("dark");
-    const pref = document.body.classList.contains("dark") ? "dark" : "light";
-    localStorage.setItem("bbs_theme", pref);
+    localStorage.setItem("bbs_theme", document.body.classList.contains("dark") ? "dark" : "light");
 }
 
-/* --------------------------------------------------
-   STORAGE HELPERS
--------------------------------------------------- */
-
 function saveUserToStorage(user) {
-    try {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(user));
-    } catch (e) {
-        console.warn("Failed to save user to storage", e);
-    }
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(user));
 }
 
 function loadUserFromStorage() {
-    try {
-        const raw = localStorage.getItem(STORAGE_KEY);
-        if (!raw) return null;
-        return JSON.parse(raw);
-    } catch (e) {
-        console.warn("Failed to load user from storage", e);
-        return null;
-    }
+    const raw = localStorage.getItem(STORAGE_KEY);
+    return raw ? JSON.parse(raw) : null;
 }
-
-/* --------------------------------------------------
-   ROLE LABELS
--------------------------------------------------- */
 
 function roleLabel(roleKey) {
     const map = {
@@ -979,13 +802,8 @@ function roleLabel(roleKey) {
     return map[roleKey] || roleKey;
 }
 
-/* --------------------------------------------------
-   AUTO-LOAD THE APP
--------------------------------------------------- */
-
 document.addEventListener("DOMContentLoaded", () => {
     const theme = localStorage.getItem("bbs_theme");
     if (theme === "dark") document.body.classList.add("dark");
-
     initApp();
 });
