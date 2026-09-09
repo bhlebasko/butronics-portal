@@ -1,262 +1,576 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Training Portal</title>
-
+    <title>Training Portal – LinkedIn Learning Style</title>
     <style>
     /* ============================
        GLOBAL STYLES
     ============================ */
     body {
-        font-family: Arial, sans-serif;
-        background: #f5f5f5;
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        background: #f3f6f9;
         margin: 0;
         padding: 0;
+        color: #1f2933;
     }
 
-    .section {
-        margin-top: 30px;
+    a {
+        color: #0a66c2;
+        text-decoration: none;
+    }
+
+    a:hover {
+        text-decoration: underline;
     }
 
     /* ============================
-       LOGIN + PASSWORD SETUP PAGES
+       LOGIN + PASSWORD SETUP
     ============================ */
-    .login-container {
+    .center-screen {
         width: 100%;
         height: 100vh;
-        background: #e9eef3;
         display: flex;
         justify-content: center;
         align-items: center;
+        background: radial-gradient(circle at top, #e6f0ff 0, #f3f6f9 45%, #e4ebf5 100%);
     }
 
-    .login-box {
-        background: white;
-        padding: 30px;
-        width: 350px;
-        border-radius: 10px;
-        box-shadow: 0 0 15px rgba(0,0,0,0.1);
+    .auth-card {
+        background: #ffffff;
+        padding: 32px;
+        width: 380px;
+        border-radius: 12px;
+        box-shadow: 0 18px 40px rgba(15, 23, 42, 0.12);
     }
 
-    .login-title {
+    .auth-title {
+        font-size: 22px;
+        font-weight: 600;
+        margin-bottom: 8px;
+        text-align: center;
+    }
+
+    .auth-subtitle {
+        font-size: 13px;
+        color: #6b7b93;
         text-align: center;
         margin-bottom: 20px;
     }
 
-    .login-box label {
-        font-weight: bold;
+    .auth-card label {
+        font-size: 13px;
+        font-weight: 600;
         margin-top: 10px;
         display: block;
+        color: #364152;
     }
 
-    .login-box input {
+    .auth-card input {
         width: 100%;
         padding: 10px;
         margin-top: 5px;
-        margin-bottom: 15px;
-        border-radius: 5px;
-        border: 1px solid #ccc;
+        margin-bottom: 12px;
+        border-radius: 6px;
+        border: 1px solid #cbd2e1;
+        font-size: 14px;
     }
 
-    .login-btn {
+    .primary-btn {
         width: 100%;
-        padding: 12px;
-        background: #0078d4;
-        color: white;
+        padding: 11px;
+        background: #0a66c2;
+        color: #ffffff;
         border: none;
-        border-radius: 5px;
+        border-radius: 999px;
         cursor: pointer;
-        font-size: 16px;
+        font-size: 15px;
+        font-weight: 600;
     }
 
-    .login-btn:hover {
-        background: #005fa3;
+    .primary-btn:hover {
+        background: #004182;
     }
 
-    .login-error {
-        color: red;
+    .error-text {
+        color: #d93025;
+        font-size: 13px;
         text-align: center;
-        margin-top: 10px;
+        margin-top: 8px;
     }
 
     /* ============================
-       MAIN APP
+       MAIN APP LAYOUT
     ============================ */
-    .app {
-        padding: 20px;
+    .app-shell {
+        display: none;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .top-bar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 10px 20px;
+        background: #ffffff;
+        border-bottom: 1px solid #d0d7e2;
+    }
+
+    .top-bar-left {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .logo-dot {
+        width: 28px;
+        height: 28px;
+        border-radius: 6px;
+        background: linear-gradient(135deg, #0a66c2, #004182);
+    }
+
+    .top-title {
+        font-size: 18px;
+        font-weight: 600;
+        color: #1f2933;
+    }
+
+    .top-bar-right {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        font-size: 13px;
+        color: #6b7b93;
+    }
+
+    .pill {
+        padding: 6px 12px;
+        border-radius: 999px;
+        background: #e6edf7;
+        font-size: 12px;
+        color: #364152;
     }
 
     .logout-btn {
-        background: #d9534f;
-        color: white;
-        padding: 10px 15px;
-        border: none;
-        border-radius: 6px;
+        padding: 7px 14px;
+        border-radius: 999px;
+        border: 1px solid #cbd2e1;
+        background: #ffffff;
         cursor: pointer;
-        font-size: 15px;
-        margin-top: 10px;
+        font-size: 13px;
+        font-weight: 500;
+        color: #364152;
     }
 
     .logout-btn:hover {
-        background: #b52b27;
+        background: #f5f7fb;
+    }
+
+    .app-body {
+        display: flex;
+        flex: 1;
+        overflow: hidden;
     }
 
     /* ============================
-       CERTIFICATE STATUS BOX
+       LEFT: COURSE LIBRARY
     ============================ */
-    .certificate-box {
-        background: #fff;
-        padding: 20px;
-        margin-top: 20px;
+    .library-pane {
+        width: 320px;
+        border-right: 1px solid #d0d7e2;
+        background: #f8fafc;
+        padding: 16px;
+        overflow-y: auto;
+    }
+
+    .library-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 10px;
+    }
+
+    .library-title {
+        font-size: 15px;
+        font-weight: 600;
+        color: #1f2933;
+    }
+
+    .library-subtitle {
+        font-size: 12px;
+        color: #6b7b93;
+    }
+
+    .course-card {
+        background: #ffffff;
         border-radius: 10px;
-        box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    }
-
-    .cert-btn {
-        background: #0078d4;
-        color: white;
-        padding: 10px 15px;
-        border: none;
-        border-radius: 6px;
-        cursor: pointer;
-        margin-top: 10px;
-    }
-
-    .cert-btn:hover {
-        background: #005fa3;
-    }
-
-    /* ============================
-       TRAINING MODULES
-    ============================ */
-    .training-item {
-        background: #fff;
-        padding: 20px;
-        margin-top: 15px;
-        border-radius: 10px;
-        box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    }
-
-    .training-item h3 {
-        margin-top: 0;
-    }
-
-    .launch-training-btn {
-        background: #17a2b8;
-        color: white;
-        padding: 8px 12px;
-        border: none;
-        border-radius: 6px;
-        cursor: pointer;
-        margin-right: 8px;
-    }
-
-    .launch-training-btn:hover {
-        background: #117a8b;
-    }
-
-    .training-status {
-        margin-top: 10px;
-        font-weight: bold;
-    }
-
-    /* ============================
-       ADMIN PANEL
-    ============================ */
-    .admin-section {
-        padding: 20px;
-    }
-
-    .create-user-box,
-    .user-list-box {
-        background: #fff;
-        padding: 20px;
-        margin-top: 20px;
-        border-radius: 10px;
-        box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    }
-
-    .create-user-box label {
-        font-weight: bold;
-        margin-top: 10px;
-        display: block;
-    }
-
-    .create-user-box input,
-    .create-user-box select {
-        width: 100%;
-        padding: 10px;
-        margin-top: 5px;
-        margin-bottom: 15px;
-        border-radius: 5px;
-        border: 1px solid #ccc;
-    }
-
-    .admin-btn {
-        width: 100%;
         padding: 12px;
-        background: #0078d4;
-        color: white;
-        border: none;
-        border-radius: 5px;
+        margin-bottom: 10px;
+        box-shadow: 0 4px 12px rgba(15, 23, 42, 0.06);
         cursor: pointer;
-        font-size: 16px;
+        border: 1px solid transparent;
+        transition: border-color 0.15s ease, box-shadow 0.15s ease, transform 0.05s ease;
     }
 
-    .admin-btn:hover {
-        background: #005fa3;
+    .course-card:hover {
+        border-color: #0a66c2;
+        box-shadow: 0 8px 18px rgba(15, 23, 42, 0.12);
+        transform: translateY(-1px);
     }
 
-    .admin-message {
-        margin-top: 10px;
-        font-weight: bold;
+    .course-title {
+        font-size: 14px;
+        font-weight: 600;
+        margin-bottom: 4px;
+        color: #1f2933;
     }
 
-    .user-card {
-        background: #f5f5f5;
-        padding: 15px;
-        margin-top: 10px;
-        border-radius: 8px;
+    .course-meta {
+        font-size: 11px;
+        color: #6b7b93;
+        margin-bottom: 6px;
     }
 
-    .user-card h4 {
-        margin: 0;
+    .course-progress-bar {
+        width: 100%;
+        height: 6px;
+        border-radius: 999px;
+        background: #e1e7f0;
+        overflow: hidden;
+        margin-top: 4px;
     }
 
-    .delete-user-btn {
-        margin-top: 10px;
-        background: #d9534f;
-        color: white;
-        padding: 8px;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
+    .course-progress-fill {
+        height: 100%;
+        background: linear-gradient(90deg, #0a66c2, #00a0dc);
+        width: 0%;
     }
 
-    .delete-user-btn:hover {
-        background: #b52b27;
+    .course-status-pill {
+        font-size: 11px;
+        padding: 3px 8px;
+        border-radius: 999px;
+        background: #e6f4ea;
+        color: #137333;
+        display: inline-block;
+        margin-top: 6px;
+    }
+
+    .course-status-pill.locked {
+        background: #fce8e6;
+        color: #d93025;
     }
 
     /* ============================
-       ADMIN PROGRESS DASHBOARD
+       CENTER: COURSE PLAYER
     ============================ */
-    #adminProgressList {
-        margin-top: 20px;
+    .player-pane {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        background: #f3f6f9;
+        overflow-y: auto;
     }
 
-    .admin-progress-card {
-        background: #f5f5f5;
-        padding: 15px;
+    .course-header {
+        padding: 16px 20px 8px 20px;
+        border-bottom: 1px solid #d0d7e2;
+        background: #ffffff;
+    }
+
+    .course-header-title {
+        font-size: 18px;
+        font-weight: 600;
+        margin-bottom: 4px;
+    }
+
+    .course-header-meta {
+        font-size: 12px;
+        color: #6b7b93;
+        display: flex;
+        gap: 10px;
+        align-items: center;
+    }
+
+    .course-progress-top {
         margin-top: 10px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .course-progress-label {
+        font-size: 12px;
+        color: #6b7b93;
+    }
+
+    .course-progress-bar-top {
+        flex: 1;
+        height: 8px;
+        border-radius: 999px;
+        background: #e1e7f0;
+        overflow: hidden;
+    }
+
+    .course-progress-fill-top {
+        height: 100%;
+        background: linear-gradient(90deg, #0a66c2, #00a0dc);
+        width: 0%;
+    }
+
+    /* Video area */
+    .video-pane {
+        background: #111827;
+        padding: 16px 20px;
+    }
+
+    .video-player {
+        width: 100%;
+        max-width: 960px;
+        margin: 0 auto;
+        border-radius: 12px;
+        background: #000000;
+        height: 320px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #e5e7eb;
+        font-size: 14px;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .video-placeholder-text {
+        text-align: center;
+        max-width: 80%;
+    }
+
+    .video-play-button {
+        position: absolute;
+        width: 64px;
+        height: 64px;
+        border-radius: 50%;
+        background: rgba(15, 23, 42, 0.85);
+        border: 2px solid #e5e7eb;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+    }
+
+    .video-play-button::before {
+        content: "";
+        border-style: solid;
+        border-width: 10px 0 10px 16px;
+        border-color: transparent transparent transparent #e5e7eb;
+        margin-left: 3px;
+    }
+
+    /* Content pane */
+    .content-pane {
+        padding: 20px;
+        max-width: 960px;
+        margin: 0 auto 40px auto;
+    }
+
+    .lesson-title {
+        font-size: 16px;
+        font-weight: 600;
+        margin-bottom: 6px;
+    }
+
+    .lesson-meta {
+        font-size: 12px;
+        color: #6b7b93;
+        margin-bottom: 12px;
+    }
+
+    .lesson-body {
+        font-size: 14px;
+        line-height: 1.6;
+        color: #1f2933;
+        margin-bottom: 20px;
+    }
+
+    .lesson-body ul {
+        margin-left: 18px;
+        margin-top: 6px;
+    }
+
+    .lesson-body li {
+        margin-bottom: 4px;
+    }
+
+    /* Quiz */
+    .quiz-block {
+        margin-top: 10px;
+        padding: 14px;
+        border-radius: 10px;
+        background: #f8fafc;
+        border: 1px solid #d0d7e2;
+    }
+
+    .quiz-question {
+        font-size: 14px;
+        font-weight: 600;
+        margin-bottom: 8px;
+    }
+
+    .quiz-options label {
+        display: block;
+        font-size: 13px;
+        margin-bottom: 6px;
+        cursor: pointer;
+    }
+
+    .quiz-options input {
+        margin-right: 6px;
+    }
+
+    .quiz-feedback {
+        font-size: 13px;
+        margin-top: 8px;
+        font-weight: 600;
+    }
+
+    .lesson-actions {
+        margin-top: 16px;
+        display: flex;
+        gap: 10px;
+        align-items: center;
+    }
+
+    .complete-lesson-btn {
+        padding: 8px 16px;
+        border-radius: 999px;
+        border: none;
+        background: #0a66c2;
+        color: #ffffff;
+        font-size: 13px;
+        font-weight: 600;
+        cursor: pointer;
+    }
+
+    .complete-lesson-btn:hover {
+        background: #004182;
+    }
+
+    .next-lesson-btn {
+        padding: 8px 16px;
+        border-radius: 999px;
+        border: 1px solid #cbd2e1;
+        background: #ffffff;
+        color: #364152;
+        font-size: 13px;
+        font-weight: 500;
+        cursor: pointer;
+    }
+
+    .next-lesson-btn:hover {
+        background: #f5f7fb;
+    }
+
+    /* ============================
+       RIGHT: LESSON DRAWER
+    ============================ */
+    .lesson-pane {
+        width: 280px;
+        border-left: 1px solid #d0d7e2;
+        background: #ffffff;
+        padding: 14px;
+        overflow-y: auto;
+    }
+
+    .lesson-pane-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 8px;
+    }
+
+    .lesson-pane-title {
+        font-size: 14px;
+        font-weight: 600;
+    }
+
+    .lesson-pane-subtitle {
+        font-size: 11px;
+        color: #6b7b93;
+    }
+
+    .lesson-item {
+        padding: 8px 10px;
         border-radius: 8px;
+        margin-bottom: 6px;
+        cursor: pointer;
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+        border: 1px solid transparent;
+        transition: background 0.1s ease, border-color 0.1s ease;
     }
 
-    .admin-progress-card h4 {
-        margin: 0;
+    .lesson-item:hover {
+        background: #f3f6fb;
+        border-color: #cbd2e1;
     }
 
-    .admin-progress-card p {
-        margin: 5px 0;
+    .lesson-item.active {
+        background: #e6f0ff;
+        border-color: #0a66c2;
+    }
+
+    .lesson-item-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .lesson-item-title {
+        font-size: 13px;
+        font-weight: 600;
+    }
+
+    .lesson-item-duration {
+        font-size: 11px;
+        color: #6b7b93;
+    }
+
+    .lesson-item-bottom {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 11px;
+        color: #6b7b93;
+    }
+
+    .lesson-status {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+    }
+
+    .status-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: #cbd2e1;
+    }
+
+    .status-dot.completed {
+        background: #22c55e;
+    }
+
+    .status-dot.current {
+        background: #0a66c2;
+    }
+
+    .lesson-type-pill {
+        padding: 2px 6px;
+        border-radius: 999px;
+        background: #f3f4ff;
+        color: #4b5fc0;
     }
 
     /* ============================
@@ -268,101 +582,207 @@
         left: 0;
         width: 100%;
         height: 100%;
-        background: rgba(0,0,0,0.5);
-        display: flex;
+        background: rgba(15, 23, 42, 0.45);
+        display: none;
         justify-content: center;
         align-items: center;
         z-index: 9999;
     }
 
-    .cert-content {
-        background: #fff;
-        padding: 40px;
-        width: 600px;
-        border-radius: 10px;
+    .cert-card {
+        background: #ffffff;
+        padding: 32px;
+        width: 520px;
+        border-radius: 16px;
+        box-shadow: 0 24px 60px rgba(15, 23, 42, 0.35);
         text-align: center;
-        box-shadow: 0 0 20px rgba(0,0,0,0.3);
     }
 
-    .cert-content h1 {
+    .cert-title {
+        font-size: 22px;
+        font-weight: 700;
+        margin-bottom: 6px;
+    }
+
+    .cert-subtitle {
+        font-size: 13px;
+        color: #6b7b93;
+        margin-bottom: 18px;
+    }
+
+    .cert-name {
+        font-size: 18px;
+        font-weight: 600;
+        margin-bottom: 4px;
+    }
+
+    .cert-role {
+        font-size: 14px;
+        color: #364152;
         margin-bottom: 10px;
     }
 
-    .cert-content h2,
-    .cert-content h3 {
-        margin: 5px 0;
+    .cert-meta {
+        font-size: 12px;
+        color: #6b7b93;
+        margin-bottom: 4px;
     }
 
-    /* ============================
-       TRAINING MODAL
-    ============================ */
-    .training-modal {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0,0,0,0.5);
-        display: none;
-        justify-content: center;
-        align-items: center;
-        z-index: 9998;
-    }
-
-    .training-content {
-        background: #fff;
-        padding: 30px;
-        width: 700px;
-        max-height: 80vh;
-        overflow-y: auto;
-        border-radius: 10px;
-        box-shadow: 0 0 20px rgba(0,0,0,0.3);
-    }
-
-    .training-content h2 {
-        margin-top: 0;
-    }
-
-    .quiz-question {
-        margin-top: 20px;
-        font-weight: bold;
-    }
-
-    .quiz-options label {
-        display: block;
-        margin-top: 5px;
-    }
-
-    .training-actions {
-        margin-top: 20px;
+    .cert-actions {
+        margin-top: 18px;
         display: flex;
+        justify-content: center;
         gap: 10px;
     }
 
-    .complete-module-btn {
-        background: #28a745;
-        color: white;
-        padding: 10px 15px;
+    .cert-btn {
+        padding: 8px 16px;
+        border-radius: 999px;
         border: none;
+        cursor: pointer;
+        font-size: 13px;
+        font-weight: 600;
+    }
+
+    .cert-btn.primary {
+        background: #0a66c2;
+        color: #ffffff;
+    }
+
+    .cert-btn.primary:hover {
+        background: #004182;
+    }
+
+    .cert-btn.secondary {
+        background: #ffffff;
+        color: #364152;
+        border: 1px solid #cbd2e1;
+    }
+
+    .cert-btn.secondary:hover {
+        background: #f5f7fb;
+    }
+
+    /* ============================
+       ADMIN PANEL
+    ============================ */
+    .admin-panel {
+        padding: 16px;
+        border-top: 1px solid #d0d7e2;
+        background: #ffffff;
+    }
+
+    .admin-grid {
+        display: grid;
+        grid-template-columns: 1.2fr 1fr;
+        gap: 16px;
+    }
+
+    .admin-card {
+        background: #f8fafc;
+        border-radius: 10px;
+        padding: 14px;
+        border: 1px solid #d0d7e2;
+    }
+
+    .admin-card h3 {
+        font-size: 14px;
+        font-weight: 600;
+        margin-bottom: 8px;
+    }
+
+    .admin-card label {
+        font-size: 12px;
+        font-weight: 600;
+        margin-top: 8px;
+        display: block;
+        color: #364152;
+    }
+
+    .admin-card input,
+    .admin-card select {
+        width: 100%;
+        padding: 8px;
+        margin-top: 4px;
+        margin-bottom: 8px;
         border-radius: 6px;
+        border: 1px solid #cbd2e1;
+        font-size: 13px;
+    }
+
+    .admin-btn {
+        padding: 8px 14px;
+        border-radius: 999px;
+        border: none;
+        background: #0a66c2;
+        color: #ffffff;
+        font-size: 13px;
+        font-weight: 600;
         cursor: pointer;
     }
 
-    .complete-module-btn:hover {
-        background: #1e7e34;
+    .admin-btn:hover {
+        background: #004182;
     }
 
-    .close-training-btn {
-        background: #6c757d;
-        color: white;
-        padding: 10px 15px;
+    .admin-message {
+        font-size: 12px;
+        margin-top: 6px;
+    }
+
+    .user-card {
+        background: #ffffff;
+        border-radius: 8px;
+        padding: 10px;
+        margin-bottom: 8px;
+        border: 1px solid #d0d7e2;
+        font-size: 12px;
+    }
+
+    .user-card h4 {
+        font-size: 13px;
+        margin: 0 0 4px 0;
+    }
+
+    .delete-user-btn {
+        margin-top: 6px;
+        padding: 5px 10px;
+        border-radius: 999px;
         border: none;
-        border-radius: 6px;
+        background: #d93025;
+        color: #ffffff;
+        font-size: 11px;
         cursor: pointer;
     }
 
-    .close-training-btn:hover {
-        background: #545b62;
+    .delete-user-btn:hover {
+        background: #b31412;
+    }
+
+    .admin-progress-card {
+        background: #ffffff;
+        border-radius: 8px;
+        padding: 10px;
+        margin-bottom: 8px;
+        border: 1px solid #d0d7e2;
+        font-size: 12px;
+    }
+
+    .admin-progress-card h4 {
+        font-size: 13px;
+        margin: 0 0 4px 0;
+    }
+
+    @media (max-width: 1024px) {
+        .library-pane {
+            display: none;
+        }
+        .lesson-pane {
+            display: none;
+        }
+        .app-body {
+            flex-direction: column;
+        }
     }
     </style>
 </head>
@@ -371,9 +791,10 @@
 <!-- ============================
      LOGIN PAGE
 ============================ -->
-<div id="loginPage" class="login-container">
-    <div class="login-box">
-        <h1 class="login-title">Training Portal Login</h1>
+<div id="loginPage" class="center-screen">
+    <div class="auth-card">
+        <div class="auth-title">Sign in to Training</div>
+        <div class="auth-subtitle">Modern LinkedIn Learning–style training portal</div>
 
         <label>Email</label>
         <input type="email" id="loginEmail" placeholder="employee@company.com">
@@ -381,112 +802,132 @@
         <label>Password</label>
         <input type="password" id="loginPassword" placeholder="Enter password">
 
-        <button id="loginButton" class="login-btn">Login</button>
+        <button id="loginButton" class="primary-btn">Sign in</button>
 
-        <p id="loginError" class="login-error"></p>
+        <div id="loginError" class="error-text"></div>
     </div>
 </div>
 
 <!-- ============================
      FIRST-TIME PASSWORD SETUP
 ============================ -->
-<div id="passwordSetupPage" class="login-container" style="display:none;">
-    <div class="login-box">
-        <h1 class="login-title">Create Your Password</h1>
+<div id="passwordSetupPage" class="center-screen" style="display:none;">
+    <div class="auth-card">
+        <div class="auth-title">Create your password</div>
+        <div class="auth-subtitle">First-time setup for your training account</div>
 
-        <p id="setupEmailDisplay"></p>
+        <p id="setupEmailDisplay" style="font-size:13px; color:#364152; margin-bottom:10px;"></p>
 
-        <label>New Password</label>
+        <label>New password</label>
         <input type="password" id="setupPassword" placeholder="Create a password">
 
-        <button id="setupPasswordButton" class="login-btn">Save Password</button>
+        <button id="setupPasswordButton" class="primary-btn">Save password & continue</button>
 
-        <p id="setupError" class="login-error"></p>
+        <div id="setupError" class="error-text"></div>
     </div>
 </div>
 
 <!-- ============================
-     MAIN APP CONTAINER
+     MAIN APP SHELL
 ============================ -->
-<div class="app" style="display:none; padding:20px;">
+<div id="appShell" class="app-shell">
 
-    <h2 id="dashboardGreeting">Welcome</h2>
-    <p id="dashboardProgress">Overall Progress: 0/0 (0%)</p>
-
-    <button onclick="logout()" class="logout-btn">Logout</button>
-
-    <!-- Certificate Status Box -->
-    <div id="certificateBox" class="certificate-box">
-        <h3>Certificate Status</h3>
-        <p>Complete all required modules to unlock your certificate.</p>
-    </div>
-
-    <!-- ============================
-         SALES TRAINING
-    ============================= -->
-    <div id="salesTraining" class="section">
-        <h2>Sales Training</h2>
-
-        <div class="training-item" data-training-id="sales-101" data-required="true">
-            <h3>Sales Fundamentals 101</h3>
-            <p>Learn the core steps of consultative selling, discovery, and closing.</p>
-            <button class="launch-training-btn">Launch Training</button>
-            <p class="training-status"></p>
+    <!-- Top bar -->
+    <div class="top-bar">
+        <div class="top-bar-left">
+            <div class="logo-dot"></div>
+            <div>
+                <div class="top-title">Learning Portal</div>
+                <div style="font-size:11px; color:#6b7b93;">LinkedIn Learning–style hybrid courses</div>
+            </div>
         </div>
-
-        <div class="training-item" data-training-id="sales-201" data-required="false">
-            <h3>Advanced Account Management</h3>
-            <p>Deep dive into strategic accounts, retention, and upsell planning.</p>
-            <button class="launch-training-btn">Launch Training</button>
-            <p class="training-status"></p>
+        <div class="top-bar-right">
+            <span id="topUserEmail" class="pill"></span>
+            <span id="topUserRole" class="pill"></span>
+            <button class="logout-btn" onclick="logout()">Sign out</button>
         </div>
     </div>
 
-    <!-- ============================
-         TECH TRAINING
-    ============================= -->
-    <div id="techTraining" class="section">
-        <h2>Technical Training</h2>
+    <!-- Main body -->
+    <div class="app-body">
 
-        <div class="training-item" data-training-id="tech-101" data-required="true">
-            <h3>Print System Basics</h3>
-            <p>Understand core print workflows, drivers, and basic troubleshooting.</p>
-            <button class="launch-training-btn">Launch Training</button>
-            <p class="training-status"></p>
+        <!-- LEFT: Course Library -->
+        <div class="library-pane">
+            <div class="library-header">
+                <div>
+                    <div class="library-title">Your Courses</div>
+                    <div class="library-subtitle">Select a course to begin</div>
+                </div>
+            </div>
+            <div id="courseList"></div>
+        </div>
+
+        <!-- CENTER: Course Player -->
+        <div class="player-pane">
+            <div class="course-header">
+                <div class="course-header-title" id="currentCourseTitle">Select a course to start learning</div>
+                <div class="course-header-meta" id="currentCourseMeta">
+                    <span>Duration: —</span>
+                    <span>Lessons: —</span>
+                </div>
+                <div class="course-progress-top">
+                    <span class="course-progress-label" id="courseProgressLabel">Progress: 0%</span>
+                    <div class="course-progress-bar-top">
+                        <div class="course-progress-fill-top" id="courseProgressFillTop"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="video-pane">
+                <div class="video-player">
+                    <div class="video-placeholder-text" id="videoPlaceholderText">
+                        Select a lesson to load the training video, text, and quiz.
+                    </div>
+                    <div class="video-play-button" id="videoPlayButton" style="display:none;"></div>
+                </div>
+            </div>
+
+            <div class="content-pane">
+                <div class="lesson-title" id="lessonTitle">No lesson selected</div>
+                <div class="lesson-meta" id="lessonMeta">Choose a lesson from the right to begin.</div>
+                <div class="lesson-body" id="lessonBody"></div>
+
+                <div class="quiz-block" id="quizBlock" style="display:none;">
+                    <div class="quiz-question" id="quizQuestion"></div>
+                    <div class="quiz-options" id="quizOptions"></div>
+                    <div class="quiz-feedback" id="quizFeedback"></div>
+                </div>
+
+                <div class="lesson-actions" id="lessonActions" style="display:none;">
+                    <button class="complete-lesson-btn" id="completeLessonButton">Mark lesson complete</button>
+                    <button class="next-lesson-btn" id="nextLessonButton">Next lesson</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- RIGHT: Lesson Drawer -->
+        <div class="lesson-pane">
+            <div class="lesson-pane-header">
+                <div>
+                    <div class="lesson-pane-title">Course lessons</div>
+                    <div class="lesson-pane-subtitle" id="lessonPaneSubtitle">Select a course to view lessons</div>
+                </div>
+            </div>
+            <div id="lessonList"></div>
         </div>
     </div>
 
-    <!-- ============================
-         OPERATIONS TRAINING
-    ============================= -->
-    <div id="operationsTraining" class="section">
-        <h2>Operations Training</h2>
-
-        <div class="training-item" data-training-id="ops-101" data-required="true">
-            <h3>Warehouse & Logistics Fundamentals</h3>
-            <p>Learn receiving, staging, inventory accuracy, and delivery coordination.</p>
-            <button class="launch-training-btn">Launch Training</button>
-            <p class="training-status"></p>
-        </div>
-    </div>
-
-    <!-- ============================
-         ADMIN PANEL
-    ============================= -->
-    <div id="adminPanel" class="section" style="display:none;">
-
-        <div class="admin-section">
-            <h2>Administrator Control Panel</h2>
-            <p>Create and manage user accounts for the Training Portal.</p>
-
-            <div class="create-user-box">
-                <h3>Create New User</h3>
-
+    <!-- ADMIN PANEL -->
+    <div id="adminPanel" class="admin-panel" style="display:none;">
+        <div style="font-size:13px; font-weight:600; margin-bottom:8px;">Administrator tools</div>
+        <div class="admin-grid">
+            <div class="admin-card">
+                <h3>Create user</h3>
                 <label>Email</label>
                 <input type="email" id="newUserEmail" placeholder="employee@company.com">
 
-                <label>Password</label>
-                <input type="password" id="newUserPassword" placeholder="Enter password (optional)">
+                <label>Password (optional)</label>
+                <input type="password" id="newUserPassword" placeholder="Leave blank for first-time setup">
 
                 <label>Role</label>
                 <select id="newUserRole">
@@ -496,6 +937,7 @@
                     <option>Sales Enablement & Support</option>
 
                     <option>Print and Image Service Technician</option>
+                    <option>Technical Troubleshooting & Diagnostics</option>
                     <option>IT / Network Engineer</option>
                     <option>Field Service Technician</option>
                     <option>Delivery & Cable Specialist</option>
@@ -504,77 +946,55 @@
                     <option>Leasing & Billing Administrative Specialist</option>
                     <option>Administrative Assistant / Reception</option>
 
+                    <option>Customer Service & Support</option>
+                    <option>Leadership & Management</option>
+
                     <option>Administrator</option>
                 </select>
 
-                <button id="createUserButton" class="admin-btn">Create User</button>
-                <p id="createUserMessage" class="admin-message"></p>
+                <button class="admin-btn" id="createUserButton">Create user</button>
+                <div id="createUserMessage" class="admin-message"></div>
             </div>
 
-            <hr>
-
-            <div class="user-list-box">
-                <h3>Existing Users</h3>
+            <div class="admin-card">
+                <h3>Existing users</h3>
                 <div id="userList"></div>
             </div>
         </div>
 
-        <!-- ADMIN TRAINING PROGRESS DASHBOARD -->
-        <div class="admin-section">
-            <h2>Training Progress Dashboard</h2>
-            <p>View employee progress, certificate status, and completion details.</p>
-
-            <div id="adminProgressList"></div>
+        <div class="admin-grid" style="margin-top:16px;">
+            <div class="admin-card">
+                <h3>Training progress overview</h3>
+                <div id="adminProgressList"></div>
+            </div>
+            <div class="admin-card">
+                <h3>Certificate status</h3>
+                <p style="font-size:12px; color:#364152;">
+                    Certificates are unlocked when a user completes all lessons in at least one assigned course.
+                </p>
+            </div>
         </div>
-    </div>
-
-</div> <!-- end .app -->
-
-<!-- ============================
-     CERTIFICATE MODAL
-============================ -->
-<div id="certificateModal" class="cert-modal" style="display:none;">
-    <div class="cert-content">
-        <h1>Certificate of Completion</h1>
-        <p>This certifies that</p>
-        <h2 id="certName">[Employee Name]</h2>
-        <p>has successfully completed all required training for the role</p>
-        <h3 id="certRole">[Role]</h3>
-        <p id="certDate">Date: [Completion Date]</p>
-        <p>Certificate ID: <span id="certId">[ID]</span></p>
-
-        <button onclick="window.print()" class="cert-btn">Print / Save as PDF</button>
-        <button onclick="closeCertificate()" class="cert-btn" style="background:#d9534f;">Close</button>
     </div>
 </div>
 
 <!-- ============================
-     TRAINING MODAL
+     CERTIFICATE MODAL
 ============================ -->
-<div id="trainingModal" class="training-modal">
-    <div class="training-content">
-        <h2 id="trainingTitle">[Module Title]</h2>
-        <p id="trainingDescription">[Module Description]</p>
+<div id="certificateModal" class="cert-modal">
+    <div class="cert-card">
+        <div class="cert-title">Certificate of Completion</div>
+        <div class="cert-subtitle">This certifies that the learner has completed all required lessons in the selected course.</div>
 
-        <hr>
+        <div class="cert-name" id="certName">[Name]</div>
+        <div class="cert-role" id="certRole">[Role]</div>
 
-        <h3>Training Content</h3>
-        <div id="trainingBody">
-            <!-- Filled dynamically per module -->
-        </div>
+        <div class="cert-meta" id="certCourse">Course: [Course]</div>
+        <div class="cert-meta" id="certDate">Date: [Date]</div>
+        <div class="cert-meta">Certificate ID: <span id="certId">[ID]</span></div>
 
-        <hr>
-
-        <h3>Quick Quiz</h3>
-        <p class="quiz-question" id="quizQuestion">[Question]</p>
-        <div class="quiz-options" id="quizOptions">
-            <!-- Options injected here -->
-        </div>
-        <p id="quizFeedback" style="margin-top:10px; font-weight:bold;"></p>
-
-        <div class="training-actions">
-            <button class="complete-module-btn" id="completeModuleButton">Complete Module</button>
-            <button class="close-training-btn" onclick="closeTrainingModal()">Close</button>
+        <div class="cert-actions">
+            <button class="cert-btn primary" onclick="window.print()">Print / Save as PDF</button>
+            <button class="cert-btn secondary" onclick="closeCertificate()">Close</button>
         </div>
     </div>
 </div>
@@ -583,9 +1003,645 @@
 /* ============================
    STORAGE KEYS
 ============================ */
-const USERS_KEY = 'trainingPortalUsers';
-const SESSION_KEY = 'trainingPortalSession';
-const TRAINING_KEY = 'trainingProgress';
+const USERS_KEY = 'llmsUsers';
+const SESSION_KEY = 'llmsSession';
+const PROGRESS_KEY = 'llmsProgress';
+
+/* ============================
+   COURSE & LESSON DATA
+   (10-course library, hybrid: video + text + quiz)
+============================ */
+const COURSES = [
+    {
+        id: 'sales-fundamentals-101',
+        title: 'Sales Fundamentals 101',
+        category: 'Sales',
+        duration: '2h 30m',
+        roleTags: [
+            'IT Account Executive / Outside Sales',
+            'Managed Print Services (MPS) Specialist',
+            'Strategic / Regional Account Manager',
+            'Sales Enablement & Support',
+            'Administrator'
+        ],
+        lessons: [
+            {
+                id: 'sf101-lesson1',
+                title: 'Introduction to Consultative Selling',
+                duration: '12m',
+                type: 'Video + Text + Quiz',
+                body: `
+                    <p>This lesson introduces the concept of consultative selling, where the focus shifts from pushing products to understanding the customer’s world.</p>
+                    <ul>
+                        <li>What consultative selling is and why it matters</li>
+                        <li>How it differs from transactional selling</li>
+                        <li>The mindset of a trusted advisor vs. a vendor</li>
+                    </ul>
+                    <p>By the end of this lesson, you should be able to explain why listening and discovery are more powerful than pitching features.</p>
+                `,
+                quiz: {
+                    question: 'What is the primary focus of consultative selling?',
+                    options: [
+                        { text: 'Closing as fast as possible', correct: false },
+                        { text: 'Understanding the customer’s needs and context', correct: true },
+                        { text: 'Offering discounts and promotions', correct: false },
+                        { text: 'Talking about product features only', correct: false }
+                    ]
+                }
+            },
+            {
+                id: 'sf101-lesson2',
+                title: 'Discovery Questions that Uncover Real Needs',
+                duration: '18m',
+                type: 'Video + Text + Quiz',
+                body: `
+                    <p>Discovery questions help you uncover the real problems, constraints, and goals behind a customer’s request.</p>
+                    <ul>
+                        <li>Open-ended vs. closed questions</li>
+                        <li>Probing for impact and urgency</li>
+                        <li>Listening for emotional drivers and business drivers</li>
+                    </ul>
+                    <p>Strong discovery leads to solutions that feel tailored and relevant, increasing trust and closing rates.</p>
+                `,
+                quiz: {
+                    question: 'Which type of question best uncovers deeper customer needs?',
+                    options: [
+                        { text: 'Yes/No questions', correct: false },
+                        { text: 'Open-ended questions that invite explanation', correct: true },
+                        { text: 'Questions about pricing only', correct: false },
+                        { text: 'Questions about competitor products', correct: false }
+                    ]
+                }
+            },
+            {
+                id: 'sf101-lesson3',
+                title: 'Presenting Solutions with Clear Value',
+                duration: '20m',
+                type: 'Video + Text + Quiz',
+                body: `
+                    <p>Once you understand the customer’s needs, you present solutions in a way that connects features to outcomes.</p>
+                    <ul>
+                        <li>Translating features into business value</li>
+                        <li>Using customer language instead of internal jargon</li>
+                        <li>Summarizing benefits in terms of time, money, and risk</li>
+                    </ul>
+                    <p>Effective presentations make it easy for the customer to see how your solution fits into their priorities.</p>
+                `,
+                quiz: {
+                    question: 'What should a strong solution presentation focus on?',
+                    options: [
+                        { text: 'Internal technical jargon', correct: false },
+                        { text: 'Business outcomes and value for the customer', correct: true },
+                        { text: 'Company history and awards', correct: false },
+                        { text: 'Personal opinions only', correct: false }
+                    ]
+                }
+            }
+        ]
+    },
+    {
+        id: 'advanced-sales-strategy',
+        title: 'Advanced Sales & Account Strategy',
+        category: 'Sales',
+        duration: '3h 10m',
+        roleTags: [
+            'IT Account Executive / Outside Sales',
+            'Strategic / Regional Account Manager',
+            'Sales Enablement & Support',
+            'Administrator'
+        ],
+        lessons: [
+            {
+                id: 'as-lesson1',
+                title: 'Strategic Account Planning',
+                duration: '22m',
+                type: 'Video + Text + Quiz',
+                body: `
+                    <p>Strategic account planning helps you map stakeholders, understand long-term goals, and identify growth opportunities.</p>
+                    <ul>
+                        <li>Building an account map</li>
+                        <li>Identifying decision-makers and influencers</li>
+                        <li>Aligning your roadmap with the customer’s strategy</li>
+                    </ul>
+                `,
+                quiz: {
+                    question: 'Why is an account map useful?',
+                    options: [
+                        { text: 'It shows only pricing history', correct: false },
+                        { text: 'It clarifies who is involved and how decisions are made', correct: true },
+                        { text: 'It replaces all communication with the customer', correct: false },
+                        { text: 'It is used only for internal reporting', correct: false }
+                    ]
+                }
+            },
+            {
+                id: 'as-lesson2',
+                title: 'Retention and Expansion Strategies',
+                duration: '24m',
+                type: 'Video + Text + Quiz',
+                body: `
+                    <p>Retention and expansion are key to sustainable revenue. This lesson explores how to keep accounts healthy and grow them over time.</p>
+                    <ul>
+                        <li>Proactive check-ins and value reviews</li>
+                        <li>Identifying expansion opportunities</li>
+                        <li>Reducing churn through better alignment</li>
+                    </ul>
+                `,
+                quiz: {
+                    question: 'What is a core goal of retention strategies?',
+                    options: [
+                        { text: 'Reducing contact with customers', correct: false },
+                        { text: 'Maintaining satisfaction and preventing churn', correct: true },
+                        { text: 'Focusing only on new prospects', correct: false },
+                        { text: 'Avoiding feedback conversations', correct: false }
+                    ]
+                }
+            }
+        ]
+    },
+    {
+        id: 'print-system-basics',
+        title: 'Print System Basics',
+        category: 'Technical',
+        duration: '2h 00m',
+        roleTags: [
+            'Print and Image Service Technician',
+            'IT / Network Engineer',
+            'Field Service Technician',
+            'Delivery & Cable Specialist',
+            'Administrator'
+        ],
+        lessons: [
+            {
+                id: 'psb-lesson1',
+                title: 'Understanding Print Drivers and Queues',
+                duration: '16m',
+                type: 'Video + Text + Quiz',
+                body: `
+                    <p>This lesson explains how print drivers and queues work together to move jobs from user devices to output devices.</p>
+                    <ul>
+                        <li>Types of print drivers</li>
+                        <li>How print queues manage jobs</li>
+                        <li>Common issues with drivers and queues</li>
+                    </ul>
+                `,
+                quiz: {
+                    question: 'What is the primary role of a print queue?',
+                    options: [
+                        { text: 'To store user passwords', correct: false },
+                        { text: 'To manage and sequence print jobs', correct: true },
+                        { text: 'To control monitor brightness', correct: false },
+                        { text: 'To update operating systems', correct: false }
+                    ]
+                }
+            },
+            {
+                id: 'psb-lesson2',
+                title: 'Basic Print Troubleshooting',
+                duration: '20m',
+                type: 'Video + Text + Quiz',
+                body: `
+                    <p>Basic troubleshooting steps can resolve many common print issues quickly.</p>
+                    <ul>
+                        <li>Checking connectivity and power</li>
+                        <li>Verifying driver installation</li>
+                        <li>Clearing stuck jobs from the queue</li>
+                    </ul>
+                `,
+                quiz: {
+                    question: 'What is a good first step when a print job is stuck?',
+                    options: [
+                        { text: 'Restart the entire network', correct: false },
+                        { text: 'Check the print queue and clear errors', correct: true },
+                        { text: 'Change the user’s email address', correct: false },
+                        { text: 'Adjust screen resolution', correct: false }
+                    ]
+                }
+            }
+        ]
+    },
+    {
+        id: 'technical-troubleshooting-diagnostics',
+        title: 'Technical Troubleshooting & Diagnostics',
+        category: 'Technical',
+        duration: '3h 20m',
+        roleTags: [
+            'Technical Troubleshooting & Diagnostics',
+            'Print and Image Service Technician',
+            'IT / Network Engineer',
+            'Field Service Technician',
+            'Administrator'
+        ],
+        lessons: [
+            {
+                id: 'ttd-lesson1',
+                title: 'Structured Troubleshooting Frameworks',
+                duration: '24m',
+                type: 'Video + Text + Quiz',
+                body: `
+                    <p>Structured troubleshooting frameworks help you approach complex issues methodically.</p>
+                    <ul>
+                        <li>Defining the problem clearly</li>
+                        <li>Isolating variables</li>
+                        <li>Testing hypotheses and documenting findings</li>
+                    </ul>
+                `,
+                quiz: {
+                    question: 'Why is documenting troubleshooting steps important?',
+                    options: [
+                        { text: 'It is only for compliance audits', correct: false },
+                        { text: 'It helps repeat solutions and share knowledge', correct: true },
+                        { text: 'It replaces communication with customers', correct: false },
+                        { text: 'It is required for all minor issues', correct: false }
+                    ]
+                }
+            },
+            {
+                id: 'ttd-lesson2',
+                title: 'Common Hardware and Network Issues',
+                duration: '26m',
+                type: 'Video + Text + Quiz',
+                body: `
+                    <p>This lesson covers frequent hardware and network problems and how to diagnose them.</p>
+                    <ul>
+                        <li>Power and cabling issues</li>
+                        <li>IP conflicts and connectivity problems</li>
+                        <li>Performance bottlenecks</li>
+                    </ul>
+                `,
+                quiz: {
+                    question: 'What is a typical sign of a network connectivity issue?',
+                    options: [
+                        { text: 'Printer lights are too bright', correct: false },
+                        { text: 'Devices cannot reach shared resources or servers', correct: true },
+                        { text: 'Monitor color is slightly off', correct: false },
+                        { text: 'Keyboard layout changes', correct: false }
+                    ]
+                }
+            }
+        ]
+    },
+    {
+        id: 'warehouse-logistics-essentials',
+        title: 'Warehouse & Logistics Essentials',
+        category: 'Operations',
+        duration: '2h 15m',
+        roleTags: [
+            'Warehouse & Logistics Worker',
+            'Delivery & Cable Specialist',
+            'Administrator'
+        ],
+        lessons: [
+            {
+                id: 'wle-lesson1',
+                title: 'Accurate Receiving and Inventory Logging',
+                duration: '18m',
+                type: 'Video + Text + Quiz',
+                body: `
+                    <p>Accurate receiving ensures that inventory records match reality and that downstream processes run smoothly.</p>
+                    <ul>
+                        <li>Verifying shipments against purchase orders</li>
+                        <li>Logging items correctly in systems</li>
+                        <li>Handling discrepancies and damaged goods</li>
+                    </ul>
+                `,
+                quiz: {
+                    question: 'Why is accurate receiving critical?',
+                    options: [
+                        { text: 'It improves office décor', correct: false },
+                        { text: 'It keeps inventory records aligned with actual stock', correct: true },
+                        { text: 'It reduces employee breaks', correct: false },
+                        { text: 'It changes printer speed', correct: false }
+                    ]
+                }
+            },
+            {
+                id: 'wle-lesson2',
+                title: 'Staging, Labeling, and Delivery Coordination',
+                duration: '20m',
+                type: 'Video + Text + Quiz',
+                body: `
+                    <p>Proper staging and labeling make deliveries faster and more accurate.</p>
+                    <ul>
+                        <li>Organizing items by route or project</li>
+                        <li>Clear labeling for installers and drivers</li>
+                        <li>Coordinating schedules and communication</li>
+                    </ul>
+                `,
+                quiz: {
+                    question: 'What does good staging help with?',
+                    options: [
+                        { text: 'Random placement of items', correct: false },
+                        { text: 'Faster, more accurate deliveries', correct: true },
+                        { text: 'Reducing inventory visibility', correct: false },
+                        { text: 'Avoiding communication with drivers', correct: false }
+                    ]
+                }
+            }
+        ]
+    },
+    {
+        id: 'administrative-billing-operations',
+        title: 'Administrative & Billing Operations',
+        category: 'Operations',
+        duration: '2h 40m',
+        roleTags: [
+            'Leasing & Billing Administrative Specialist',
+            'Administrative Assistant / Reception',
+            'Administrator'
+        ],
+        lessons: [
+            {
+                id: 'abo-lesson1',
+                title: 'Accurate Billing and Documentation',
+                duration: '22m',
+                type: 'Video + Text + Quiz',
+                body: `
+                    <p>Accurate billing builds trust and reduces disputes.</p>
+                    <ul>
+                        <li>Verifying contract terms</li>
+                        <li>Ensuring usage and charges match agreements</li>
+                        <li>Documenting changes and approvals</li>
+                    </ul>
+                `,
+                quiz: {
+                    question: 'What is a key outcome of accurate billing?',
+                    options: [
+                        { text: 'More confusion for customers', correct: false },
+                        { text: 'Fewer disputes and higher trust', correct: true },
+                        { text: 'Random invoice amounts', correct: false },
+                        { text: 'Less need for documentation', correct: false }
+                    ]
+                }
+            },
+            {
+                id: 'abo-lesson2',
+                title: 'Effective Administrative Communication',
+                duration: '18m',
+                type: 'Video + Text + Quiz',
+                body: `
+                    <p>Clear communication keeps operations aligned and reduces errors.</p>
+                    <ul>
+                        <li>Using concise, structured messages</li>
+                        <li>Confirming understanding and next steps</li>
+                        <li>Maintaining professional tone with internal and external contacts</li>
+                    </ul>
+                `,
+                quiz: {
+                    question: 'What does effective administrative communication help prevent?',
+                    options: [
+                        { text: 'Alignment between teams', correct: false },
+                        { text: 'Misunderstandings and errors', correct: true },
+                        { text: 'Documentation of decisions', correct: false },
+                        { text: 'Professional tone', correct: false }
+                    ]
+                }
+            }
+        ]
+    },
+    {
+        id: 'customer-service-excellence',
+        title: 'Customer Service Excellence',
+        category: 'Professional Development',
+        duration: '2h 20m',
+        roleTags: [
+            'Customer Service & Support',
+            'IT Account Executive / Outside Sales',
+            'Warehouse & Logistics Worker',
+            'Administrative Assistant / Reception',
+            'Administrator'
+        ],
+        lessons: [
+            {
+                id: 'cse-lesson1',
+                title: 'Foundations of Great Service',
+                duration: '18m',
+                type: 'Video + Text + Quiz',
+                body: `
+                    <p>Great service is built on empathy, clarity, and reliability.</p>
+                    <ul>
+                        <li>Listening actively to customers</li>
+                        <li>Clarifying expectations and timelines</li>
+                        <li>Following through on commitments</li>
+                    </ul>
+                `,
+                quiz: {
+                    question: 'What is a core behavior in great customer service?',
+                    options: [
+                        { text: 'Ignoring customer concerns', correct: false },
+                        { text: 'Listening actively and responding clearly', correct: true },
+                        { text: 'Avoiding follow-up', correct: false },
+                        { text: 'Using jargon to sound expert', correct: false }
+                    ]
+                }
+            },
+            {
+                id: 'cse-lesson2',
+                title: 'Handling Difficult Conversations',
+                duration: '22m',
+                type: 'Video + Text + Quiz',
+                body: `
+                    <p>Difficult conversations can be turned into opportunities to build trust.</p>
+                    <ul>
+                        <li>Staying calm and respectful</li>
+                        <li>Focusing on solutions, not blame</li>
+                        <li>Setting clear next steps</li>
+                    </ul>
+                `,
+                quiz: {
+                    question: 'What is a helpful approach in a difficult conversation?',
+                    options: [
+                        { text: 'Blaming the customer', correct: false },
+                        { text: 'Focusing on solutions and next steps', correct: true },
+                        { text: 'Avoiding any responsibility', correct: false },
+                        { text: 'Ending the call quickly', correct: false }
+                    ]
+                }
+            }
+        ]
+    },
+    {
+        id: 'leadership-communication-skills',
+        title: 'Leadership & Communication Skills',
+        category: 'Professional Development',
+        duration: '3h 00m',
+        roleTags: [
+            'Leadership & Management',
+            'Strategic / Regional Account Manager',
+            'Sales Enablement & Support',
+            'Administrator'
+        ],
+        lessons: [
+            {
+                id: 'lcs-lesson1',
+                title: 'Leading with Clarity and Direction',
+                duration: '24m',
+                type: 'Video + Text + Quiz',
+                body: `
+                    <p>Leaders provide clarity, direction, and support.</p>
+                    <ul>
+                        <li>Setting clear goals and expectations</li>
+                        <li>Communicating priorities consistently</li>
+                        <li>Removing obstacles for the team</li>
+                    </ul>
+                `,
+                quiz: {
+                    question: 'What is a key responsibility of a leader?',
+                    options: [
+                        { text: 'Creating confusion about priorities', correct: false },
+                        { text: 'Providing clarity and direction', correct: true },
+                        { text: 'Avoiding feedback conversations', correct: false },
+                        { text: 'Ignoring team obstacles', correct: false }
+                    ]
+                }
+            },
+            {
+                id: 'lcs-lesson2',
+                title: 'Giving and Receiving Feedback',
+                duration: '26m',
+                type: 'Video + Text + Quiz',
+                body: `
+                    <p>Feedback helps individuals and teams grow.</p>
+                    <ul>
+                        <li>Framing feedback around behaviors and impact</li>
+                        <li>Receiving feedback with openness</li>
+                        <li>Turning feedback into action</li>
+                    </ul>
+                `,
+                quiz: {
+                    question: 'What makes feedback most effective?',
+                    options: [
+                        { text: 'Focusing on personal attacks', correct: false },
+                        { text: 'Focusing on behaviors and impact', correct: true },
+                        { text: 'Avoiding specific examples', correct: false },
+                        { text: 'Delivering feedback only once a year', correct: false }
+                    ]
+                }
+            }
+        ]
+    },
+    {
+        id: 'cybersecurity-awareness-training',
+        title: 'Cybersecurity Awareness Training',
+        category: 'Safety & Compliance',
+        duration: '2h 10m',
+        roleTags: [
+            'IT / Network Engineer',
+            'Customer Service & Support',
+            'Leadership & Management',
+            'Administrator'
+        ],
+        lessons: [
+            {
+                id: 'cat-lesson1',
+                title: 'Recognizing Phishing and Social Engineering',
+                duration: '20m',
+                type: 'Video + Text + Quiz',
+                body: `
+                    <p>Phishing and social engineering attacks target human behavior.</p>
+                    <ul>
+                        <li>Common signs of phishing emails</li>
+                        <li>Suspicious links and attachments</li>
+                        <li>Verifying requests through trusted channels</li>
+                    </ul>
+                `,
+                quiz: {
+                    question: 'What is a common sign of a phishing email?',
+                    options: [
+                        { text: 'Perfect grammar and familiar sender', correct: false },
+                        { text: 'Urgent requests for sensitive information', correct: true },
+                        { text: 'No links or attachments', correct: false },
+                        { text: 'Sent from internal IT only', correct: false }
+                    ]
+                }
+            },
+            {
+                id: 'cat-lesson2',
+                title: 'Protecting Accounts and Devices',
+                duration: '22m',
+                type: 'Video + Text + Quiz',
+                body: `
+                    <p>Strong account and device hygiene reduces risk.</p>
+                    <ul>
+                        <li>Using strong, unique passwords</li>
+                        <li>Enabling multi-factor authentication</li>
+                        <li>Keeping software up to date</li>
+                    </ul>
+                `,
+                quiz: {
+                    question: 'Which practice improves account security?',
+                    options: [
+                        { text: 'Sharing passwords with coworkers', correct: false },
+                        { text: 'Using strong, unique passwords and MFA', correct: true },
+                        { text: 'Ignoring software updates', correct: false },
+                        { text: 'Using the same password everywhere', correct: false }
+                    ]
+                }
+            }
+        ]
+    },
+    {
+        id: 'workplace-safety-risk-prevention',
+        title: 'Workplace Safety & Risk Prevention',
+        category: 'Safety & Compliance',
+        duration: '2h 30m',
+        roleTags: [
+            'Warehouse & Logistics Worker',
+            'Delivery & Cable Specialist',
+            'Administrative Assistant / Reception',
+            'Leadership & Management',
+            'Administrator'
+        ],
+        lessons: [
+            {
+                id: 'wsrp-lesson1',
+                title: 'Core Safety Principles',
+                duration: '18m',
+                type: 'Video + Text + Quiz',
+                body: `
+                    <p>Safety principles protect people and operations.</p>
+                    <ul>
+                        <li>Awareness of surroundings</li>
+                        <li>Proper use of equipment</li>
+                        <li>Reporting hazards promptly</li>
+                    </ul>
+                `,
+                quiz: {
+                    question: 'What is a key safety behavior?',
+                    options: [
+                        { text: 'Ignoring hazards', correct: false },
+                        { text: 'Reporting hazards promptly', correct: true },
+                        { text: 'Using equipment without training', correct: false },
+                        { text: 'Avoiding safety procedures', correct: false }
+                    ]
+                }
+            },
+            {
+                id: 'wsrp-lesson2',
+                title: 'Preventing Common Workplace Injuries',
+                duration: '22m',
+                type: 'Video + Text + Quiz',
+                body: `
+                    <p>Many injuries can be prevented with simple habits.</p>
+                    <ul>
+                        <li>Proper lifting techniques</li>
+                        <li>Maintaining clear walkways</li>
+                        <li>Using protective gear when required</li>
+                    </ul>
+                `,
+                quiz: {
+                    question: 'What helps prevent lifting injuries?',
+                    options: [
+                        { text: 'Twisting while lifting heavy loads', correct: false },
+                        { text: 'Using proper lifting techniques and assistance', correct: true },
+                        { text: 'Ignoring weight limits', correct: false },
+                        { text: 'Rushing through tasks', correct: false }
+                    ]
+                }
+            }
+        ]
+    }
+];
 
 /* ============================
    ELEMENT REFERENCES
@@ -602,35 +1658,59 @@ const setupPassword = document.getElementById('setupPassword');
 const setupPasswordButton = document.getElementById('setupPasswordButton');
 const setupError = document.getElementById('setupError');
 
-const appContainer = document.querySelector('.app');
+const appShell = document.getElementById('appShell');
+const topUserEmail = document.getElementById('topUserEmail');
+const topUserRole = document.getElementById('topUserRole');
 
-const adminPanel = document.getElementById('adminPanel');
-const createUserButton = document.getElementById('createUserButton');
-const createUserMessage = document.getElementById('createUserMessage');
-const userList = document.getElementById('userList');
+const courseList = document.getElementById('courseList');
+const lessonList = document.getElementById('lessonList');
+const lessonPaneSubtitle = document.getElementById('lessonPaneSubtitle');
 
-const certificateBox = document.getElementById('certificateBox');
-const certificateModal = document.getElementById('certificateModal');
-const certName = document.getElementById('certName');
-const certRole = document.getElementById('certRole');
-const certDate = document.getElementById('certDate');
-const certId = document.getElementById('certId');
+const currentCourseTitle = document.getElementById('currentCourseTitle');
+const currentCourseMeta = document.getElementById('currentCourseMeta');
+const courseProgressLabel = document.getElementById('courseProgressLabel');
+const courseProgressFillTop = document.getElementById('courseProgressFillTop');
 
-const adminProgressList = document.getElementById('adminProgressList');
+const videoPlaceholderText = document.getElementById('videoPlaceholderText');
+const videoPlayButton = document.getElementById('videoPlayButton');
 
-const trainingModal = document.getElementById('trainingModal');
-const trainingTitle = document.getElementById('trainingTitle');
-const trainingDescription = document.getElementById('trainingDescription');
-const trainingBody = document.getElementById('trainingBody');
+const lessonTitle = document.getElementById('lessonTitle');
+const lessonMeta = document.getElementById('lessonMeta');
+const lessonBody = document.getElementById('lessonBody');
+
+const quizBlock = document.getElementById('quizBlock');
 const quizQuestion = document.getElementById('quizQuestion');
 const quizOptions = document.getElementById('quizOptions');
 const quizFeedback = document.getElementById('quizFeedback');
-const completeModuleButton = document.getElementById('completeModuleButton');
 
-let currentTrainingId = null;
+const lessonActions = document.getElementById('lessonActions');
+const completeLessonButton = document.getElementById('completeLessonButton');
+const nextLessonButton = document.getElementById('nextLessonButton');
+
+const adminPanel = document.getElementById('adminPanel');
+const newUserEmail = document.getElementById('newUserEmail');
+const newUserPassword = document.getElementById('newUserPassword');
+const newUserRole = document.getElementById('newUserRole');
+const createUserButton = document.getElementById('createUserButton');
+const createUserMessage = document.getElementById('createUserMessage');
+const userList = document.getElementById('userList');
+const adminProgressList = document.getElementById('adminProgressList');
+
+const certificateModal = document.getElementById('certificateModal');
+const certName = document.getElementById('certName');
+const certRole = document.getElementById('certRole');
+const certCourse = document.getElementById('certCourse');
+const certDate = document.getElementById('certDate');
+const certId = document.getElementById('certId');
 
 /* ============================
-   USER STORAGE HELPERS
+   STATE
+============================ */
+let currentCourseId = null;
+let currentLessonId = null;
+
+/* ============================
+   STORAGE HELPERS
 ============================ */
 function getUsers() {
     const data = localStorage.getItem(USERS_KEY);
@@ -654,33 +1734,28 @@ function clearSession() {
     localStorage.removeItem(SESSION_KEY);
 }
 
-/* ============================
-   TRAINING STORAGE HELPERS
-============================ */
-function getTrainingProgress() {
-    const data = localStorage.getItem(TRAINING_KEY);
+function getProgress() {
+    const data = localStorage.getItem(PROGRESS_KEY);
     return data ? JSON.parse(data) : {};
 }
 
-function saveTrainingProgress(progress) {
-    localStorage.setItem(TRAINING_KEY, JSON.stringify(progress));
+function saveProgress(progress) {
+    localStorage.setItem(PROGRESS_KEY, JSON.stringify(progress));
 }
 
 /* ============================
-   AUTO-CREATE FIRST ADMIN USER
+   INITIAL ADMIN USER
 ============================ */
 window.addEventListener('load', () => {
     let users = getUsers();
-
     if (users.length === 0) {
         users.push({
-            email: "bryon@company.com",
-            password: "",   // blank → first-time setup
-            role: "Administrator"
+            email: 'bryon@company.com',
+            password: '',
+            role: 'Administrator'
         });
         saveUsers(users);
     }
-
     initializeSystem();
 });
 
@@ -692,7 +1767,7 @@ loginButton.addEventListener('click', () => {
     const password = loginPassword.value.trim();
 
     if (!email) {
-        loginError.textContent = "Please enter your email.";
+        loginError.textContent = 'Please enter your email.';
         return;
     }
 
@@ -700,22 +1775,17 @@ loginButton.addEventListener('click', () => {
     const user = users.find(u => u.email.toLowerCase() === email);
 
     if (!user) {
-        loginError.textContent = "No account found with that email.";
+        loginError.textContent = 'No account found with that email.';
         return;
     }
 
-    if (!user.password || user.password === "") {
-        showPasswordSetup(user.email);
-        return;
-    }
-
-    if (user.password === "temp" || user.password === "1234") {
+    if (!user.password || user.password === '' || user.password === 'temp' || user.password === '1234') {
         showPasswordSetup(user.email);
         return;
     }
 
     if (user.password !== password) {
-        loginError.textContent = "Incorrect password.";
+        loginError.textContent = 'Incorrect password.';
         return;
     }
 
@@ -723,40 +1793,34 @@ loginButton.addEventListener('click', () => {
     initializeSystem();
 });
 
-/* ============================
-   PASSWORD SETUP LOGIC
-============================ */
 function showPasswordSetup(email) {
-    loginPage.style.display = "none";
-    passwordSetupPage.style.display = "flex";
-
+    loginPage.style.display = 'none';
+    passwordSetupPage.style.display = 'flex';
     setupEmailDisplay.textContent = `Setting password for: ${email}`;
     window.passwordSetupEmail = email;
 }
 
 setupPasswordButton.addEventListener('click', () => {
     const newPass = setupPassword.value.trim();
-
     if (!newPass) {
-        setupError.textContent = "Password cannot be empty.";
+        setupError.textContent = 'Password cannot be empty.';
         return;
     }
 
     const email = window.passwordSetupEmail;
     let users = getUsers();
-
     const user = users.find(u => u.email.toLowerCase() === email.toLowerCase());
+
     if (!user) {
-        setupError.textContent = "User not found.";
+        setupError.textContent = 'User not found.';
         return;
     }
 
     user.password = newPass;
     saveUsers(users);
-
     saveSession({ email: user.email, role: user.role });
 
-    passwordSetupPage.style.display = "none";
+    passwordSetupPage.style.display = 'none';
     initializeSystem();
 });
 
@@ -765,378 +1829,383 @@ setupPasswordButton.addEventListener('click', () => {
 ============================ */
 function logout() {
     clearSession();
-    loginPage.style.display = "flex";
-    passwordSetupPage.style.display = "none";
-    appContainer.style.display = "none";
+    appShell.style.display = 'none';
+    passwordSetupPage.style.display = 'none';
+    loginPage.style.display = 'flex';
 }
 
 /* ============================
-   ROLE-BASED ACCESS
+   ROLE-BASED COURSE FILTER
 ============================ */
-function applyRoleAccess(role) {
-    if (role === "Administrator") {
-        adminPanel.style.display = "block";
+function getCoursesForRole(role) {
+    return COURSES.filter(course => course.roleTags.includes(role));
+}
 
-        document.getElementById('salesTraining').style.display = "block";
-        document.getElementById('techTraining').style.display = "block";
-        document.getElementById('operationsTraining').style.display = "block";
+/* ============================
+   RENDER COURSE LIST
+============================ */
+function renderCourseList(role) {
+    const courses = getCoursesForRole(role);
+    const progress = getProgress();
+    courseList.innerHTML = '';
+
+    if (courses.length === 0) {
+        courseList.innerHTML = '<p style="font-size:12px; color:#6b7b93;">No courses assigned to your role yet.</p>';
         return;
     }
 
-    adminPanel.style.display = "none";
+    courses.forEach(course => {
+        const courseProgress = getCourseProgress(course.id, progress);
+        const card = document.createElement('div');
+        card.className = 'course-card';
+        card.dataset.courseId = course.id;
 
-    const salesRoles = [
-        "IT Account Executive / Outside Sales",
-        "Managed Print Services (MPS) Specialist",
-        "Strategic / Regional Account Manager",
-        "Sales Enablement & Support"
-    ];
+        const statusClass = courseProgress.completedLessons === courseProgress.totalLessons
+            ? ''
+            : 'locked';
 
-    const techRoles = [
-        "Print and Image Service Technician",
-        "IT / Network Engineer",
-        "Field Service Technician",
-        "Delivery & Cable Specialist"
-    ];
+        card.innerHTML = `
+            <div class="course-title">${course.title}</div>
+            <div class="course-meta">
+                <span>${course.category}</span> •
+                <span>${course.duration}</span> •
+                <span>${courseProgress.completedLessons}/${courseProgress.totalLessons} lessons</span>
+            </div>
+            <div class="course-progress-bar">
+                <div class="course-progress-fill" style="width:${courseProgress.percent}%"></div>
+            </div>
+            <div class="course-status-pill ${statusClass}">
+                ${courseProgress.completedLessons === courseProgress.totalLessons ? '✔ Completed' : 'In progress'}
+            </div>
+        `;
 
-    const opsRoles = [
-        "Warehouse & Logistics Worker",
-        "Leasing & Billing Administrative Specialist",
-        "Administrative Assistant / Reception"
-    ];
+        card.addEventListener('click', () => {
+            loadCourse(course.id);
+        });
 
-    document.getElementById('salesTraining').style.display =
-        salesRoles.includes(role) ? "block" : "none";
-
-    document.getElementById('techTraining').style.display =
-        techRoles.includes(role) ? "block" : "none";
-
-    document.getElementById('operationsTraining').style.display =
-        opsRoles.includes(role) ? "block" : "none";
-}
-
-/* ============================
-   TRAINING MODULE LOGIC
-============================ */
-function initTrainingButtons() {
-    const buttons = document.querySelectorAll('.launch-training-btn');
-
-    buttons.forEach(btn => {
-        btn.onclick = () => {
-            const item = btn.closest('.training-item');
-            const trainingId = item.dataset.trainingId;
-            const title = item.querySelector('h3').textContent;
-            const desc = item.querySelector('p').textContent;
-
-            openTrainingModal(trainingId, title, desc);
-        };
+        courseList.appendChild(card);
     });
 }
 
-function openTrainingModal(trainingId, title, desc) {
-    currentTrainingId = trainingId;
-    trainingTitle.textContent = title;
-    trainingDescription.textContent = desc;
-    quizFeedback.textContent = "";
+/* ============================
+   COURSE PROGRESS CALC
+============================ */
+function getCourseProgress(courseId, progress) {
+    const course = COURSES.find(c => c.id === courseId);
+    if (!course) return { completedLessons: 0, totalLessons: 0, percent: 0 };
 
-    // Simple content per module
-    let bodyHtml = "";
-    let question = "";
-    let options = [];
+    const totalLessons = course.lessons.length;
+    let completedLessons = 0;
 
-    if (trainingId === "sales-101") {
-        bodyHtml = `
-            <p><strong>Overview:</strong> This module covers the basics of consultative selling:
-            discovery, presenting value, handling objections, and closing.</p>
-            <ul>
-                <li>Step 1: Build rapport and trust</li>
-                <li>Step 2: Ask discovery questions</li>
-                <li>Step 3: Present tailored solutions</li>
-                <li>Step 4: Confirm value and next steps</li>
-            </ul>
-        `;
-        question = "Which step focuses on understanding the customer's needs?";
-        options = [
-            { text: "Building rapport", correct: false },
-            { text: "Discovery questions", correct: true },
-            { text: "Presenting solutions", correct: false },
-            { text: "Closing the deal", correct: false }
-        ];
-    } else if (trainingId === "sales-201") {
-        bodyHtml = `
-            <p><strong>Overview:</strong> Advanced account management focuses on long-term
-            relationships, retention, and strategic growth.</p>
-            <ul>
-                <li>Account planning and mapping</li>
-                <li>Retention strategies</li>
-                <li>Upsell and cross-sell opportunities</li>
-            </ul>
-        `;
-        question = "What is a key goal of advanced account management?";
-        options = [
-            { text: "One-time sales only", correct: false },
-            { text: "Long-term retention and growth", correct: true },
-            { text: "Reducing contact with clients", correct: false },
-            { text: "Avoiding upsell conversations", correct: false }
-        ];
-    } else if (trainingId === "tech-101") {
-        bodyHtml = `
-            <p><strong>Overview:</strong> Print System Basics covers drivers, queues, and
-            basic troubleshooting steps.</p>
-            <ul>
-                <li>Understanding print drivers</li>
-                <li>Managing print queues</li>
-                <li>Resolving common error codes</li>
-            </ul>
-        `;
-        question = "What should you check first when a job is stuck in the queue?";
-        options = [
-            { text: "Network cable color", correct: false },
-            { text: "Print queue status and errors", correct: true },
-            { text: "User's email address", correct: false },
-            { text: "Monitor brightness", correct: false }
-        ];
-    } else if (trainingId === "ops-101") {
-        bodyHtml = `
-            <p><strong>Overview:</strong> Warehouse & Logistics Fundamentals covers receiving,
-            staging, inventory accuracy, and delivery coordination.</p>
-            <ul>
-                <li>Accurate receiving and logging</li>
-                <li>Proper staging and labeling</li>
-                <li>Coordinating deliveries with drivers</li>
-            </ul>
-        `;
-        question = "Why is accurate receiving important?";
-        options = [
-            { text: "It improves office décor", correct: false },
-            { text: "It ensures inventory records match reality", correct: true },
-            { text: "It reduces employee breaks", correct: false },
-            { text: "It changes printer speed", correct: false }
-        ];
-    }
+    course.lessons.forEach(lesson => {
+        if (progress[lesson.id]) {
+            completedLessons++;
+        }
+    });
 
-    trainingBody.innerHTML = bodyHtml;
-    quizQuestion.textContent = question;
-    quizOptions.innerHTML = "";
+    const percent = totalLessons > 0 ? Math.round((completedLessons / totalLessons) * 100) : 0;
+    return { completedLessons, totalLessons, percent };
+}
 
-    options.forEach((opt, index) => {
-        const id = `quizOpt_${index}`;
+/* ============================
+   LOAD COURSE
+============================ */
+function loadCourse(courseId) {
+    const session = getSession();
+    if (!session) return;
+
+    const course = COURSES.find(c => c.id === courseId);
+    if (!course) return;
+
+    currentCourseId = courseId;
+    currentLessonId = null;
+
+    currentCourseTitle.textContent = course.title;
+    currentCourseMeta.innerHTML = `
+        <span>${course.category}</span>
+        <span>•</span>
+        <span>${course.duration}</span>
+        <span>•</span>
+        <span>${course.lessons.length} lessons</span>
+    `;
+
+    const progress = getProgress();
+    const courseProgress = getCourseProgress(courseId, progress);
+    courseProgressLabel.textContent = `Progress: ${courseProgress.percent}%`;
+    courseProgressFillTop.style.width = `${courseProgress.percent}%`;
+
+    videoPlaceholderText.textContent = 'Select a lesson from the right to load the training video, text, and quiz.';
+    videoPlayButton.style.display = 'none';
+
+    lessonTitle.textContent = 'No lesson selected';
+    lessonMeta.textContent = 'Choose a lesson from the right to begin.';
+    lessonBody.innerHTML = '';
+
+    quizBlock.style.display = 'none';
+    lessonActions.style.display = 'none';
+
+    lessonPaneSubtitle.textContent = `${course.lessons.length} lessons in this course`;
+    renderLessonList(course, progress);
+}
+
+/* ============================
+   RENDER LESSON LIST
+============================ */
+function renderLessonList(course, progress) {
+    lessonList.innerHTML = '';
+
+    course.lessons.forEach((lesson, index) => {
+        const item = document.createElement('div');
+        item.className = 'lesson-item';
+        item.dataset.lessonId = lesson.id;
+
+        const isCompleted = !!progress[lesson.id];
+        const isCurrent = currentLessonId === lesson.id;
+
+        item.innerHTML = `
+            <div class="lesson-item-top">
+                <div class="lesson-item-title">${lesson.title}</div>
+                <div class="lesson-item-duration">${lesson.duration}</div>
+            </div>
+            <div class="lesson-item-bottom">
+                <div class="lesson-status">
+                    <div class="status-dot ${isCompleted ? 'completed' : (isCurrent ? 'current' : '')}"></div>
+                    <span>${isCompleted ? 'Completed' : (isCurrent ? 'In progress' : 'Not started')}</span>
+                </div>
+                <div class="lesson-type-pill">${lesson.type}</div>
+            </div>
+        `;
+
+        item.addEventListener('click', () => {
+            loadLesson(course.id, lesson.id);
+        });
+
+        lessonList.appendChild(item);
+    });
+
+    updateLessonActiveState();
+}
+
+/* ============================
+   LOAD LESSON
+============================ */
+function loadLesson(courseId, lessonId) {
+    const course = COURSES.find(c => c.id === courseId);
+    if (!course) return;
+
+    const lesson = course.lessons.find(l => l.id === lessonId);
+    if (!lesson) return;
+
+    currentCourseId = courseId;
+    currentLessonId = lessonId;
+
+    videoPlaceholderText.textContent = `Playing training video for: ${lesson.title}`;
+    videoPlayButton.style.display = 'block';
+
+    lessonTitle.textContent = lesson.title;
+    lessonMeta.textContent = `${course.title} • ${lesson.duration}`;
+    lessonBody.innerHTML = lesson.body;
+
+    quizBlock.style.display = 'block';
+    quizQuestion.textContent = lesson.quiz.question;
+    quizOptions.innerHTML = '';
+    quizFeedback.textContent = '';
+
+    lesson.quiz.options.forEach((opt, index) => {
+        const id = `quiz_${lesson.id}_${index}`;
         const label = document.createElement('label');
         const input = document.createElement('input');
-        input.type = "radio";
-        input.name = "quizOption";
-        input.value = opt.correct ? "true" : "false";
+        input.type = 'radio';
+        input.name = 'quizOption';
+        input.value = opt.correct ? 'true' : 'false';
         input.id = id;
 
         label.htmlFor = id;
         label.textContent = opt.text;
-
         label.prepend(input);
         quizOptions.appendChild(label);
     });
 
-    completeModuleButton.onclick = () => {
+    lessonActions.style.display = 'flex';
+
+    completeLessonButton.onclick = () => {
         const selected = document.querySelector('input[name="quizOption"]:checked');
         if (!selected) {
-            quizFeedback.textContent = "Please select an answer before completing the module.";
-            quizFeedback.style.color = "red";
+            quizFeedback.textContent = 'Please select an answer before marking the lesson complete.';
+            quizFeedback.style.color = '#d93025';
             return;
         }
 
-        if (selected.value === "true") {
-            quizFeedback.textContent = "Correct! Module marked as complete.";
-            quizFeedback.style.color = "green";
-            markTrainingComplete(currentTrainingId);
-            setTimeout(() => {
-                closeTrainingModal();
-            }, 800);
+        if (selected.value === 'true') {
+            quizFeedback.textContent = 'Correct! Lesson marked as complete.';
+            quizFeedback.style.color = '#137333';
+            markLessonComplete(lesson.id);
         } else {
-            quizFeedback.textContent = "Not quite. Review the content and try again.";
-            quizFeedback.style.color = "red";
+            quizFeedback.textContent = 'Not quite. Review the content and try again.';
+            quizFeedback.style.color = '#d93025';
         }
     };
 
-    trainingModal.style.display = "flex";
+    nextLessonButton.onclick = () => {
+        goToNextLesson(courseId, lessonId);
+    };
+
+    updateLessonActiveState();
 }
 
-function closeTrainingModal() {
-    trainingModal.style.display = "none";
-    currentTrainingId = null;
+/* ============================
+   NEXT LESSON
+============================ */
+function goToNextLesson(courseId, lessonId) {
+    const course = COURSES.find(c => c.id === courseId);
+    if (!course) return;
+
+    const index = course.lessons.findIndex(l => l.id === lessonId);
+    if (index === -1) return;
+
+    const nextIndex = index + 1;
+    if (nextIndex < course.lessons.length) {
+        loadLesson(courseId, course.lessons[nextIndex].id);
+    }
 }
 
-function markTrainingComplete(trainingId) {
-    let progress = getTrainingProgress();
-    progress[trainingId] = true;
-    saveTrainingProgress(progress);
+/* ============================
+   MARK LESSON COMPLETE
+============================ */
+function markLessonComplete(lessonId) {
+    const progress = getProgress();
+    progress[lessonId] = true;
+    saveProgress(progress);
 
-    updateTrainingStatuses();
-    updateDashboardProgress();
-    checkCertificateUnlock();
-    updateAdminDashboardIfAdmin();
+    const course = COURSES.find(c => c.id === currentCourseId);
+    if (course) {
+        const courseProgress = getCourseProgress(currentCourseId, progress);
+        courseProgressLabel.textContent = `Progress: ${courseProgress.percent}%`;
+        courseProgressFillTop.style.width = `${courseProgress.percent}%`;
+        renderLessonList(course, progress);
+        renderCourseList(getSession().role);
+
+        if (courseProgress.completedLessons === courseProgress.totalLessons) {
+            openCertificateForCourse(course);
+        }
+    }
 }
 
-function updateTrainingStatuses() {
-    const progress = getTrainingProgress();
-    const items = document.querySelectorAll('.training-item');
+/* ============================
+   UPDATE LESSON ACTIVE STATE
+============================ */
+function updateLessonActiveState() {
+    const items = document.querySelectorAll('.lesson-item');
+    const progress = getProgress();
 
     items.forEach(item => {
-        const id = item.dataset.trainingId;
-        const status = item.querySelector('.training-status');
+        const lessonId = item.dataset.lessonId;
+        const isCompleted = !!progress[lessonId];
+        const isCurrent = currentLessonId === lessonId;
 
-        if (progress[id]) {
-            status.textContent = "✔ Completed";
-            status.style.color = "green";
+        item.classList.remove('active');
+
+        const dot = item.querySelector('.status-dot');
+        const statusText = item.querySelector('.lesson-status span');
+
+        dot.classList.remove('completed', 'current');
+
+        if (isCompleted) {
+            dot.classList.add('completed');
+            statusText.textContent = 'Completed';
+        } else if (isCurrent) {
+            dot.classList.add('current');
+            statusText.textContent = 'In progress';
+            item.classList.add('active');
         } else {
-            status.textContent = "❌ Not Completed";
-            status.style.color = "red";
+            statusText.textContent = 'Not started';
         }
     });
-}
-
-function updateDashboardProgress() {
-    const progress = getTrainingProgress();
-    const items = document.querySelectorAll('.training-item');
-
-    let totalRequired = 0;
-    let completedRequired = 0;
-
-    items.forEach(item => {
-        const id = item.dataset.trainingId;
-        const required = item.dataset.required === "true";
-
-        if (required) {
-            totalRequired++;
-            if (progress[id]) {
-                completedRequired++;
-            }
-        }
-    });
-
-    const percent = totalRequired > 0
-        ? Math.round((completedRequired / totalRequired) * 100)
-        : 0;
-
-    document.getElementById('dashboardProgress').textContent =
-        `Overall Progress: ${completedRequired}/${totalRequired} (${percent}%)`;
 }
 
 /* ============================
    CERTIFICATE LOGIC
 ============================ */
-function checkCertificateUnlock() {
-    const progress = getTrainingProgress();
-    const items = document.querySelectorAll('.training-item');
-
-    let totalRequired = 0;
-    let completedRequired = 0;
-
-    items.forEach(item => {
-        const id = item.dataset.trainingId;
-        const required = item.dataset.required === "true";
-
-        if (required) {
-            totalRequired++;
-            if (progress[id]) {
-                completedRequired++;
-            }
-        }
-    });
-
-    if (totalRequired > 0 && completedRequired === totalRequired) {
-        certificateBox.innerHTML = `
-            <h3>Certificate Status</h3>
-            <p style="color:green; font-weight:bold;">✔ All required training completed!</p>
-            <button class="cert-btn" onclick="openCertificate()">View Certificate</button>
-        `;
-    } else {
-        certificateBox.innerHTML = `
-            <h3>Certificate Status</h3>
-            <p>Complete all required modules to unlock your certificate.</p>
-        `;
-    }
-}
-
-function openCertificate() {
+function openCertificateForCourse(course) {
     const session = getSession();
-    const userEmail = session.email;
-    const userRole = session.role;
+    if (!session) return;
 
-    certName.textContent = userEmail;
-    certRole.textContent = userRole;
+    certName.textContent = session.email;
+    certRole.textContent = session.role;
+    certCourse.textContent = `Course: ${course.title}`;
 
     const today = new Date();
     certDate.textContent = `Date: ${today.toLocaleDateString()}`;
 
-    const uniqueId = "CERT-" + Math.floor(Math.random() * 1000000000);
+    const uniqueId = 'CERT-' + Math.floor(Math.random() * 1000000000);
     certId.textContent = uniqueId;
 
-    certificateModal.style.display = "flex";
+    certificateModal.style.display = 'flex';
 }
 
 function closeCertificate() {
-    certificateModal.style.display = "none";
+    certificateModal.style.display = 'none';
 }
 
 /* ============================
    ADMIN PANEL LOGIC
 ============================ */
 createUserButton.addEventListener('click', () => {
-    const email = document.getElementById('newUserEmail').value.trim().toLowerCase();
-    const password = document.getElementById('newUserPassword').value.trim();
-    const role = document.getElementById('newUserRole').value;
+    const email = newUserEmail.value.trim().toLowerCase();
+    const password = newUserPassword.value.trim();
+    const role = newUserRole.value;
 
     if (!email) {
-        createUserMessage.textContent = "Email is required.";
-        createUserMessage.style.color = "red";
+        createUserMessage.textContent = 'Email is required.';
+        createUserMessage.style.color = '#d93025';
         return;
     }
 
     let users = getUsers();
-
     if (users.find(u => u.email.toLowerCase() === email)) {
-        createUserMessage.textContent = "A user with that email already exists.";
-        createUserMessage.style.color = "red";
+        createUserMessage.textContent = 'A user with that email already exists.';
+        createUserMessage.style.color = '#d93025';
         return;
     }
 
-    let finalPassword = password || null;
-
     const newUser = {
         email,
-        password: finalPassword,
+        password: password || '',
         role
     };
 
     users.push(newUser);
     saveUsers(users);
 
-    createUserMessage.textContent = "User created successfully!";
-    createUserMessage.style.color = "green";
+    createUserMessage.textContent = 'User created successfully.';
+    createUserMessage.style.color = '#137333';
 
-    document.getElementById('newUserEmail').value = "";
-    document.getElementById('newUserPassword').value = "";
+    newUserEmail.value = '';
+    newUserPassword.value = '';
 
     renderUserList();
-    renderAdminProgressDashboard();
+    renderAdminProgress();
 });
 
 function renderUserList() {
     const users = getUsers();
-    userList.innerHTML = "";
+    userList.innerHTML = '';
 
     users.forEach(user => {
         const card = document.createElement('div');
-        card.className = "user-card";
+        card.className = 'user-card';
 
         card.innerHTML = `
             <h4>${user.email}</h4>
             <p>Role: ${user.role}</p>
-            <p>Password Status: ${
-                !user.password ? "No password (first-time setup)" :
-                (user.password === "temp" || user.password === "1234") ? "Temporary (reset required)" :
-                "Normal"
+            <p>Password status: ${
+                !user.password
+                    ? 'No password (first-time setup)'
+                    : (user.password === 'temp' || user.password === '1234')
+                        ? 'Temporary (reset required)'
+                        : 'Normal'
             }</p>
-            <button class="delete-user-btn">Delete User</button>
+            <button class="delete-user-btn">Delete user</button>
         `;
 
         card.querySelector('.delete-user-btn').addEventListener('click', () => {
@@ -1153,67 +2222,44 @@ function deleteUser(email) {
     saveUsers(users);
 
     renderUserList();
-    renderAdminProgressDashboard();
+    renderAdminProgress();
 }
 
-/* ============================
-   ADMIN PROGRESS DASHBOARD
-============================ */
-function renderAdminProgressDashboard() {
+function renderAdminProgress() {
     const users = getUsers();
-    const progress = getTrainingProgress();
-
-    adminProgressList.innerHTML = "";
+    const progress = getProgress();
+    adminProgressList.innerHTML = '';
 
     users.forEach(user => {
-        if (user.role === "Administrator") return;
+        if (user.role === 'Administrator') return;
 
-        const items = document.querySelectorAll('.training-item');
-        let totalRequired = 0;
-        let completedRequired = 0;
+        const courses = getCoursesForRole(user.role);
+        let totalLessons = 0;
+        let completedLessons = 0;
 
-        items.forEach(item => {
-            const id = item.dataset.trainingId;
-            const required = item.dataset.required === "true";
-
-            if (required) {
-                totalRequired++;
-                if (progress[id]) {
-                    completedRequired++;
+        courses.forEach(course => {
+            course.lessons.forEach(lesson => {
+                totalLessons++;
+                if (progress[lesson.id]) {
+                    completedLessons++;
                 }
-            }
+            });
         });
 
-        const percent = totalRequired > 0
-            ? Math.round((completedRequired / totalRequired) * 100)
-            : 0;
-
-        const certificateUnlocked = (totalRequired > 0 && completedRequired === totalRequired);
+        const percent = totalLessons > 0 ? Math.round((completedLessons / totalLessons) * 100) : 0;
 
         const card = document.createElement('div');
-        card.className = "admin-progress-card";
+        card.className = 'admin-progress-card';
 
         card.innerHTML = `
             <h4>${user.email}</h4>
             <p>Role: ${user.role}</p>
-            <p>Required Training: ${completedRequired}/${totalRequired}</p>
-            <p>Completion: ${percent}%</p>
-            <p>Certificate: ${
-                certificateUnlocked
-                    ? "<span style='color:green; font-weight:bold;'>✔ Unlocked</span>"
-                    : "<span style='color:red;'>❌ Locked</span>"
-            }</p>
+            <p>Lessons completed: ${completedLessons}/${totalLessons}</p>
+            <p>Overall progress: ${percent}%</p>
         `;
 
         adminProgressList.appendChild(card);
     });
-}
-
-function updateAdminDashboardIfAdmin() {
-    const session = getSession();
-    if (session && session.role === "Administrator") {
-        renderAdminProgressDashboard();
-    }
 }
 
 /* ============================
@@ -1223,28 +2269,27 @@ function initializeSystem() {
     const session = getSession();
 
     if (!session) {
-        loginPage.style.display = "flex";
-        passwordSetupPage.style.display = "none";
-        appContainer.style.display = "none";
+        loginPage.style.display = 'flex';
+        passwordSetupPage.style.display = 'none';
+        appShell.style.display = 'none';
         return;
     }
 
-    loginPage.style.display = "none";
-    passwordSetupPage.style.display = "none";
-    appContainer.style.display = "block";
+    loginPage.style.display = 'none';
+    passwordSetupPage.style.display = 'none';
+    appShell.style.display = 'flex';
 
-    document.getElementById('dashboardGreeting').textContent =
-        `Welcome, ${session.email}`;
+    topUserEmail.textContent = session.email;
+    topUserRole.textContent = session.role;
 
-    applyRoleAccess(session.role);
-    initTrainingButtons();
-    updateTrainingStatuses();
-    updateDashboardProgress();
-    checkCertificateUnlock();
+    renderCourseList(session.role);
 
-    if (session.role === "Administrator") {
+    if (session.role === 'Administrator') {
+        adminPanel.style.display = 'block';
         renderUserList();
-        renderAdminProgressDashboard();
+        renderAdminProgress();
+    } else {
+        adminPanel.style.display = 'none';
     }
 }
 </script>
