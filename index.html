@@ -1,8 +1,297 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Butronics Training Portal</title>
+    <title>Training Portal</title>
+
+    <style>
+    /* ============================
+       GLOBAL STYLES
+    ============================ */
+    body {
+        font-family: Arial, sans-serif;
+        background: #f5f5f5;
+        margin: 0;
+        padding: 0;
+    }
+
+    .section {
+        margin-top: 30px;
+    }
+
+    /* ============================
+       LOGIN + PASSWORD SETUP PAGES
+    ============================ */
+    .login-container {
+        width: 100%;
+        height: 100vh;
+        background: #e9eef3;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .login-box {
+        background: white;
+        padding: 30px;
+        width: 350px;
+        border-radius: 10px;
+        box-shadow: 0 0 15px rgba(0,0,0,0.1);
+    }
+
+    .login-title {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .login-box label {
+        font-weight: bold;
+        margin-top: 10px;
+        display: block;
+    }
+
+    .login-box input {
+        width: 100%;
+        padding: 10px;
+        margin-top: 5px;
+        margin-bottom: 15px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+    }
+
+    .login-btn {
+        width: 100%;
+        padding: 12px;
+        background: #0078d4;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+    }
+
+    .login-btn:hover {
+        background: #005fa3;
+    }
+
+    .login-error {
+        color: red;
+        text-align: center;
+        margin-top: 10px;
+    }
+
+    /* ============================
+       MAIN APP
+    ============================ */
+    .app {
+        padding: 20px;
+    }
+
+    .logout-btn {
+        background: #d9534f;
+        color: white;
+        padding: 10px 15px;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 15px;
+        margin-top: 10px;
+    }
+
+    .logout-btn:hover {
+        background: #b52b27;
+    }
+
+    /* ============================
+       CERTIFICATE STATUS BOX
+    ============================ */
+    .certificate-box {
+        background: #fff;
+        padding: 20px;
+        margin-top: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    .cert-btn {
+        background: #0078d4;
+        color: white;
+        padding: 10px 15px;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        margin-top: 10px;
+    }
+
+    .cert-btn:hover {
+        background: #005fa3;
+    }
+
+    /* ============================
+       TRAINING MODULES
+    ============================ */
+    .training-item {
+        background: #fff;
+        padding: 20px;
+        margin-top: 15px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    .training-item h3 {
+        margin-top: 0;
+    }
+
+    .complete-training-btn {
+        background: #28a745;
+        color: white;
+        padding: 8px 12px;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+    }
+
+    .complete-training-btn:hover {
+        background: #1e7e34;
+    }
+
+    .training-status {
+        margin-top: 10px;
+        font-weight: bold;
+    }
+
+    /* ============================
+       ADMIN PANEL
+    ============================ */
+    .admin-section {
+        padding: 20px;
+    }
+
+    .create-user-box,
+    .user-list-box {
+        background: #fff;
+        padding: 20px;
+        margin-top: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    .create-user-box label {
+        font-weight: bold;
+        margin-top: 10px;
+        display: block;
+    }
+
+    .create-user-box input,
+    .create-user-box select {
+        width: 100%;
+        padding: 10px;
+        margin-top: 5px;
+        margin-bottom: 15px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+    }
+
+    .admin-btn {
+        width: 100%;
+        padding: 12px;
+        background: #0078d4;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+    }
+
+    .admin-btn:hover {
+        background: #005fa3;
+    }
+
+    .admin-message {
+        margin-top: 10px;
+        font-weight: bold;
+    }
+
+    .user-card {
+        background: #f5f5f5;
+        padding: 15px;
+        margin-top: 10px;
+        border-radius: 8px;
+    }
+
+    .user-card h4 {
+        margin: 0;
+    }
+
+    .delete-user-btn {
+        margin-top: 10px;
+        background: #d9534f;
+        color: white;
+        padding: 8px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    .delete-user-btn:hover {
+        background: #b52b27;
+    }
+
+    /* ============================
+       ADMIN PROGRESS DASHBOARD
+    ============================ */
+    #adminProgressList {
+        margin-top: 20px;
+    }
+
+    .admin-progress-card {
+        background: #f5f5f5;
+        padding: 15px;
+        margin-top: 10px;
+        border-radius: 8px;
+    }
+
+    .admin-progress-card h4 {
+        margin: 0;
+    }
+
+    .admin-progress-card p {
+        margin: 5px 0;
+    }
+
+    /* ============================
+       CERTIFICATE MODAL
+    ============================ */
+    .cert-modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0,0,0,0.5);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+    }
+
+    .cert-content {
+        background: #fff;
+        padding: 40px;
+        width: 600px;
+        border-radius: 10px;
+        text-align: center;
+        box-shadow: 0 0 20px rgba(0,0,0,0.3);
+    }
+
+    .cert-content h1 {
+        margin-bottom: 10px;
+    }
+
+    .cert-content h2,
+    .cert-content h3 {
+        margin: 5px 0;
+    }
+    </style>
 </head>
 <body>
 
@@ -25,118 +314,43 @@
     </div>
 </div>
 
-<style>
-    /* LOGIN PAGE STYLES */
-    .login-container {
-        width: 100%;
-        height: 100vh;
-        background: #f5f5f5;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-    .login-box {
-        background: white;
-        padding: 30px;
-        width: 350px;
-        border-radius: 10px;
-        box-shadow: 0 0 15px rgba(0,0,0,0.1);
-    }
-    .login-title {
-        text-align: center;
-        margin-bottom: 20px;
-    }
-    .login-box label {
-        font-weight: bold;
-        margin-top: 10px;
-        display: block;
-    }
-    .login-box input {
-        width: 100%;
-        padding: 10px;
-        margin-top: 5px;
-        margin-bottom: 15px;
-        border-radius: 5px;
-        border: 1px solid #ccc;
-    }
-    .login-btn {
-        width: 100%;
-        padding: 12px;
-        background: #0078d4;
-        color: white;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        font-size: 16px;
-    }
-    .login-btn:hover {
-        background: #005fa3;
-    }
-    .login-error {
-        color: red;
-        text-align: center;
-        margin-top: 10px;
-    }
-</style>
+<!-- ============================
+     FIRST-TIME PASSWORD SETUP
+============================ -->
+<div id="passwordSetupPage" class="login-container" style="display:none;">
+    <div class="login-box">
+        <h1 class="login-title">Create Your Password</h1>
+
+        <p id="setupEmailDisplay"></p>
+
+        <label>New Password</label>
+        <input type="password" id="setupPassword" placeholder="Create a password">
+
+        <button id="setupPasswordButton" class="login-btn">Save Password</button>
+
+        <p id="setupError" class="login-error"></p>
+    </div>
+</div>
 
 <!-- ============================
      MAIN APP CONTAINER
 ============================ -->
 <div class="app" style="display:none; padding:20px;">
 
-    <!-- Top dashboard area -->
     <h2 id="dashboardGreeting">Welcome</h2>
     <p id="dashboardProgress">Overall Progress: 0/0 (0%)</p>
 
     <button onclick="logout()" class="logout-btn">Logout</button>
 
-    <style>
-        .logout-btn {
-            background: #d9534f;
-            color: white;
-            padding: 10px 15px;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 15px;
-            margin-top: 10px;
-        }
-        .logout-btn:hover {
-            background: #b52b27;
-        }
-    </style>
-
-    <!-- Certificate status box -->
+    <!-- Certificate Status Box -->
     <div id="certificateBox" class="certificate-box">
         <h3>Certificate Status</h3>
         <p>Complete all required modules to unlock your certificate.</p>
     </div>
 
-    <style>
-        .certificate-box {
-            background: #fff;
-            padding: 20px;
-            margin-top: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-        }
-        .cert-btn {
-            background: #0078d4;
-            color: white;
-            padding: 10px 15px;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            margin-top: 10px;
-        }
-        .cert-btn:hover {
-            background: #005fa3;
-        }
-    </style>
-
     <!-- ============================
          SALES TRAINING
-    ============================ -->
+    ============================= -->
     <div id="salesTraining" class="section">
         <h2>Sales Training</h2>
 
@@ -155,7 +369,7 @@
 
     <!-- ============================
          TECH TRAINING
-    ============================ -->
+    ============================= -->
     <div id="techTraining" class="section">
         <h2>Technical Training</h2>
 
@@ -168,7 +382,7 @@
 
     <!-- ============================
          OPERATIONS TRAINING
-    ============================ -->
+    ============================= -->
     <div id="operationsTraining" class="section">
         <h2>Operations Training</h2>
 
@@ -181,9 +395,9 @@
 
     <!-- ============================
          ADMIN PANEL
-    ============================ -->
+    ============================= -->
     <div id="adminPanel" class="section" style="display:none;">
-        <!-- ADMIN ACCOUNT CREATION PANEL -->
+
         <div class="admin-section">
             <h2>Administrator Control Panel</h2>
             <p>Create and manage user accounts for the Training Portal.</p>
@@ -195,7 +409,7 @@
                 <input type="email" id="newUserEmail" placeholder="employee@company.com">
 
                 <label>Password</label>
-                <input type="password" id="newUserPassword" placeholder="Enter password">
+                <input type="password" id="newUserPassword" placeholder="Enter password (optional)">
 
                 <label>Role</label>
                 <select id="newUserRole">
@@ -237,86 +451,6 @@
         </div>
     </div>
 
-    <style>
-        /* ADMIN PANEL STYLES */
-        .admin-section {
-            padding: 20px;
-        }
-        .create-user-box, .user-list-box {
-            background: #fff;
-            padding: 20px;
-            margin-top: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-        }
-        .create-user-box label {
-            font-weight: bold;
-            margin-top: 10px;
-            display: block;
-        }
-        .create-user-box input, .create-user-box select {
-            width: 100%;
-            padding: 10px;
-            margin-top: 5px;
-            margin-bottom: 15px;
-            border-radius: 5px;
-            border: 1px solid #ccc;
-        }
-        .admin-btn {
-            width: 100%;
-            padding: 12px;
-            background: #0078d4;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
-        }
-        .admin-btn:hover {
-            background: #005fa3;
-        }
-        .admin-message {
-            margin-top: 10px;
-            font-weight: bold;
-        }
-        .user-card {
-            background: #f5f5f5;
-            padding: 15px;
-            margin-top: 10px;
-            border-radius: 8px;
-        }
-        .user-card h4 {
-            margin: 0;
-        }
-        .delete-user-btn {
-            margin-top: 10px;
-            background: #d9534f;
-            color: white;
-            padding: 8px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        .delete-user-btn:hover {
-            background: #b52b27;
-        }
-        #adminProgressList {
-            margin-top: 20px;
-        }
-        .admin-progress-card {
-            background: #f5f5f5;
-            padding: 15px;
-            margin-top: 10px;
-            border-radius: 8px;
-        }
-        .admin-progress-card h4 {
-            margin: 0;
-        }
-        .admin-progress-card p {
-            margin: 5px 0;
-        }
-    </style>
-
 </div> <!-- end .app -->
 
 <!-- ============================
@@ -337,488 +471,522 @@
     </div>
 </div>
 
-<style>
-    .cert-modal {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0,0,0,0.5);
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        z-index: 9999;
-    }
-    .cert-content {
-        background: #fff;
-        padding: 40px;
-        width: 600px;
-        border-radius: 10px;
-        text-align: center;
-        box-shadow: 0 0 20px rgba(0,0,0,0.3);
-    }
-    .cert-content h1 {
-        margin-bottom: 10px;
-    }
-    .cert-content h2, .cert-content h3 {
-        margin: 5px 0;
-    }
-</style>
-
-<!-- ============================
-     SCRIPT BLOCK
-============================ -->
 <script>
-// KEYS
+/* ============================
+   STORAGE KEYS
+============================ */
 const USERS_KEY = 'trainingPortalUsers';
 const SESSION_KEY = 'trainingPortalSession';
-const PROGRESS_KEY = 'trainingPortalProgress';
+const TRAINING_KEY = 'trainingProgress';
 
-// ELEMENTS
+/* ============================
+   ELEMENT REFERENCES
+============================ */
 const loginPage = document.getElementById('loginPage');
 const loginEmail = document.getElementById('loginEmail');
 const loginPassword = document.getElementById('loginPassword');
 const loginButton = document.getElementById('loginButton');
 const loginError = document.getElementById('loginError');
 
-const createUserButton = document.getElementById('createUserButton');
-const newUserEmail = document.getElementById('newUserEmail');
-const newUserPassword = document.getElementById('newUserPassword');
-const newUserRole = document.getElementById('newUserRole');
-const createUserMessage = document.getElementById('createUserMessage');
-const userList = document.getElementById('userList');
+const passwordSetupPage = document.getElementById('passwordSetupPage');
+const setupEmailDisplay = document.getElementById('setupEmailDisplay');
+const setupPassword = document.getElementById('setupPassword');
+const setupPasswordButton = document.getElementById('setupPasswordButton');
+const setupError = document.getElementById('setupError');
 
 const appContainer = document.querySelector('.app');
 
-// USERS / SESSION
+const adminPanel = document.getElementById('adminPanel');
+const createUserButton = document.getElementById('createUserButton');
+const createUserMessage = document.getElementById('createUserMessage');
+const userList = document.getElementById('userList');
+
+const certificateBox = document.getElementById('certificateBox');
+const certificateModal = document.getElementById('certificateModal');
+const certName = document.getElementById('certName');
+const certRole = document.getElementById('certRole');
+const certDate = document.getElementById('certDate');
+const certId = document.getElementById('certId');
+
+const adminProgressList = document.getElementById('adminProgressList');
+
+/* ============================
+   USER STORAGE HELPERS
+============================ */
 function getUsers() {
     const data = localStorage.getItem(USERS_KEY);
     return data ? JSON.parse(data) : [];
 }
+
 function saveUsers(users) {
     localStorage.setItem(USERS_KEY, JSON.stringify(users));
 }
+
 function getSession() {
     const data = localStorage.getItem(SESSION_KEY);
     return data ? JSON.parse(data) : null;
 }
+
 function saveSession(session) {
     localStorage.setItem(SESSION_KEY, JSON.stringify(session));
 }
+
 function clearSession() {
     localStorage.removeItem(SESSION_KEY);
 }
 
-// USER LIST RENDER
-function renderUserList() {
-    if (!userList) return;
+/* ============================
+   TRAINING STORAGE HELPERS
+============================ */
+function getTrainingProgress() {
+    const data = localStorage.getItem(TRAINING_KEY);
+    return data ? JSON.parse(data) : {};
+}
 
-    const users = getUsers();
-    if (users.length === 0) {
-        userList.innerHTML = '<p>No users created yet.</p>';
+function saveTrainingProgress(progress) {
+    localStorage.setItem(TRAINING_KEY, JSON.stringify(progress));
+}
+
+/* ============================
+   LOGIN LOGIC
+============================ */
+loginButton.addEventListener('click', () => {
+    const email = loginEmail.value.trim().toLowerCase();
+    const password = loginPassword.value.trim();
+
+    if (!email) {
+        loginError.textContent = "Please enter your email.";
         return;
     }
 
-    userList.innerHTML = '';
-    users.forEach((user, index) => {
-        const div = document.createElement('div');
-        div.className = 'user-card';
-        div.innerHTML = `
-            <h4>${user.email}</h4>
-            <p>Role: ${user.role}</p>
-            <button class="delete-user-btn" data-index="${index}">Delete User</button>
-        `;
-        userList.appendChild(div);
-    });
-
-    const deleteButtons = userList.querySelectorAll('.delete-user-btn');
-    deleteButtons.forEach(btn => {
-        btn.addEventListener('click', () => {
-            const idx = parseInt(btn.getAttribute('data-index'), 10);
-            deleteUser(idx);
-        });
-    });
-}
-function deleteUser(index) {
     const users = getUsers();
-    users.splice(index, 1);
-    saveUsers(users);
-    renderUserList();
-}
+    const user = users.find(u => u.email.toLowerCase() === email);
 
-// CREATE USER
-if (createUserButton) {
-    createUserButton.addEventListener('click', () => {
-        const email = newUserEmail.value.trim();
-        const password = newUserPassword.value.trim();
-        const role = newUserRole.value;
-
-        if (!email || !password) {
-            createUserMessage.textContent = 'Email and password are required.';
-            createUserMessage.style.color = 'red';
-            return;
-        }
-
-        let users = getUsers();
-        if (users.some(u => u.email.toLowerCase() === email.toLowerCase())) {
-            createUserMessage.textContent = 'A user with this email already exists.';
-            createUserMessage.style.color = 'red';
-            return;
-        }
-
-        const newUser = { email, password, role };
-        users.push(newUser);
-        saveUsers(users);
-
-        createUserMessage.textContent = 'User created successfully.';
-        createUserMessage.style.color = 'green';
-
-        newUserEmail.value = '';
-        newUserPassword.value = '';
-        newUserRole.value = 'IT Account Executive / Outside Sales';
-
-        renderUserList();
-        refreshAdminViewIfAdmin();
-    });
-}
-
-// LOGIN
-if (loginButton) {
-    loginButton.addEventListener('click', () => {
-        const email = loginEmail.value.trim();
-        const password = loginPassword.value.trim();
-
-        if (!email || !password) {
-            loginError.textContent = 'Please enter email and password.';
-            return;
-        }
-
-        const users = getUsers();
-        const user = users.find(
-            u => u.email.toLowerCase() === email.toLowerCase() && u.password === password
-        );
-
-        if (!user) {
-            loginError.textContent = 'Invalid email or password.';
-            return;
-        }
-
-        saveSession({ email: user.email, role: user.role });
-
-        if (loginPage) loginPage.style.display = 'none';
-        if (appContainer) appContainer.style.display = 'block';
-
-        applyRoleAccess(user.role);
-        initTrainingButtons();
-        updateTrainingStatuses();
-        updateDashboardProgress();
-        checkCertificateUnlock();
-    });
-}
-
-// SESSION RESTORE
-window.addEventListener('load', () => {
-    const session = getSession();
-
-    if (session && appContainer && loginPage) {
-        loginPage.style.display = 'none';
-        appContainer.style.display = 'block';
-        applyRoleAccess(session.role);
-    } else {
-        if (loginPage) loginPage.style.display = 'flex';
-        if (appContainer) appContainer.style.display = 'none';
+    if (!user) {
+        loginError.textContent = "No account found with that email.";
+        return;
     }
 
-    renderUserList();
-    initTrainingButtons();
-    updateTrainingStatuses();
-    updateDashboardProgress();
-    checkCertificateUnlock();
-    refreshAdminViewIfAdmin();
+    // First-time password setup
+    if (!user.password || user.password === "") {
+        showPasswordSetup(user.email);
+        return;
+    }
+
+    // Temporary password forced reset ("temp" or "1234")
+    if (user.password === "temp" || user.password === "1234") {
+        showPasswordSetup(user.email);
+        return;
+    }
+
+    // Normal login
+    if (user.password !== password) {
+        loginError.textContent = "Incorrect password.";
+        return;
+    }
+
+    // Successful login
+    saveSession({ email: user.email, role: user.role });
+    initializeSystem();
 });
 
-// LOGOUT
+/* ============================
+   PASSWORD SETUP LOGIC
+============================ */
+function showPasswordSetup(email) {
+    loginPage.style.display = "none";
+    passwordSetupPage.style.display = "flex";
+
+    setupEmailDisplay.textContent = `Setting password for: ${email}`;
+    window.passwordSetupEmail = email;
+}
+
+setupPasswordButton.addEventListener('click', () => {
+    const newPass = setupPassword.value.trim();
+
+    if (!newPass) {
+        setupError.textContent = "Password cannot be empty.";
+        return;
+    }
+
+    const email = window.passwordSetupEmail;
+    let users = getUsers();
+
+    const user = users.find(u => u.email.toLowerCase() === email.toLowerCase());
+    if (!user) {
+        setupError.textContent = "User not found.";
+        return;
+    }
+
+    user.password = newPass;
+    saveUsers(users);
+
+    saveSession({ email: user.email, role: user.role });
+
+    passwordSetupPage.style.display = "none";
+    initializeSystem();
+});
+
+/* ============================
+   LOGOUT
+============================ */
 function logout() {
     clearSession();
-    if (loginPage) loginPage.style.display = 'flex';
-    if (appContainer) appContainer.style.display = 'none';
+    loginPage.style.display = "flex";
+    appContainer.style.display = "none";
 }
 
-// ROLE-BASED TRAINING MAP
-const roleTrainingMap = {
-    "IT Account Executive / Outside Sales": ["salesTraining"],
-    "Managed Print Services (MPS) Specialist": ["salesTraining"],
-    "Strategic / Regional Account Manager": ["salesTraining"],
-    "Sales Enablement & Support": ["salesTraining"],
-
-    "Print and Image Service Technician": ["techTraining"],
-    "IT / Network Engineer": ["techTraining"],
-    "Field Service Technician": ["techTraining"],
-    "Delivery & Cable Specialist": ["techTraining"],
-
-    "Warehouse & Logistics Worker": ["operationsTraining"],
-    "Leasing & Billing Administrative Specialist": ["operationsTraining"],
-    "Administrative Assistant / Reception": ["operationsTraining"],
-
-    "Administrator": ["salesTraining", "techTraining", "operationsTraining", "adminPanel"]
-};
-
-// REQUIRED TRAINING PER ROLE
-const requiredTrainingMap = {
-    "IT Account Executive / Outside Sales": ["sales-101", "sales-201"],
-    "Managed Print Services (MPS) Specialist": ["sales-101"],
-    "Strategic / Regional Account Manager": ["sales-101", "sales-201"],
-    "Sales Enablement & Support": ["sales-101"],
-
-    "Print and Image Service Technician": ["tech-101"],
-    "IT / Network Engineer": ["tech-101"],
-    "Field Service Technician": ["tech-101"],
-    "Delivery & Cable Specialist": ["tech-101"],
-
-    "Warehouse & Logistics Worker": ["ops-101"],
-    "Leasing & Billing Administrative Specialist": ["ops-101"],
-    "Administrative Assistant / Reception": ["ops-101"],
-
-    "Administrator": []
-};
-
-// ROLE ACCESS
+/* ============================
+   ROLE-BASED ACCESS
+============================ */
 function applyRoleAccess(role) {
-    const allSections = ["salesTraining", "techTraining", "operationsTraining", "adminPanel"];
-    allSections.forEach(sectionId => {
-        const el = document.getElementById(sectionId);
-        if (el) el.style.display = "none";
-    });
+    // Admin sees everything
+    if (role === "Administrator") {
+        adminPanel.style.display = "block";
 
-    const allowedSections = roleTrainingMap[role] || [];
-    allowedSections.forEach(sectionId => {
-        const el = document.getElementById(sectionId);
-        if (el) el.style.display = "block";
-    });
-
-    const dashGreeting = document.getElementById("dashboardGreeting");
-    if (dashGreeting) {
-        dashGreeting.textContent = `Welcome, ${role}`;
+        document.getElementById('salesTraining').style.display = "block";
+        document.getElementById('techTraining').style.display = "block";
+        document.getElementById('operationsTraining').style.display = "block";
+        return;
     }
 
-    if (role === 'Administrator') {
-        refreshAdminViewIfAdmin();
-    }
+    adminPanel.style.display = "none";
+
+    const salesRoles = [
+        "IT Account Executive / Outside Sales",
+        "Managed Print Services (MPS) Specialist",
+        "Strategic / Regional Account Manager",
+        "Sales Enablement & Support"
+    ];
+
+    const techRoles = [
+        "Print and Image Service Technician",
+        "IT / Network Engineer",
+        "Field Service Technician",
+        "Delivery & Cable Specialist"
+    ];
+
+    const opsRoles = [
+        "Warehouse & Logistics Worker",
+        "Leasing & Billing Administrative Specialist",
+        "Administrative Assistant / Reception"
+    ];
+
+    document.getElementById('salesTraining').style.display =
+        salesRoles.includes(role) ? "block" : "none";
+
+    document.getElementById('techTraining').style.display =
+        techRoles.includes(role) ? "block" : "none";
+
+    document.getElementById('operationsTraining').style.display =
+        opsRoles.includes(role) ? "block" : "none";
 }
 
-// PROGRESS
-function getCurrentUserEmail() {
-    const session = getSession();
-    return session ? session.email : null;
-}
-function getProgress() {
-    const data = localStorage.getItem(PROGRESS_KEY);
-    return data ? JSON.parse(data) : {};
-}
-function saveProgress(progress) {
-    localStorage.setItem(PROGRESS_KEY, JSON.stringify(progress));
-}
-function completeTraining(trainingId) {
-    const email = getCurrentUserEmail();
-    if (!email) return;
-
-    const progress = getProgress();
-
-    if (!progress[email]) {
-        progress[email] = { completed: [], certificateId: null };
-    }
-
-    if (!progress[email].completed.includes(trainingId)) {
-        progress[email].completed.push(trainingId);
-    }
-
-    saveProgress(progress);
-    updateTrainingStatuses();
-    updateDashboardProgress();
-    checkCertificateUnlock();
-    refreshAdminViewIfAdmin();
-}
-function updateTrainingStatuses() {
-    const email = getCurrentUserEmail();
-    if (!email) return;
-
-    const progress = getProgress();
-    const userProgress = progress[email] || { completed: [] };
-
-    const items = document.querySelectorAll('.training-item');
-    items.forEach(item => {
-        const id = item.getAttribute('data-training-id');
-        const statusEl = item.querySelector('.training-status');
-        if (!statusEl) return;
-
-        if (userProgress.completed.includes(id)) {
-            statusEl.textContent = 'Completed';
-            statusEl.style.color = 'green';
-        } else {
-            statusEl.textContent = 'Not completed';
-            statusEl.style.color = 'red';
-        }
-    });
-}
+/* ============================
+   TRAINING MODULE LOGIC
+============================ */
 function initTrainingButtons() {
     const buttons = document.querySelectorAll('.complete-training-btn');
+
     buttons.forEach(btn => {
         btn.onclick = () => {
-            const parent = btn.closest('.training-item');
-            if (!parent) return;
-            const id = parent.getAttribute('data-training-id');
-            completeTraining(id);
+            const item = btn.closest('.training-item');
+            const trainingId = item.dataset.trainingId;
+
+            markTrainingComplete(trainingId);
         };
     });
 }
-function updateDashboardProgress() {
-    const email = getCurrentUserEmail();
-    if (!email) return;
 
-    const progress = getProgress();
-    const userProgress = progress[email] || { completed: [] };
+function markTrainingComplete(trainingId) {
+    let progress = getTrainingProgress();
+    progress[trainingId] = true;
+    saveTrainingProgress(progress);
 
-    const totalTrainings = document.querySelectorAll('.training-item').length;
-    const completedCount = userProgress.completed.length;
-
-    const dashProgress = document.getElementById('dashboardProgress');
-    if (dashProgress && totalTrainings > 0) {
-        const percent = Math.round((completedCount / totalTrainings) * 100);
-        dashProgress.textContent = `Overall Progress: ${completedCount}/${totalTrainings} (${percent}%)`;
-    }
+    updateTrainingStatuses();
+    updateDashboardProgress();
+    checkCertificateUnlock();
+    updateAdminDashboardIfAdmin();
 }
 
-// CERTIFICATE LOGIC
-function checkCertificateUnlock() {
-    const email = getCurrentUserEmail();
-    if (!email) return;
+function updateTrainingStatuses() {
+    const progress = getTrainingProgress();
+    const items = document.querySelectorAll('.training-item');
 
-    const session = getSession();
-    if (!session) return;
-    const role = session.role;
+    items.forEach(item => {
+        const id = item.dataset.trainingId;
+        const status = item.querySelector('.training-status');
 
-    const requiredList = requiredTrainingMap[role] || [];
-    if (requiredList.length === 0) return;
-
-    const progress = getProgress();
-    const userProgress = progress[email] || { completed: [], certificateId: null };
-
-    const completedRequired = requiredList.every(id => userProgress.completed.includes(id));
-
-    const certBox = document.getElementById("certificateBox");
-
-    if (certBox) {
-        if (completedRequired) {
-            certBox.innerHTML = `
-                <h3 style="color: green;">🎉 Certificate Unlocked!</h3>
-                <p>You have completed all required training for your role.</p>
-                <button onclick="downloadCertificate()" class="cert-btn">Download Certificate</button>
-            `;
+        if (progress[id]) {
+            status.textContent = "✔ Completed";
+            status.style.color = "green";
         } else {
-            certBox.innerHTML = `
-                <h3>Certificate Status</h3>
-                <p>Complete all required modules to unlock your certificate.</p>
-            `;
+            status.textContent = "❌ Not Completed";
+            status.style.color = "red";
         }
+    });
+}
+
+function updateDashboardProgress() {
+    const progress = getTrainingProgress();
+    const items = document.querySelectorAll('.training-item');
+
+    let totalRequired = 0;
+    let completedRequired = 0;
+
+    items.forEach(item => {
+        const id = item.dataset.trainingId;
+        const required = item.dataset.required === "true";
+
+        if (required) {
+            totalRequired++;
+            if (progress[id]) {
+                completedRequired++;
+            }
+        }
+    });
+
+    const percent = totalRequired > 0
+        ? Math.round((completedRequired / totalRequired) * 100)
+        : 0;
+
+    document.getElementById('dashboardProgress').textContent =
+        `Overall Progress: ${completedRequired}/${totalRequired} (${percent}%)`;
+}
+
+/* ============================
+   CERTIFICATE LOGIC
+============================ */
+function checkCertificateUnlock() {
+    const progress = getTrainingProgress();
+    const items = document.querySelectorAll('.training-item');
+
+    let totalRequired = 0;
+    let completedRequired = 0;
+
+    items.forEach(item => {
+        const id = item.dataset.trainingId;
+        const required = item.dataset.required === "true";
+
+        if (required) {
+            totalRequired++;
+            if (progress[id]) {
+                completedRequired++;
+            }
+        }
+    });
+
+    if (totalRequired > 0 && completedRequired === totalRequired) {
+        certificateBox.innerHTML = `
+            <h3>Certificate Status</h3>
+            <p style="color:green; font-weight:bold;">✔ All required training completed!</p>
+            <button class="cert-btn" onclick="openCertificate()">View Certificate</button>
+        `;
+    } else {
+        certificateBox.innerHTML = `
+            <h3>Certificate Status</h3>
+            <p>Complete all required modules to unlock your certificate.</p>
+        `;
     }
 }
 
-function downloadCertificate() {
+function openCertificate() {
     const session = getSession();
-    if (!session) return;
+    const userEmail = session.email;
+    const userRole = session.role;
 
-    const email = session.email;
-    const role = session.role;
+    certName.textContent = userEmail;
+    certRole.textContent = userRole;
 
-    const name = email.split('@')[0];
+    const today = new Date();
+    certDate.textContent = `Date: ${today.toLocaleDateString()}`;
 
-    const certNameEl = document.getElementById('certName');
-    const certRoleEl = document.getElementById('certRole');
-    const certDateEl = document.getElementById('certDate');
-    const certIdEl = document.getElementById('certId');
-    const certModal = document.getElementById('certificateModal');
+    const uniqueId = "CERT-" + Math.floor(Math.random() * 1000000000);
+    certId.textContent = uniqueId;
 
-    const dateStr = new Date().toLocaleDateString();
-    const certId = `CERT-${Date.now()}`;
-
-    if (certNameEl) certNameEl.textContent = name;
-    if (certRoleEl) certRoleEl.textContent = role;
-    if (certDateEl) certDateEl.textContent = `Date: ${dateStr}`;
-    if (certIdEl) certIdEl.textContent = certId;
-
-    if (certModal) certModal.style.display = 'flex';
-
-    const emailKey = getCurrentUserEmail();
-    if (emailKey) {
-        const progress = getProgress();
-        if (!progress[emailKey]) progress[emailKey] = { completed: [], certificateId: null };
-        progress[emailKey].certificateId = certId;
-        saveProgress(progress);
-        refreshAdminViewIfAdmin();
-    }
+    certificateModal.style.display = "flex";
 }
 
 function closeCertificate() {
-    const certModal = document.getElementById('certificateModal');
-    if (certModal) certModal.style.display = 'none';
+    certificateModal.style.display = "none";
 }
 
-// ADMIN PROGRESS DASHBOARD
-function renderAdminProgress() {
-    const adminProgressList = document.getElementById('adminProgressList');
-    if (!adminProgressList) return;
+/* ============================
+   ADMIN PANEL LOGIC
+============================ */
+createUserButton.addEventListener('click', () => {
+    const email = document.getElementById('newUserEmail').value.trim().toLowerCase();
+    const password = document.getElementById('newUserPassword').value.trim();
+    const role = document.getElementById('newUserRole').value;
 
-    const users = getUsers();
-    const progress = getProgress();
-
-    adminProgressList.innerHTML = '';
-
-    if (users.length === 0) {
-        adminProgressList.innerHTML = '<p>No users found.</p>';
+    if (!email) {
+        createUserMessage.textContent = "Email is required.";
+        createUserMessage.style.color = "red";
         return;
     }
 
+    let users = getUsers();
+
+    if (users.find(u => u.email.toLowerCase() === email)) {
+        createUserMessage.textContent = "A user with that email already exists.";
+        createUserMessage.style.color = "red";
+        return;
+    }
+
+    let finalPassword = password || null;
+
+    const newUser = {
+        email,
+        password: finalPassword,
+        role
+    };
+
+    users.push(newUser);
+    saveUsers(users);
+
+    createUserMessage.textContent = "User created successfully!";
+    createUserMessage.style.color = "green";
+
+    document.getElementById('newUserEmail').value = "";
+    document.getElementById('newUserPassword').value = "";
+
+    renderUserList();
+    renderAdminProgressDashboard();
+});
+
+function renderUserList() {
+    const users = getUsers();
+    userList.innerHTML = "";
+
     users.forEach(user => {
-        const email = user.email;
-        const role = user.role;
-
-        const userProgress = progress[email] || { completed: [], certificateId: null };
-        const completedCount = userProgress.completed.length;
-
-        const requiredList = requiredTrainingMap[role] || [];
-        const requiredCount = requiredList.length;
-
-        const hasCertificate =
-            requiredCount > 0 &&
-            requiredList.every(id => userProgress.completed.includes(id));
-
-        const certId = userProgress.certificateId || 'Not issued';
-
         const card = document.createElement('div');
-        card.className = 'admin-progress-card';
+        card.className = "user-card";
 
         card.innerHTML = `
-            <h4>${email}</h4>
-            <p>Role: ${role}</p>
-            <p>Completed Modules: ${completedCount}</p>
-            <p>Required Modules: ${requiredCount}</p>
-            <p>Certificate Status: ${hasCertificate ? 'Unlocked' : 'Locked'}</p>
-            <p>Certificate ID: ${certId}</p>
+            <h4>${user.email}</h4>
+            <p>Role: ${user.role}</p>
+            <p>Password Status: ${
+                !user.password ? "No password (first-time setup)" :
+                (user.password === "temp" || user.password === "1234") ? "Temporary (reset required)" :
+                "Normal"
+            }</p>
+            <button class="delete-user-btn">Delete User</button>
+        `;
+
+        card.querySelector('.delete-user-btn').addEventListener('click', () => {
+            deleteUser(user.email);
+        });
+
+        userList.appendChild(card);
+    });
+}
+
+function deleteUser(email) {
+    let users = getUsers();
+    users = users.filter(u => u.email.toLowerCase() !== email.toLowerCase());
+    saveUsers(users);
+
+    renderUserList();
+    renderAdminProgressDashboard();
+}
+
+/* ============================
+   ADMIN PROGRESS DASHBOARD
+============================ */
+function renderAdminProgressDashboard() {
+    const users = getUsers();
+    const progress = getTrainingProgress();
+
+    adminProgressList.innerHTML = "";
+
+    users.forEach(user => {
+        if (user.role === "Administrator") return;
+
+        const items = document.querySelectorAll('.training-item');
+        let totalRequired = 0;
+        let completedRequired = 0;
+
+        items.forEach(item => {
+            const id = item.dataset.trainingId;
+            const required = item.dataset.required === "true";
+
+            if (required) {
+                totalRequired++;
+                if (progress[id]) {
+                    completedRequired++;
+                }
+            }
+        });
+
+        const percent = totalRequired > 0
+            ? Math.round((completedRequired / totalRequired) * 100)
+            : 0;
+
+        const certificateUnlocked = (totalRequired > 0 && completedRequired === totalRequired);
+
+        const card = document.createElement('div');
+        card.className = "admin-progress-card";
+
+        card.innerHTML = `
+            <h4>${user.email}</h4>
+            <p>Role: ${user.role}</p>
+            <p>Required Training: ${completedRequired}/${totalRequired}</p>
+            <p>Completion: ${percent}%</p>
+            <p>Certificate: ${
+                certificateUnlocked
+                    ? "<span style='color:green; font-weight:bold;'>✔ Unlocked</span>"
+                    : "<span style='color:red;'>❌ Locked</span>"
+            }</p>
         `;
 
         adminProgressList.appendChild(card);
     });
 }
 
-function refreshAdminViewIfAdmin() {
+function updateAdminDashboardIfAdmin() {
     const session = getSession();
-    if (!session) return;
-
-    if (session.role === 'Administrator') {
-        renderAdminProgress();
+    if (session && session.role === "Administrator") {
+        renderAdminProgressDashboard();
     }
 }
+
+/* ============================
+   SYSTEM INITIALIZATION
+============================ */
+function initializeSystem() {
+    const session = getSession();
+
+    if (!session) {
+        loginPage.style.display = "flex";
+        appContainer.style.display = "none";
+        return;
+    }
+
+    loginPage.style.display = "none";
+    passwordSetupPage.style.display = "none";
+    appContainer.style.display = "block";
+
+    document.getElementById('dashboardGreeting').textContent =
+        `Welcome, ${session.email}`;
+
+    applyRoleAccess(session.role);
+    initTrainingButtons();
+    updateTrainingStatuses();
+    updateDashboardProgress();
+    checkCertificateUnlock();
+
+    if (session.role === "Administrator") {
+        renderUserList();
+        renderAdminProgressDashboard();
+    }
+}
+
+/* ============================
+   PAGE LOAD
+============================ */
+window.addEventListener('load', () => {
+    initializeSystem();
+});
 </script>
 
 </body>
