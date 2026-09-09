@@ -548,6 +548,24 @@ function saveTrainingProgress(progress) {
 }
 
 /* ============================
+   AUTO-CREATE FIRST ADMIN USER
+============================ */
+window.addEventListener('load', () => {
+    let users = getUsers();
+
+    if (users.length === 0) {
+        users.push({
+            email: "bryon@company.com",
+            password: "",   // blank → first-time setup
+            role: "Administrator"
+        });
+        saveUsers(users);
+    }
+
+    initializeSystem();
+});
+
+/* ============================
    LOGIN LOGIC
 ============================ */
 loginButton.addEventListener('click', () => {
@@ -585,7 +603,6 @@ loginButton.addEventListener('click', () => {
         return;
     }
 
-    // Successful login
     saveSession({ email: user.email, role: user.role });
     initializeSystem();
 });
@@ -633,6 +650,7 @@ setupPasswordButton.addEventListener('click', () => {
 function logout() {
     clearSession();
     loginPage.style.display = "flex";
+    passwordSetupPage.style.display = "none";
     appContainer.style.display = "none";
 }
 
@@ -640,7 +658,6 @@ function logout() {
    ROLE-BASED ACCESS
 ============================ */
 function applyRoleAccess(role) {
-    // Admin sees everything
     if (role === "Administrator") {
         adminPanel.style.display = "block";
 
@@ -958,6 +975,7 @@ function initializeSystem() {
 
     if (!session) {
         loginPage.style.display = "flex";
+        passwordSetupPage.style.display = "none";
         appContainer.style.display = "none";
         return;
     }
@@ -980,13 +998,6 @@ function initializeSystem() {
         renderAdminProgressDashboard();
     }
 }
-
-/* ============================
-   PAGE LOAD
-============================ */
-window.addEventListener('load', () => {
-    initializeSystem();
-});
 </script>
 
 </body>
