@@ -1,459 +1,432 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Training Portal</title>
+<!-- ============================
+     LOGIN PAGE
+============================ -->
+<div id="loginPage" class="login-container">
+
+    <div class="login-box">
+        <h1 class="login-title">Training Portal Login</h1>
+
+        <label>Email</label>
+        <input type="email" id="loginEmail" placeholder="employee@company.com">
+
+        <label>Password</label>
+        <input type="password" id="loginPassword" placeholder="Enter password">
+
+        <button id="loginButton" class="login-btn">Login</button>
+
+        <p id="loginError" class="login-error"></p>
+    </div>
+</div>
 
 <style>
+    /* LOGIN PAGE STYLES */
+    .login-container {
+        width: 100%;
+        height: 100vh;
+        background: #f5f5f5;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
 
-/* ============================
-   GLOBAL STYLES
-============================ */
-body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background: #f4f4f4;
-    color: #222;
-}
+    .login-box {
+        background: white;
+        padding: 30px;
+        width: 350px;
+        border-radius: 10px;
+        box-shadow: 0 0 15px rgba(0,0,0,0.1);
+    }
 
-.app {
-    display: flex;
-    height: 100vh;
-}
+    .login-title {
+        text-align: center;
+        margin-bottom: 20px;
+    }
 
-/* ============================
-   SIDEBAR
-============================ */
-.sidebar {
-    width: 260px;
-    background: #1e1e1e;
-    color: white;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-}
+    .login-box label {
+        font-weight: bold;
+        margin-top: 10px;
+        display: block;
+    }
 
-.sidebar-title {
-    font-size: 22px;
-    margin-bottom: 20px;
-}
+    .login-box input {
+        width: 100%;
+        padding: 10px;
+        margin-top: 5px;
+        margin-bottom: 15px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+    }
 
-.sidebar-menu {
-    list-style: none;
-    padding: 0;
-}
+    .login-btn {
+        width: 100%;
+        padding: 12px;
+        background: #0078d4;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+    }
 
-.sidebar-menu li {
-    padding: 12px;
-    margin-bottom: 8px;
-    background: #2b2b2b;
-    cursor: pointer;
-    border-radius: 6px;
-    transition: 0.2s;
-}
+    .login-btn:hover {
+        background: #005fa3;
+    }
 
-.sidebar-menu li:hover {
-    background: #3a3a3a;
-}
-
-.dark-btn {
-    margin-top: auto;
-    padding: 10px;
-    background: #444;
-    color: white;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-}
-
-/* ============================
-   MAIN CONTENT
-============================ */
-.main {
-    flex: 1;
-    padding: 30px;
-    overflow-y: auto;
-}
-
-.section {
-    display: none;
-}
-
-.section.active {
-    display: block;
-}
-
-/* ============================
-   TRAINING CARDS
-============================ */
-.training-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-    gap: 20px;
-}
-
-.training-card {
-    background: white;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
-}
-
-.training-card h3 {
-    margin-top: 0;
-}
-
-.start-btn {
-    margin-top: 10px;
-    padding: 10px;
-    width: 100%;
-    background: #0078ff;
-    color: white;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-}
-
-.start-btn:hover {
-    background: #005fcc;
-}
-
-/* ============================
-   CERTIFICATIONS
-============================ */
-.cert-list {
-    list-style: none;
-    padding: 0;
-}
-
-.cert-list li {
-    background: white;
-    padding: 12px;
-    margin-bottom: 10px;
-    border-radius: 6px;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-}
-
-/* ============================
-   TRAINING PAGE
-============================ */
-#trainingPage {
-    text-align: center;
-}
-
-#trainingTitle {
-    font-size: 28px;
-    margin-bottom: 20px;
-}
-
-.back-btn {
-    padding: 10px 20px;
-    background: #444;
-    color: white;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-}
-
-.back-btn:hover {
-    background: #333;
-}
-
-/* ============================
-   DARK MODE
-============================ */
-.dark body {
-    background: #121212;
-    color: #eaeaea;
-}
-
-.dark .sidebar {
-    background: #000;
-}
-
-.dark .sidebar-menu li {
-    background: #222;
-}
-
-.dark .sidebar-menu li:hover {
-    background: #333;
-}
-
-.dark .training-card {
-    background: #1e1e1e;
-    color: #eaeaea;
-}
-
-.dark .cert-list li {
-    background: #1e1e1e;
-    color: #eaeaea;
-}
-
-.dark .start-btn {
-    background: #0099ff;
-}
-
-.dark .back-btn {
-    background: #666;
-}
-
+    .login-error {
+        color: red;
+        text-align: center;
+        margin-top: 10px;
+    }
 </style>
-</head>
+<!-- ============================
+     ADMIN ACCOUNT CREATION PANEL
+============================ -->
+<div class="admin-section">
 
-<body>
-<div class="app">
+    <h2>Administrator Control Panel</h2>
+    <p>Create and manage user accounts for the Training Portal.</p>
 
-    <!-- ============================
-         SIDEBAR
-    ============================ -->
-    <div class="sidebar">
-        <h2 class="sidebar-title">Training Portal</h2>
+    <div class="create-user-box">
+        <h3>Create New User</h3>
 
-        <ul class="sidebar-menu">
-            <li data-section="dashboard">Dashboard</li>
-            <li data-section="trainings">Trainings</li>
-            <li data-section="california">California Mandatory Training</li>
-            <li data-section="certifications">Certifications</li>
-            <li data-section="paths">Learning Paths</li>
-            <li data-section="admin">Admin Panel</li>
-        </ul>
+        <label>Email</label>
+        <input type="email" id="newUserEmail" placeholder="employee@company.com">
 
-        <button id="darkModeToggle" class="dark-btn">Dark Mode</button>
+        <label>Password</label>
+        <input type="password" id="newUserPassword" placeholder="Enter password">
+
+        <label>Role</label>
+        <select id="newUserRole">
+            <option>IT Account Executive / Outside Sales</option>
+            <option>Managed Print Services (MPS) Specialist</option>
+            <option>Strategic / Regional Account Manager</option>
+            <option>Sales Enablement & Support</option>
+
+            <option>Print and Image Service Technician</option>
+            <option>IT / Network Engineer</option>
+            <option>Field Service Technician</option>
+            <option>Delivery & Cable Specialist</option>
+
+            <option>Warehouse & Logistics Worker</option>
+            <option>Leasing & Billing Administrative Specialist</option>
+            <option>Administrative Assistant / Reception</option>
+
+            <option>Administrator</option>
+        </select>
+
+        <button id="createUserButton" class="admin-btn">Create User</button>
+        <p id="createUserMessage" class="admin-message"></p>
     </div>
 
-    <!-- ============================
-         MAIN CONTENT
-    ============================ -->
-    <div class="main">
+    <hr>
 
-        <!-- ============================
-             DASHBOARD
-        ============================ -->
-        <section id="dashboard" class="section active">
-            <h1>Welcome to the Training Portal</h1>
-            <p>Select a section from the sidebar to begin.</p>
-        </section>
+    <div class="user-list-box">
+        <h3>Existing Users</h3>
+        <div id="userList"></div>
+    </div>
 
-        <!-- ============================
-             TRAININGS SECTION
-        ============================ -->
-        <section id="trainings" class="section">
-            <h1>All Trainings</h1>
-            <div class="training-grid" id="trainingList">
-                <!-- JS will populate all trainings here -->
-            </div>
-        </section>
+</div>
 
-        <!-- ============================
-             CALIFORNIA MANDATORY TRAINING
-        ============================ -->
-        <section id="california" class="section">
-            <h1>California Mandatory Training</h1>
-            <p>These links open the official California state training websites.</p>
+<style>
+    /* ADMIN PANEL STYLES */
+    .admin-section {
+        padding: 20px;
+    }
 
-            <div class="training-grid">
+    .create-user-box, .user-list-box {
+        background: #fff;
+        padding: 20px;
+        margin-top: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
 
-                <div class="training-card">
-                    <h3>SB 1343 — Sexual Harassment (Employee)</h3>
-                    <button class="start-btn" data-link="https://calcivilrights.ca.gov/shpt/" data-newtab="true">
-                        Start Training
-                    </button>
-                </div>
+    .create-user-box label {
+        font-weight: bold;
+        margin-top: 10px;
+        display: block;
+    }
 
-                <div class="training-card">
-                    <h3>SB 1343 — Sexual Harassment (Supervisor)</h3>
-                    <button class="start-btn" data-link="https://calcivilrights.ca.gov/shpt/supervisors/" data-newtab="true">
-                        Start Training
-                    </button>
-                </div>
+    .create-user-box input, .create-user-box select {
+        width: 100%;
+        padding: 10px;
+        margin-top: 5px;
+        margin-bottom: 15px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+    }
 
-                <div class="training-card">
-                    <h3>SB 553 — Workplace Violence Prevention</h3>
-                    <button class="start-btn" data-link="https://www.dir.ca.gov/dosh/Workplace-Violence-Prevention.html" data-newtab="true">
-                        Start Training
-                    </button>
-                </div>
+    .admin-btn {
+        width: 100%;
+        padding: 12px;
+        background: #0078d4;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+    }
 
-                <div class="training-card">
-                    <h3>Hazard Communication (HazCom)</h3>
-                    <button class="start-btn" data-link="https://www.dir.ca.gov/dosh/dosh_publications/hazcom.pdf" data-newtab="true">
-                        Start Training
-                    </button>
-                </div>
+    .admin-btn:hover {
+        background: #005fa3;
+    }
 
-                <div class="training-card">
-                    <h3>HIPAA Privacy & Security</h3>
-                    <button class="start-btn" data-link="https://www.hhs.gov/hipaa/for-professionals/training/index.html" data-newtab="true">
-                        Start Training
-                    </button>
-                </div>
+    .admin-message {
+        margin-top: 10px;
+        font-weight: bold;
+    }
 
-            </div>
-        </section>
+    .user-card {
+        background: #f5f5f5;
+        padding: 15px;
+        margin-top: 10px;
+        border-radius: 8px;
+    }
 
-        <!-- ============================
-             CERTIFICATIONS SECTION
-        ============================ -->
-        <section id="certifications" class="section">
-            <h1>Certifications</h1>
-            <p>All employees are required to complete the following certifications:</p>
+    .user-card h4 {
+        margin: 0;
+    }
 
-            <ul class="cert-list">
-                <li>SB 1343 — Sexual Harassment (Employee)</li>
-                <li>SB 1343 — Sexual Harassment (Supervisor — Admin Only)</li>
-                <li>SB 553 — Workplace Violence Prevention</li>
-                <li>Hazard Communication (HazCom)</li>
-                <li>HIPAA Privacy & Security</li>
-            </ul>
-        </section>
+    .delete-user-btn {
+        margin-top: 10px;
+        background: #d9534f;
+        color: white;<script>
+// ============================
+// USER DATABASE + LOGIN LOGIC
+// ============================
 
-        <!-- ============================
-             LEARNING PATHS SECTION
-        ============================ -->
-        <section id="paths" class="section">
-            <h1>Learning Paths</h1>
-            <p>Structured training paths will be added soon.</p>
-        </section>
+// LocalStorage keys
+const USERS_KEY = 'trainingPortalUsers';
+const SESSION_KEY = 'trainingPortalSession';
 
-        <!-- ============================
-             ADMIN PANEL
-        ============================ -->
-        <section id="admin" class="section">
-            <h1>Admin Panel</h1>
-            <p>Admin tools will be added here.</p>
-        </section>
+// Get elements
+const loginPage = document.getElementById('loginPage');
+const loginEmail = document.getElementById('loginEmail');
+const loginPassword = document.getElementById('loginPassword');
+const loginButton = document.getElementById('loginButton');
+const loginError = document.getElementById('loginError');
 
-        <!-- ============================
-             INTERNAL TRAINING PLACEHOLDER PAGE
-        ============================ -->
-        <section id="trainingPage" class="section">
-            <h1 id="trainingTitle"></h1>
-            <p>Training content coming soon.</p>
-            <button id="backToTrainings" class="back-btn">Back to Trainings</button>
-        </section>
+const createUserButton = document.getElementById('createUserButton');
+const newUserEmail = document.getElementById('newUserEmail');
+const newUserPassword = document.getElementById('newUserPassword');
+const newUserRole = document.getElementById('newUserRole');
+const createUserMessage = document.getElementById('createUserMessage');
+const userList = document.getElementById('userList');
 
-    </div> <!-- end main -->
-</div> <!-- end app -->
-<!-- ============================
-     JAVASCRIPT
-============================ -->
-<script>
+// Your main app container (portal)
+const appContainer = document.querySelector('.app'); // adjust if your main wrapper has a different class/id
 
 // ============================
-// SECTION SWITCHING
+// Helper functions
 // ============================
-const sections = document.querySelectorAll(".section");
-const menuItems = document.querySelectorAll(".sidebar-menu li");
 
-menuItems.forEach(item => {
-    item.addEventListener("click", () => {
-        const target = item.getAttribute("data-section");
+function getUsers() {
+    const data = localStorage.getItem(USERS_KEY);
+    return data ? JSON.parse(data) : [];
+}
 
-        sections.forEach(sec => sec.classList.remove("active"));
-        document.getElementById(target).classList.add("active");
+function saveUsers(users) {
+    localStorage.setItem(USERS_KEY, JSON.stringify(users));
+}
+
+function getSession() {
+    const data = localStorage.getItem(SESSION_KEY);
+    return data ? JSON.parse(data) : null;
+}
+
+function saveSession(session) {
+    localStorage.setItem(SESSION_KEY, JSON.stringify(session));
+}
+
+function clearSession() {
+    localStorage.removeItem(SESSION_KEY);
+}
+
+// ============================
+// Render user list in Admin Panel
+// ============================
+
+function renderUserList() {
+    if (!userList) return;
+
+    const users = getUsers();
+    if (users.length === 0) {
+        userList.innerHTML = '<p>No users created yet.</p>';
+        return;
+    }
+
+    userList.innerHTML = '';
+    users.forEach((user, index) => {
+        const div = document.createElement('div');
+        div.className = 'user-card';
+        div.innerHTML = `
+            <h4>${user.email}</h4>
+            <p>Role: ${user.role}</p>
+            <button class="delete-user-btn" data-index="${index}">Delete User</button>
+        `;
+        userList.appendChild(div);
     });
-});
+
+    // Attach delete handlers
+    const deleteButtons = userList.querySelectorAll('.delete-user-btn');
+    deleteButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const idx = parseInt(btn.getAttribute('data-index'), 10);
+            deleteUser(idx);
+        });
+    });
+}
+
+function deleteUser(index) {
+    const users = getUsers();
+    users.splice(index, 1);
+    saveUsers(users);
+    renderUserList();
+}
 
 // ============================
-// DARK MODE TOGGLE
+// Create user (Admin Panel)
 // ============================
-document.getElementById("darkModeToggle").addEventListener("click", () => {
-    document.body.classList.toggle("dark");
-});
 
-// ============================
-// INTERNAL TRAININGS LIST
-// ============================
-const internalTrainings = [
-    "Printer Setup",
-    "Network Performance",
-    "VoIP Basics",
-    "CRM Tools",
-    "Archiving Software",
-    "Troubleshooting Essentials",
-    "Leadership Essentials",
-    "Customer Service Excellence",
-    "Warehouse Operations",
-    "Shredding Workflow",
-    "Office Technology Overview",
-    "Remote Work Tools",
-    "Cybersecurity Basics",
-    "Data Entry Accuracy",
-    "Document Handling Procedures"
-];
+if (createUserButton) {
+    createUserButton.addEventListener('click', () => {
+        const email = newUserEmail.value.trim();
+        const password = newUserPassword.value.trim();
+        const role = newUserRole.value;
 
-// ============================
-// POPULATE TRAININGS SECTION
-// ============================
-const trainingList = document.getElementById("trainingList");
-
-internalTrainings.forEach(name => {
-    const card = document.createElement("div");
-    card.classList.add("training-card");
-
-    card.innerHTML = `
-        <h3>${name}</h3>
-        <button class="start-btn" data-internal="${name}">
-            Start Training
-        </button>
-    `;
-
-    trainingList.appendChild(card);
-});
-
-// ============================
-// START TRAINING BUTTON LOGIC
-// ============================
-document.addEventListener("click", (e) => {
-    if (e.target.classList.contains("start-btn")) {
-
-        // External compliance training (opens in new tab)
-        const link = e.target.getAttribute("data-link");
-        const newTab = e.target.getAttribute("data-newtab");
-
-        if (link) {
-            if (newTab === "true") {
-                window.open(link, "_blank");
-            } else {
-                window.location.href = link;
-            }
+        if (!email || !password) {
+            createUserMessage.textContent = 'Email and password are required.';
+            createUserMessage.style.color = 'red';
             return;
         }
 
-        // Internal training (placeholder page)
-        const internalName = e.target.getAttribute("data-internal");
-        if (internalName) {
-            document.getElementById("trainingTitle").innerText = internalName;
+        let users = getUsers();
 
-            sections.forEach(sec => sec.classList.remove("active"));
-            document.getElementById("trainingPage").classList.add("active");
+        // Check if email already exists
+        if (users.some(u => u.email.toLowerCase() === email.toLowerCase())) {
+            createUserMessage.textContent = 'A user with this email already exists.';
+            createUserMessage.style.color = 'red';
+            return;
+        }
+
+        const newUser = {
+            email,
+            password,
+            role
+        };
+
+        users.push(newUser);
+        saveUsers(users);
+
+        createUserMessage.textContent = 'User created successfully.';
+        createUserMessage.style.color = 'green';
+
+        newUserEmail.value = '';
+        newUserPassword.value = '';
+        newUserRole.value = 'IT Account Executive / Outside Sales';
+
+        renderUserList();
+    });
+}
+
+// ============================
+// Login logic
+// ============================
+
+if (loginButton) {
+    loginButton.addEventListener('click', () => {
+        const email = loginEmail.value.trim();
+        const password = loginPassword.value.trim();
+
+        if (!email || !password) {
+            loginError.textContent = 'Please enter email and password.';
+            return;
+        }
+
+        const users = getUsers();
+        const user = users.find(
+            u => u.email.toLowerCase() === email.toLowerCase() && u.password === password
+        );
+
+        if (!user) {
+            loginError.textContent = 'Invalid email or password.';
+            return;
+        }
+
+        // Save session
+        saveSession({
+            email: user.email,
+            role: user.role
+        });
+
+        // Show portal, hide login
+        if (loginPage) loginPage.style.display = 'none';
+        if (appContainer) appContainer.style.display = 'block';
+
+        // Apply role-based behavior
+        applyRoleAccess(user.role);
+    });
+}
+
+// ============================
+// Session restore on page load
+// ============================
+
+window.addEventListener('load', () => {
+    const session = getSession();
+
+    if (session && appContainer && loginPage) {
+        loginPage.style.display = 'none';
+        appContainer.style.display = 'block';
+        applyRoleAccess(session.role);
+    } else {
+        if (loginPage) loginPage.style.display = 'flex';
+        if (appContainer) appContainer.style.display = 'none';
+    }
+
+    renderUserList();
+});
+
+// ============================
+// Logout function (you can wire this to a button)
+// ============================
+
+function logout() {
+    clearSession();
+    if (loginPage) loginPage.style.display = 'flex';
+    if (appContainer) appContainer.style.display = 'none';
+}
+
+// ============================
+// Role-based access
+// ============================
+
+function applyRoleAccess(role) {
+    // Example: hide Admin Panel unless role is "Administrator"
+    const adminPanel = document.getElementById('adminPanel');
+    if (adminPanel) {
+        if (role === 'Administrator') {
+            adminPanel.style.display = 'block';
+        } else {
+            adminPanel.style.display = 'none';
         }
     }
-});
 
-// ============================
-// BACK TO TRAININGS
-// ============================
-document.getElementById("backToTrainings").addEventListener("click", () => {
-    sections.forEach(sec => sec.classList.remove("active"));
-    document.getElementById("trainings").classList.add("active");
-});
-
-// ============================
-// ADMIN PANEL LOGIC
-// ============================
-const isAdmin = true;
-
-if (!isAdmin) {
-    const supervisorCard = document.querySelector(
-        'button[data-link="https://calcivilrights.ca.gov/shpt/supervisors/"]'
-    ).parentElement;
-
-    supervisorCard.style.display = "none";
+    // Here you can add more role-based logic:
+    // - Show/hide certain training sections
+    // - Customize dashboard text
+    // - Restrict supervisor-only modules, etc.
 }
 
 </script>
 
-</body>
-</html>
+        padding: 8px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    .delete-user-btn:hover {
+        background: #b52b27;
+    }
+</style>
