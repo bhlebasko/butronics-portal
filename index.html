@@ -141,17 +141,18 @@
         margin-top: 0;
     }
 
-    .complete-training-btn {
-        background: #28a745;
+    .launch-training-btn {
+        background: #17a2b8;
         color: white;
         padding: 8px 12px;
         border: none;
         border-radius: 6px;
         cursor: pointer;
+        margin-right: 8px;
     }
 
-    .complete-training-btn:hover {
-        background: #1e7e34;
+    .launch-training-btn:hover {
+        background: #117a8b;
     }
 
     .training-status {
@@ -291,6 +292,78 @@
     .cert-content h3 {
         margin: 5px 0;
     }
+
+    /* ============================
+       TRAINING MODAL
+    ============================ */
+    .training-modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0,0,0,0.5);
+        display: none;
+        justify-content: center;
+        align-items: center;
+        z-index: 9998;
+    }
+
+    .training-content {
+        background: #fff;
+        padding: 30px;
+        width: 700px;
+        max-height: 80vh;
+        overflow-y: auto;
+        border-radius: 10px;
+        box-shadow: 0 0 20px rgba(0,0,0,0.3);
+    }
+
+    .training-content h2 {
+        margin-top: 0;
+    }
+
+    .quiz-question {
+        margin-top: 20px;
+        font-weight: bold;
+    }
+
+    .quiz-options label {
+        display: block;
+        margin-top: 5px;
+    }
+
+    .training-actions {
+        margin-top: 20px;
+        display: flex;
+        gap: 10px;
+    }
+
+    .complete-module-btn {
+        background: #28a745;
+        color: white;
+        padding: 10px 15px;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+    }
+
+    .complete-module-btn:hover {
+        background: #1e7e34;
+    }
+
+    .close-training-btn {
+        background: #6c757d;
+        color: white;
+        padding: 10px 15px;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+    }
+
+    .close-training-btn:hover {
+        background: #545b62;
+    }
     </style>
 </head>
 <body>
@@ -356,13 +429,15 @@
 
         <div class="training-item" data-training-id="sales-101" data-required="true">
             <h3>Sales Fundamentals 101</h3>
-            <button class="complete-training-btn">Mark as Complete</button>
+            <p>Learn the core steps of consultative selling, discovery, and closing.</p>
+            <button class="launch-training-btn">Launch Training</button>
             <p class="training-status"></p>
         </div>
 
         <div class="training-item" data-training-id="sales-201" data-required="false">
             <h3>Advanced Account Management</h3>
-            <button class="complete-training-btn">Mark as Complete</button>
+            <p>Deep dive into strategic accounts, retention, and upsell planning.</p>
+            <button class="launch-training-btn">Launch Training</button>
             <p class="training-status"></p>
         </div>
     </div>
@@ -375,7 +450,8 @@
 
         <div class="training-item" data-training-id="tech-101" data-required="true">
             <h3>Print System Basics</h3>
-            <button class="complete-training-btn">Mark as Complete</button>
+            <p>Understand core print workflows, drivers, and basic troubleshooting.</p>
+            <button class="launch-training-btn">Launch Training</button>
             <p class="training-status"></p>
         </div>
     </div>
@@ -388,7 +464,8 @@
 
         <div class="training-item" data-training-id="ops-101" data-required="true">
             <h3>Warehouse & Logistics Fundamentals</h3>
-            <button class="complete-training-btn">Mark as Complete</button>
+            <p>Learn receiving, staging, inventory accuracy, and delivery coordination.</p>
+            <button class="launch-training-btn">Launch Training</button>
             <p class="training-status"></p>
         </div>
     </div>
@@ -471,6 +548,37 @@
     </div>
 </div>
 
+<!-- ============================
+     TRAINING MODAL
+============================ -->
+<div id="trainingModal" class="training-modal">
+    <div class="training-content">
+        <h2 id="trainingTitle">[Module Title]</h2>
+        <p id="trainingDescription">[Module Description]</p>
+
+        <hr>
+
+        <h3>Training Content</h3>
+        <div id="trainingBody">
+            <!-- Filled dynamically per module -->
+        </div>
+
+        <hr>
+
+        <h3>Quick Quiz</h3>
+        <p class="quiz-question" id="quizQuestion">[Question]</p>
+        <div class="quiz-options" id="quizOptions">
+            <!-- Options injected here -->
+        </div>
+        <p id="quizFeedback" style="margin-top:10px; font-weight:bold;"></p>
+
+        <div class="training-actions">
+            <button class="complete-module-btn" id="completeModuleButton">Complete Module</button>
+            <button class="close-training-btn" onclick="closeTrainingModal()">Close</button>
+        </div>
+    </div>
+</div>
+
 <script>
 /* ============================
    STORAGE KEYS
@@ -509,6 +617,17 @@ const certDate = document.getElementById('certDate');
 const certId = document.getElementById('certId');
 
 const adminProgressList = document.getElementById('adminProgressList');
+
+const trainingModal = document.getElementById('trainingModal');
+const trainingTitle = document.getElementById('trainingTitle');
+const trainingDescription = document.getElementById('trainingDescription');
+const trainingBody = document.getElementById('trainingBody');
+const quizQuestion = document.getElementById('quizQuestion');
+const quizOptions = document.getElementById('quizOptions');
+const quizFeedback = document.getElementById('quizFeedback');
+const completeModuleButton = document.getElementById('completeModuleButton');
+
+let currentTrainingId = null;
 
 /* ============================
    USER STORAGE HELPERS
@@ -585,19 +704,16 @@ loginButton.addEventListener('click', () => {
         return;
     }
 
-    // First-time password setup
     if (!user.password || user.password === "") {
         showPasswordSetup(user.email);
         return;
     }
 
-    // Temporary password forced reset ("temp" or "1234")
     if (user.password === "temp" || user.password === "1234") {
         showPasswordSetup(user.email);
         return;
     }
 
-    // Normal login
     if (user.password !== password) {
         loginError.textContent = "Incorrect password.";
         return;
@@ -703,16 +819,149 @@ function applyRoleAccess(role) {
    TRAINING MODULE LOGIC
 ============================ */
 function initTrainingButtons() {
-    const buttons = document.querySelectorAll('.complete-training-btn');
+    const buttons = document.querySelectorAll('.launch-training-btn');
 
     buttons.forEach(btn => {
         btn.onclick = () => {
             const item = btn.closest('.training-item');
             const trainingId = item.dataset.trainingId;
+            const title = item.querySelector('h3').textContent;
+            const desc = item.querySelector('p').textContent;
 
-            markTrainingComplete(trainingId);
+            openTrainingModal(trainingId, title, desc);
         };
     });
+}
+
+function openTrainingModal(trainingId, title, desc) {
+    currentTrainingId = trainingId;
+    trainingTitle.textContent = title;
+    trainingDescription.textContent = desc;
+    quizFeedback.textContent = "";
+
+    // Simple content per module
+    let bodyHtml = "";
+    let question = "";
+    let options = [];
+
+    if (trainingId === "sales-101") {
+        bodyHtml = `
+            <p><strong>Overview:</strong> This module covers the basics of consultative selling:
+            discovery, presenting value, handling objections, and closing.</p>
+            <ul>
+                <li>Step 1: Build rapport and trust</li>
+                <li>Step 2: Ask discovery questions</li>
+                <li>Step 3: Present tailored solutions</li>
+                <li>Step 4: Confirm value and next steps</li>
+            </ul>
+        `;
+        question = "Which step focuses on understanding the customer's needs?";
+        options = [
+            { text: "Building rapport", correct: false },
+            { text: "Discovery questions", correct: true },
+            { text: "Presenting solutions", correct: false },
+            { text: "Closing the deal", correct: false }
+        ];
+    } else if (trainingId === "sales-201") {
+        bodyHtml = `
+            <p><strong>Overview:</strong> Advanced account management focuses on long-term
+            relationships, retention, and strategic growth.</p>
+            <ul>
+                <li>Account planning and mapping</li>
+                <li>Retention strategies</li>
+                <li>Upsell and cross-sell opportunities</li>
+            </ul>
+        `;
+        question = "What is a key goal of advanced account management?";
+        options = [
+            { text: "One-time sales only", correct: false },
+            { text: "Long-term retention and growth", correct: true },
+            { text: "Reducing contact with clients", correct: false },
+            { text: "Avoiding upsell conversations", correct: false }
+        ];
+    } else if (trainingId === "tech-101") {
+        bodyHtml = `
+            <p><strong>Overview:</strong> Print System Basics covers drivers, queues, and
+            basic troubleshooting steps.</p>
+            <ul>
+                <li>Understanding print drivers</li>
+                <li>Managing print queues</li>
+                <li>Resolving common error codes</li>
+            </ul>
+        `;
+        question = "What should you check first when a job is stuck in the queue?";
+        options = [
+            { text: "Network cable color", correct: false },
+            { text: "Print queue status and errors", correct: true },
+            { text: "User's email address", correct: false },
+            { text: "Monitor brightness", correct: false }
+        ];
+    } else if (trainingId === "ops-101") {
+        bodyHtml = `
+            <p><strong>Overview:</strong> Warehouse & Logistics Fundamentals covers receiving,
+            staging, inventory accuracy, and delivery coordination.</p>
+            <ul>
+                <li>Accurate receiving and logging</li>
+                <li>Proper staging and labeling</li>
+                <li>Coordinating deliveries with drivers</li>
+            </ul>
+        `;
+        question = "Why is accurate receiving important?";
+        options = [
+            { text: "It improves office décor", correct: false },
+            { text: "It ensures inventory records match reality", correct: true },
+            { text: "It reduces employee breaks", correct: false },
+            { text: "It changes printer speed", correct: false }
+        ];
+    }
+
+    trainingBody.innerHTML = bodyHtml;
+    quizQuestion.textContent = question;
+    quizOptions.innerHTML = "";
+
+    options.forEach((opt, index) => {
+        const id = `quizOpt_${index}`;
+        const label = document.createElement('label');
+        const input = document.createElement('input');
+        input.type = "radio";
+        input.name = "quizOption";
+        input.value = opt.correct ? "true" : "false";
+        input.id = id;
+
+        label.htmlFor = id;
+        label.textContent = opt.text;
+
+        label.prepend(input);
+        quizOptions.appendChild(label);
+    });
+
+    completeModuleButton.onclick = () => {
+        const selected = document.querySelector('input[name="quizOption"]:checked');
+        if (!selected) {
+            quizFeedback.textContent = "Please select an answer before completing the module.";
+            quizFeedback.style.color = "red";
+            return;
+        }
+
+        if (selected.value === "true") {
+            quizFeedback.textContent = "Correct! Module marked as complete.";
+            quizFeedback.style.color = "green";
+            markTrainingComplete(currentTrainingId);
+            setTimeout(() => {
+                closeTrainingModal();
+            }, 800);
+        } else {
+            quizFeedback.textContent = "Not quite. Review the content and try again.";
+            quizFeedback.style.color = "red";
+        }
+    };
+
+    trainingModal.style.display = "flex";
+}
+
+function closeTrainingModal() {
+    trainingModal.style.display = "none";
+    currentTrainingId = null;
 }
 
 function markTrainingComplete(trainingId) {
