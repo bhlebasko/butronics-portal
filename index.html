@@ -186,6 +186,21 @@
             This onboarding flow covers all required California onboarding steps, including
             forms, policies, and training acknowledgments.
         </p>
+
+        <p>
+            Official California onboarding requirements:
+            <ul>
+                <li><a href="https://www.uscis.gov/i-9" target="_blank">Form I‑9 (USCIS)</a></li>
+                <li><a href="https://www.irs.gov/forms-pubs/about-form-w-4" target="_blank">Form W‑4 (IRS)</a></li>
+                <li><a href="https://edd.ca.gov/en/Payroll_Taxes/Forms_and_Publications" target="_blank">Form DE 4 (EDD)</a></li>
+                <li><a href="https://www.dir.ca.gov/dlse/MealBreaks.htm" target="_blank">Meal & Rest Break Rules (DLSE)</a></li>
+                <li><a href="https://www.dir.ca.gov/dlse/LC_2810.5.html" target="_blank">Wage Theft Prevention Act Notice</a></li>
+                <li><a href="https://www.dfeh.ca.gov/wp-content/uploads/sites/32/2022/05/DFEH-Sexual-Harassment-Prevention-Training.pdf" target="_blank">Harassment Training Requirements (Civil Rights Dept.)</a></li>
+                <li><a href="https://oag.ca.gov/privacy/ccpa" target="_blank">CCPA Employee Privacy Notice</a></li>
+                <li><a href="https://edd.ca.gov/en/Payroll_Taxes/New_Hire_Reporting" target="_blank">California New Hire Reporting</a></li>
+            </ul>
+        </p>
+
         <button class="btn" onclick="goToStep('personal')">Begin</button>
     </div>
 
@@ -215,9 +230,10 @@
     <!-- I-9 Step -->
     <div id="step_i9" class="card" style="display:none;">
         <h2>Form I‑9 — Employment Eligibility Verification</h2>
+
         <p>
-            You must complete Section 1 of Form I‑9 no later than your first day of work.
-            BURTRONICS will complete Section 2.
+            Official I‑9 instructions:
+            <a href="https://www.uscis.gov/i-9" target="_blank">USCIS I‑9 Resource Center</a>
         </p>
 
         <label>Citizenship / Immigration Status</label>
@@ -238,9 +254,10 @@
     <!-- W-4 Step -->
     <div id="step_w4" class="card" style="display:none;">
         <h2>Form W‑4 — Federal Withholding</h2>
+
         <p>
-            Complete your federal withholding selections. This is a simplified capture; HR will
-            generate the official W‑4.
+            Official W‑4 instructions:
+            <a href="https://www.irs.gov/forms-pubs/about-form-w-4" target="_blank">IRS W‑4 Page</a>
         </p>
 
         <label>Filing Status</label>
@@ -263,9 +280,10 @@
     <!-- DE 4 Step -->
     <div id="step_de4" class="card" style="display:none;">
         <h2>Form DE 4 — California State Withholding</h2>
+
         <p>
-            California requires a separate state withholding form (DE 4). Provide your selections
-            below; HR will generate the official DE 4.
+            Official DE 4 instructions:
+            <a href="https://edd.ca.gov/en/Payroll_Taxes/Forms_and_Publications" target="_blank">EDD DE 4 Page</a>
         </p>
 
         <label>Filing Status (CA)</label>
@@ -288,41 +306,39 @@
     <!-- Policies Step -->
     <div id="step_policies" class="card" style="display:none;">
         <h2>California Policies & Acknowledgments</h2>
-        <p>Please review and acknowledge the following required policies.</p>
+
+        <p>
+            Official California policy references:
+            <ul>
+                <li><a href="https://www.dir.ca.gov/dlse/MealBreaks.htm" target="_blank">Meal & Rest Break Rules</a></li>
+                <li><a href="https://www.dir.ca.gov/dlse/LC_2810.5.html" target="_blank">Wage Theft Prevention Act Notice</a></li>
+                <li><a href="https://www.dir.ca.gov/dlse/" target="_blank">California Labor Standards (DLSE)</a></li>
+            </ul>
+        </p>
 
         <div>
             <input type="checkbox" id="pol_mealrest">
-            <label for="pol_mealrest">
-                I acknowledge the California Meal & Rest Break Policy.
-            </label>
+            <label for="pol_mealrest">I acknowledge the California Meal & Rest Break Policy.</label>
         </div>
 
         <div>
             <input type="checkbox" id="pol_overtime">
-            <label for="pol_overtime">
-                I acknowledge the California Overtime Policy.
-            </label>
+            <label for="pol_overtime">I acknowledge the California Overtime Policy.</label>
         </div>
 
         <div>
             <input type="checkbox" id="pol_wage">
-            <label for="pol_wage">
-                I acknowledge receipt of the Wage Theft Prevention Act Notice (Labor Code 2810.5).
-            </label>
+            <label for="pol_wage">I acknowledge receipt of the Wage Theft Prevention Act Notice.</label>
         </div>
 
         <div>
             <input type="checkbox" id="pol_atwill">
-            <label for="pol_atwill">
-                I acknowledge that my employment is at‑will.
-            </label>
+            <label for="pol_atwill">I acknowledge that my employment is at‑will.</label>
         </div>
 
         <div>
             <input type="checkbox" id="pol_handbook">
-            <label for="pol_handbook">
-                I acknowledge receipt of the BURTRONICS Employee Handbook.
-            </label>
+            <label for="pol_handbook">I acknowledge receipt of the BURTRONICS Employee Handbook.</label>
         </div>
 
         <button class="btn" onclick="completePolicies()">Save Policy Acknowledgments</button>
@@ -331,9 +347,12 @@
     <!-- Harassment Training Step -->
     <div id="step_harassment" class="card" style="display:none;">
         <h2>California Sexual Harassment Prevention Training</h2>
+
         <p>
-            California (SB 1343) requires harassment prevention training for employees within
-            6 months of hire. Supervisors must complete 2 hours; non‑supervisors 1 hour.
+            Official training requirements:
+            <a href="https://www.dfeh.ca.gov/wp-content/uploads/sites/32/2022/05/DFEH-Sexual-Harassment-Prevention-Training.pdf" target="_blank">
+                California Civil Rights Department — Training Requirements
+            </a>
         </p>
 
         <label>Your Role</label>
@@ -355,14 +374,10 @@
     <!-- Privacy (CCPA) Step -->
     <div id="step_privacy" class="card" style="display:none;">
         <h2>California Privacy Notice (CCPA)</h2>
-        <p>
-            California law requires that employees receive a notice describing how their personal
-            information is collected, used, and shared.
-        </p>
 
         <p>
-            By checking below, you acknowledge receipt of the BURTRONICS California Employee
-            Privacy Notice.
+            Official CCPA employee privacy information:
+            <a href="https://oag.ca.gov/privacy/ccpa" target="_blank">California Attorney General — CCPA</a>
         </p>
 
         <div>
