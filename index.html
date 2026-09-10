@@ -1,3 +1,9 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- ============================================================
+   SECTION A — HEAD
+============================================================ -->
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -158,6 +164,10 @@
         }
     </style>
 </head>
+
+<!-- ============================================================
+   SECTION B — BODY
+============================================================ -->
 <body>
 
     <!-- Header -->
@@ -176,8 +186,13 @@
         <div class="stepNavItem" onclick="goToStep('policies')">Policies</div>
         <div class="stepNavItem" onclick="goToStep('harassment')">Harassment Training</div>
         <div class="stepNavItem" onclick="goToStep('privacy')">Privacy (CCPA)</div>
+        <div class="stepNavItem" onclick="goToStep('training_overview')">Training Overview</div>
         <div class="stepNavItem" onclick="goToStep('summary')">Summary</div>
     </div>
+
+    <!-- ============================================================
+         ALL ONBOARDING STEPS
+    ============================================================ -->
 
     <!-- Welcome Step -->
     <div id="step_welcome" class="card">
@@ -195,7 +210,7 @@
                 <li><a href="https://edd.ca.gov/en/Payroll_Taxes/Forms_and_Publications" target="_blank">Form DE 4 (EDD)</a></li>
                 <li><a href="https://www.dir.ca.gov/dlse/MealBreaks.htm" target="_blank">Meal & Rest Break Rules (DLSE)</a></li>
                 <li><a href="https://www.dir.ca.gov/dlse/LC_2810.5.html" target="_blank">Wage Theft Prevention Act Notice</a></li>
-                <li><a href="https://www.dfeh.ca.gov/wp-content/uploads/sites/32/2022/05/DFEH-Sexual-Harassment-Prevention-Training.pdf" target="_blank">Harassment Training Requirements (Civil Rights Dept.)</a></li>
+                <li><a href="https://www.dfeh.ca.gov/wp-content/uploads/sites/32/2022/05/DFEH-Sexual-Harassment-Prevention-Training.pdf" target="_blank">Harassment Training Requirements</a></li>
                 <li><a href="https://oag.ca.gov/privacy/ccpa" target="_blank">CCPA Employee Privacy Notice</a></li>
                 <li><a href="https://edd.ca.gov/en/Payroll_Taxes/New_Hire_Reporting" target="_blank">California New Hire Reporting</a></li>
             </ul>
@@ -207,22 +222,21 @@
     <!-- Personal Info Step -->
     <div id="step_personal" class="card" style="display:none;">
         <h2>Personal Information</h2>
-        <p>Please provide your basic information to populate required forms.</p>
 
         <label>Full Legal Name</label>
-        <input id="pi_name" placeholder="First Middle Last">
+        <input id="pi_name">
 
         <label>Social Security Number</label>
-        <input id="pi_ssn" placeholder="XXX-XX-XXXX">
+        <input id="pi_ssn">
 
         <label>Home Address</label>
-        <input id="pi_address" placeholder="Street, City, State, ZIP">
+        <input id="pi_address">
 
         <label>Phone Number</label>
-        <input id="pi_phone" placeholder="(XXX) XXX-XXXX">
+        <input id="pi_phone">
 
         <label>Email</label>
-        <input id="pi_email" placeholder="you@example.com">
+        <input id="pi_email">
 
         <button class="btn" onclick="savePersonalInfo()">Save & Continue</button>
     </div>
@@ -245,10 +259,10 @@
             <option>Alien Authorized to Work</option>
         </select>
 
-        <label>Signature (type your full name)</label>
-        <input id="i9_signature" placeholder="Full Name">
+        <label>Signature</label>
+        <input id="i9_signature">
 
-        <button class="btn" onclick="completeI9()">Mark I‑9 Section 1 Complete</button>
+        <button class="btn" onclick="completeI9()">Mark I‑9 Complete</button>
     </div>
 
     <!-- W-4 Step -->
@@ -268,13 +282,13 @@
             <option>Head of household</option>
         </select>
 
-        <label>Number of Dependents</label>
-        <input id="w4_dependents" type="number" min="0" placeholder="0">
+        <label>Dependents</label>
+        <input id="w4_dependents" type="number">
 
-        <label>Additional Amount to Withhold (optional)</label>
-        <input id="w4_additional" type="number" min="0" placeholder="0">
+        <label>Additional Withholding</label>
+        <input id="w4_additional" type="number">
 
-        <button class="btn" onclick="completeW4()">Save W‑4 Selections</button>
+        <button class="btn" onclick="completeW4()">Save W‑4</button>
     </div>
 
     <!-- DE 4 Step -->
@@ -294,13 +308,13 @@
             <option>Head of household</option>
         </select>
 
-        <label>Number of Allowances (CA)</label>
-        <input id="de4_allowances" type="number" min="0" placeholder="0">
+        <label>Allowances</label>
+        <input id="de4_allowances" type="number">
 
-        <label>Additional State Withholding (optional)</label>
-        <input id="de4_additional" type="number" min="0" placeholder="0">
+        <label>Additional State Withholding</label>
+        <input id="de4_additional" type="number">
 
-        <button class="btn" onclick="completeDE4()">Save DE 4 Selections</button>
+        <button class="btn" onclick="completeDE4()">Save DE 4</button>
     </div>
 
     <!-- Policies Step -->
@@ -316,32 +330,13 @@
             </ul>
         </p>
 
-        <div>
-            <input type="checkbox" id="pol_mealrest">
-            <label for="pol_mealrest">I acknowledge the California Meal & Rest Break Policy.</label>
-        </div>
+        <div><input type="checkbox" id="pol_mealrest"> Meal & Rest Break Policy</div>
+        <div><input type="checkbox" id="pol_overtime"> Overtime Policy</div>
+        <div><input type="checkbox" id="pol_wage"> Wage Theft Prevention Act Notice</div>
+        <div><input type="checkbox" id="pol_atwill"> At‑Will Employment</div>
+        <div><input type="checkbox" id="pol_handbook"> Employee Handbook</div>
 
-        <div>
-            <input type="checkbox" id="pol_overtime">
-            <label for="pol_overtime">I acknowledge the California Overtime Policy.</label>
-        </div>
-
-        <div>
-            <input type="checkbox" id="pol_wage">
-            <label for="pol_wage">I acknowledge receipt of the Wage Theft Prevention Act Notice.</label>
-        </div>
-
-        <div>
-            <input type="checkbox" id="pol_atwill">
-            <label for="pol_atwill">I acknowledge that my employment is at‑will.</label>
-        </div>
-
-        <div>
-            <input type="checkbox" id="pol_handbook">
-            <label for="pol_handbook">I acknowledge receipt of the BURTRONICS Employee Handbook.</label>
-        </div>
-
-        <button class="btn" onclick="completePolicies()">Save Policy Acknowledgments</button>
+        <button class="btn" onclick="completePolicies()">Save Policies</button>
     </div>
 
     <!-- Harassment Training Step -->
@@ -365,10 +360,10 @@
         <label>Training Completion Date</label>
         <input id="har_date" type="date">
 
-        <label>Training Provider / Platform</label>
-        <input id="har_provider" placeholder="e.g., BURTRONICS LMS, External Vendor">
+        <label>Training Provider</label>
+        <input id="har_provider">
 
-        <button class="btn" onclick="completeHarassmentTraining()">Record Training Completion</button>
+        <button class="btn" onclick="completeHarassmentTraining()">Record Training</button>
     </div>
 
     <!-- Privacy (CCPA) Step -->
@@ -382,22 +377,96 @@
 
         <div>
             <input type="checkbox" id="privacy_ack">
-            <label for="privacy_ack">
-                I acknowledge receipt of the California Employee Privacy Notice (CCPA).
-            </label>
+            I acknowledge receipt of the California Employee Privacy Notice (CCPA).
         </div>
 
         <button class="btn" onclick="completePrivacy()">Save Privacy Acknowledgment</button>
     </div>
 
+    <!-- NEW — Required Workplace Training Overview -->
+    <div id="step_training_overview" class="card" style="display:none;">
+        <h2>California Required Workplace Training Overview</h2>
+
+        <p>
+            California requires several mandatory workplace training programs to ensure safety,
+            prevent harassment, and maintain compliance with state labor laws.
+        </p>
+
+        <h3>Mandatory Training Programs</h3>
+        <ul>
+            <li>Sexual Harassment & Abusive Conduct Prevention (SB 1343)</li>
+            <li>Workplace Violence Prevention (SB 553)</li>
+            <li>Injury & Illness Prevention Program (IIPP)</li>
+            <li>Heat Illness Prevention</li>
+            <li>Hazard Communication (HazCom)</li>
+        </ul>
+
+        <h3>Who Must Complete These Trainings?</h3>
+        <ul>
+            <li>Supervisors & Managers</li>
+            <li>Non‑supervisory Employees</li>
+            <li>Temporary & Seasonal Workers</li>
+            <li>Outdoor Workers</li>
+        </ul>
+
+        <div>
+            <input type="checkbox" id="training_overview_ack">
+            I acknowledge I have reviewed the California Required Workplace Training Overview.
+        </div>
+
+        <button class="btn" onclick="completeTrainingOverview()">Save & Continue</button>
+    </div>
+
     <!-- Summary Step -->
     <div id="step_summary" class="card" style="display:none;">
         <h2>Onboarding Summary</h2>
-        <p>Review your completion status for all California onboarding requirements.</p>
-
         <div id="summaryContent"></div>
-
         <button class="btn" onclick="generateOnboardingRecord()">Generate Onboarding Record</button>
     </div>
 
 </body>
+
+<!-- ============================================================
+   SECTION C — SCRIPT
+============================================================ -->
+<script>
+
+    /* ============================================================
+       DARK MODE
+    ============================================================ */
+    darkModeToggle.addEventListener("click", () => {
+        document.body.classList.toggle("dark");
+    });
+
+    /* ============================================================
+       STEP ENGINE
+    ============================================================ */
+    function goToStep(step) {
+        document.querySelectorAll(".card").forEach(c => c.style.display = "none");
+        document.querySelectorAll(".stepNavItem").forEach(i => i.classList.remove("active"));
+
+        document.getElementById(`step_${step}`).style.display = "block";
+
+        const navItem = [...document.querySelectorAll(".stepNavItem")]
+            .find(i => i.textContent.trim().toLowerCase().includes(step.replace("_", " ")));
+        if (navItem) navItem.classList.add("active");
+    }
+
+    /* ============================================================
+       PROGRESS STORAGE
+    ============================================================ */
+    let onboarding = JSON.parse(localStorage.getItem("onboarding_ca") || "{}");
+
+    function saveOnboardingProgress() {
+        localStorage.setItem("onboarding_ca", JSON.stringify(onboarding));
+    }
+
+    /* ============================================================
+       STEP COMPLETION FUNCTIONS
+    ============================================================ */
+
+    function savePersonalInfo() {
+        onboarding.personal = {
+            name: pi_name.value,
+            ssn: pi_ssn.value,
+            address: pi_address
