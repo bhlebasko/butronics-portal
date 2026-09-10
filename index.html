@@ -1,198 +1,120 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BURTRONICS LMS</title>
+    <title>California Onboarding — BURTRONICS</title>
 
-    <!-- ============================================================
-         GLOBAL BRAND VARIABLES
-    ============================================================ -->
     <style>
         :root {
             --brand-blue: #0A66C2;
             --brand-blue-accent: #1D9BF0;
-            --brand-black: #111111;
             --brand-dark: #111827;
+            --brand-black: #111111;
             --brand-white: #FFFFFF;
             --brand-light-bg: #F3F6F9;
             --brand-card-bg: #FFFFFF;
             --brand-border: #D0D7E2;
         }
 
-        /* ============================================================
-           GLOBAL BASE STYLES
-        ============================================================ */
+        * {
+            transition: background 0.25s ease, color 0.25s ease, border-color 0.25s ease;
+            font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+        }
+
         body {
             background: var(--brand-light-bg);
             color: var(--brand-black);
-            font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
             margin: 0;
             padding: 0;
         }
 
-        * {
-            transition: background 0.25s ease, color 0.25s ease, border-color 0.25s ease;
-        }
-
-        /* ============================================================
-           HEADER BAR
-        ============================================================ */
-        #burtronicsHeader {
-            width: 100%;
+        /* Header */
+        #header {
             background: var(--brand-dark);
             color: var(--brand-white);
-            padding: 16px 24px;
-            font-size: 18px;
+            padding: 20px;
+            font-size: 22px;
             font-weight: 700;
             display: flex;
-            align-items: center;
             justify-content: space-between;
+            align-items: center;
         }
 
-        #burtronicsHeaderLogo {
-            font-size: 20px;
-            font-weight: 800;
-        }
-
-        #burtronicsHeaderUser {
-            font-size: 14px;
-            opacity: 0.85;
-        }
-
-        /* ============================================================
-           BUTTONS
-        ============================================================ */
-        .btn,
-        button {
+        #darkModeToggle {
             background: var(--brand-blue);
             color: var(--brand-white);
             border: none;
-            border-radius: 8px;
             padding: 10px 16px;
-            font-size: 14px;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        /* Step Navigation */
+        #stepNav {
+            display: flex;
+            overflow-x: auto;
+            padding: 12px;
+            background: var(--brand-white);
+            border-bottom: 1px solid var(--brand-border);
+        }
+
+        .stepNavItem {
+            padding: 10px 16px;
+            margin-right: 10px;
+            border-radius: 8px;
+            background: var(--brand-light-bg);
             font-weight: 600;
             cursor: pointer;
-            transition: background 0.2s ease;
+            white-space: nowrap;
         }
 
-        .btn:hover,
-        button:hover {
-            background: var(--brand-blue-accent);
+        .stepNavItem.active {
+            background: var(--brand-blue);
+            color: var(--brand-white);
         }
 
-        .btn-secondary {
-            background: var(--brand-dark);
-        }
-
-        .btn-secondary:hover {
-            background: var(--brand-black);
-        }
-
-        .btn-danger {
-            background: #d93025;
-        }
-
-        .btn-danger:hover {
-            background: #b1271b;
-        }
-
-        /* ============================================================
-           INPUTS
-        ============================================================ */
-        input, select, textarea {
-            border: 1px solid var(--brand-border);
-            border-radius: 8px;
-            padding: 12px;
-            font-size: 14px;
-            width: 100%;
-            box-sizing: border-box;
-        }
-
-        /* ============================================================
-           CARDS
-        ============================================================ */
-        .card,
-        .course-card,
-        .sectionCard {
+        /* Cards */
+        .card {
             background: var(--brand-card-bg);
             border: 1px solid var(--brand-border);
             border-radius: 12px;
             padding: 20px;
-            margin-bottom: 20px;
+            margin: 20px;
             box-shadow: 0 4px 12px rgba(0,0,0,0.06);
         }
 
-        /* ============================================================
-           LANDING PAGE
-        ============================================================ */
-        #landingPage {
-            padding: 30px;
-            display: none;
-        }
-
-        #landingWelcome {
+        /* Buttons */
+        .btn {
             background: var(--brand-blue);
             color: var(--brand-white);
-            padding: 30px;
-            border-radius: 16px;
-            font-size: 24px;
-            font-weight: 700;
-            margin-bottom: 30px;
-            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+            border: none;
+            border-radius: 8px;
+            padding: 12px 18px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 10px;
         }
 
-        .sectionTitle {
-            font-size: 22px;
-            font-weight: 700;
-            color: var(--brand-blue);
-            margin-bottom: 16px;
+        .btn:hover {
+            background: var(--brand-blue-accent);
         }
 
-        /* ============================================================
-           COURSE LIST
-        ============================================================ */
-        #courseList {
-            padding: 30px;
-            display: none;
+        /* Inputs */
+        input, select, textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--brand-border);
+            border-radius: 8px;
+            margin-top: 10px;
+            font-size: 16px;
         }
 
-        .course-card h3 {
-            margin-top: 0;
-        }
-
-        /* ============================================================
-           COURSE PLAYER
-        ============================================================ */
-        #coursePlayer {
-            padding: 30px;
-            display: none;
-        }
-
-        /* ============================================================
-           LOGIN SCREEN
-        ============================================================ */
-        #loginScreen {
-            max-width: 400px;
-            margin: 60px auto;
-            padding: 30px;
-            background: var(--brand-white);
-            border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-        }
-
-        #passwordStrength {
-            margin-top: 8px;
-            font-size: 14px;
-            opacity: 0.8;
-        }
-
-        /* ============================================================
-           DARK MODE
-        ============================================================ */
+        /* Dark Mode */
         body.dark {
             --brand-blue: #1D9BF0;
             --brand-blue-accent: #4AB3F4;
-            --brand-black: #E5E7EB;
             --brand-dark: #0D1117;
+            --brand-black: #E5E7EB;
             --brand-white: #1A1F24;
             --brand-light-bg: #0D1117;
             --brand-card-bg: #1A1F24;
@@ -201,9 +123,7 @@
             color: var(--brand-black);
         }
 
-        body.dark .card,
-        body.dark .course-card,
-        body.dark .sectionCard {
+        body.dark .card {
             background: var(--brand-card-bg);
             border-color: var(--brand-border);
         }
@@ -216,51 +136,23 @@
             border-color: var(--brand-border);
         }
 
-        body.dark #burtronicsHeader {
-            background: #111827;
-            color: var(--brand-black);
-        }
-
-        /* ============================================================
-           MOBILE OPTIMIZATION
-        ============================================================ */
+        /* Mobile */
         @media (max-width: 768px) {
-            #burtronicsHeader {
+            #header {
                 flex-direction: column;
                 text-align: center;
-                padding: 12px;
             }
 
-            #landingPage {
+            .card {
+                margin: 12px;
                 padding: 16px;
             }
 
-            .sectionCard {
-                padding: 16px;
-            }
-
-            .course-card {
-                padding: 16px;
-            }
-
-            .btn,
-            button {
+            .btn {
                 width: 100%;
-                padding: 14px;
-                font-size: 16px;
             }
 
             input, select, textarea {
-                font-size: 16px;
-                padding: 14px;
-            }
-
-            #landingWelcome {
-                font-size: 20px;
-                padding: 20px;
-            }
-
-            .sectionTitle {
                 font-size: 18px;
             }
         }
@@ -268,1122 +160,229 @@
 </head>
 <body>
 
-    <!-- ============================================================
-         HEADER BAR
-    ============================================================ -->
-    <div id="burtronicsHeader">
-        <div id="burtronicsHeaderLogo">BURTRONICS LMS</div>
-        <div id="burtronicsHeaderUser"></div>
-        <button id="darkModeToggle" class="btn-secondary">Dark Mode</button>
+    <!-- Header -->
+    <div id="header">
+        <div>BURTRONICS — California Onboarding</div>
+        <button id="darkModeToggle">Dark Mode</button>
     </div>
 
+    <!-- Step Navigation -->
+    <div id="stepNav">
+        <div class="stepNavItem active" onclick="goToStep('welcome')">Welcome</div>
+        <div class="stepNavItem" onclick="goToStep('personal')">Personal Info</div>
+        <div class="stepNavItem" onclick="goToStep('i9')">I‑9</div>
+        <div class="stepNavItem" onclick="goToStep('w4')">W‑4</div>
+        <div class="stepNavItem" onclick="goToStep('de4')">DE 4 (CA)</div>
+        <div class="stepNavItem" onclick="goToStep('policies')">Policies</div>
+        <div class="stepNavItem" onclick="goToStep('harassment')">Harassment Training</div>
+        <div class="stepNavItem" onclick="goToStep('privacy')">Privacy (CCPA)</div>
+        <div class="stepNavItem" onclick="goToStep('summary')">Summary</div>
+    </div>
 
-    <!-- ============================================================
-         LOGIN SCREEN
-    ============================================================ -->
-    <div id="loginScreen">
-        <h2>Login</h2>
+    <!-- Welcome Step -->
+    <div id="step_welcome" class="card">
+        <h2>Welcome to BURTRONICS California Onboarding</h2>
+        <p>
+            This onboarding flow covers all required California onboarding steps, including
+            forms, policies, and training acknowledgments.
+        </p>
+        <button class="btn" onclick="goToStep('personal')">Begin</button>
+    </div>
+
+    <!-- Personal Info Step -->
+    <div id="step_personal" class="card" style="display:none;">
+        <h2>Personal Information</h2>
+        <p>Please provide your basic information to populate required forms.</p>
+
+        <label>Full Legal Name</label>
+        <input id="pi_name" placeholder="First Middle Last">
+
+        <label>Social Security Number</label>
+        <input id="pi_ssn" placeholder="XXX-XX-XXXX">
+
+        <label>Home Address</label>
+        <input id="pi_address" placeholder="Street, City, State, ZIP">
+
+        <label>Phone Number</label>
+        <input id="pi_phone" placeholder="(XXX) XXX-XXXX">
 
         <label>Email</label>
-        <input id="loginEmail" type="email" placeholder="you@burtronics.com">
+        <input id="pi_email" placeholder="you@example.com">
 
-        <label>Password</label>
-        <input id="loginPassword" type="password" placeholder="Enter password">
-        <div id="passwordStrength"></div>
-
-        <button class="btn" onclick="login()">Login</button>
-
-        <div style="margin-top:10px;">
-            <a href="#" onclick="forgotPassword()">Forgot Password?</a>
-        </div>
+        <button class="btn" onclick="savePersonalInfo()">Save & Continue</button>
     </div>
 
+    <!-- I-9 Step -->
+    <div id="step_i9" class="card" style="display:none;">
+        <h2>Form I‑9 — Employment Eligibility Verification</h2>
+        <p>
+            You must complete Section 1 of Form I‑9 no later than your first day of work.
+            BURTRONICS will complete Section 2.
+        </p>
 
-    <!-- ============================================================
-         LANDING PAGE (after login)
-    ============================================================ -->
-    <div id="landingPage">
+        <label>Citizenship / Immigration Status</label>
+        <select id="i9_status">
+            <option value="">Select...</option>
+            <option>U.S. Citizen</option>
+            <option>Noncitizen National</option>
+            <option>Lawful Permanent Resident</option>
+            <option>Alien Authorized to Work</option>
+        </select>
 
-        <!-- Welcome Banner -->
-        <div id="landingWelcome"></div>
+        <label>Signature (type your full name)</label>
+        <input id="i9_signature" placeholder="Full Name">
 
-        <!-- Continue Learning -->
-        <div id="continueLearningSection"></div>
-
-        <!-- Recommended for You -->
-        <div id="recommendedSection"></div>
-
-        <!-- Role Shortcuts -->
-        <div id="roleShortcutsSection"></div>
-
+        <button class="btn" onclick="completeI9()">Mark I‑9 Section 1 Complete</button>
     </div>
 
+    <!-- W-4 Step -->
+    <div id="step_w4" class="card" style="display:none;">
+        <h2>Form W‑4 — Federal Withholding</h2>
+        <p>
+            Complete your federal withholding selections. This is a simplified capture; HR will
+            generate the official W‑4.
+        </p>
 
-    <!-- ============================================================
-         COURSE LIST
-    ============================================================ -->
-    <div id="courseList">
-        <h2>All Courses</h2>
-        <div id="courseListContainer"></div>
+        <label>Filing Status</label>
+        <select id="w4_status">
+            <option value="">Select...</option>
+            <option>Single or Married filing separately</option>
+            <option>Married filing jointly</option>
+            <option>Head of household</option>
+        </select>
+
+        <label>Number of Dependents</label>
+        <input id="w4_dependents" type="number" min="0" placeholder="0">
+
+        <label>Additional Amount to Withhold (optional)</label>
+        <input id="w4_additional" type="number" min="0" placeholder="0">
+
+        <button class="btn" onclick="completeW4()">Save W‑4 Selections</button>
     </div>
 
+    <!-- DE 4 Step -->
+    <div id="step_de4" class="card" style="display:none;">
+        <h2>Form DE 4 — California State Withholding</h2>
+        <p>
+            California requires a separate state withholding form (DE 4). Provide your selections
+            below; HR will generate the official DE 4.
+        </p>
 
-    <!-- ============================================================
-         COURSE PLAYER
-    ============================================================ -->
-    <div id="coursePlayer">
-        <h2 id="coursePlayerTitle"></h2>
+        <label>Filing Status (CA)</label>
+        <select id="de4_status">
+            <option value="">Select...</option>
+            <option>Single</option>
+            <option>Married</option>
+            <option>Head of household</option>
+        </select>
 
-        <div id="coursePlayerContent"></div>
+        <label>Number of Allowances (CA)</label>
+        <input id="de4_allowances" type="number" min="0" placeholder="0">
 
-        <div id="coursePlayerQuiz"></div>
+        <label>Additional State Withholding (optional)</label>
+        <input id="de4_additional" type="number" min="0" placeholder="0">
 
-        <button class="btn-secondary" onclick="exitCoursePlayer()">Back</button>
+        <button class="btn" onclick="completeDE4()">Save DE 4 Selections</button>
     </div>
 
-</body>
-<script>
-/* ============================================================
-   STORAGE HELPERS
-============================================================ */
-
-function saveUsers(users) {
-    localStorage.setItem("users", JSON.stringify(users));
-}
-
-function getUsers() {
-    return JSON.parse(localStorage.getItem("users") || "[]");
-}
-
-function saveCourses(courses) {
-    localStorage.setItem("courses", JSON.stringify(courses));
-}
-
-function getCourses() {
-    return JSON.parse(localStorage.getItem("courses") || "[]");
-}
-
-function saveProgress(progress) {
-    localStorage.setItem("progress", JSON.stringify(progress));
-}
-
-function getProgress() {
-    return JSON.parse(localStorage.getItem("progress") || "{}");
-}
-
-
-/* ============================================================
-   SESSION LOGIC
-============================================================ */
-
-function setSession(user) {
-    localStorage.setItem("session", JSON.stringify(user));
-}
-
-function getSession() {
-    return JSON.parse(localStorage.getItem("session") || "null");
-}
-
-function logout() {
-    localStorage.removeItem("session");
-    location.reload();
-}
-
-
-/* ============================================================
-   LOGIN LOGIC
-============================================================ */
-
-function login() {
-    const email = loginEmail.value.trim();
-    const password = loginPassword.value.trim();
-
-    const users = getUsers();
-    const user = users.find(u => u.email === email && u.password === password);
-
-    if (!user) {
-        alert("Invalid email or password.");
-        return;
-    }
-
-    setSession(user);
-    loginScreen.style.display = "none";
-    showLandingPage();
-}
-
-
-/* ============================================================
-   PASSWORD STRENGTH METER
-============================================================ */
-
-loginPassword.addEventListener("input", () => {
-    const val = loginPassword.value;
-
-    let score = 0;
-    if (val.length >= 8) score++;
-    if (/[A-Z]/.test(val)) score++;
-    if (/[0-9]/.test(val)) score++;
-    if (/[^A-Za-z0-9]/.test(val)) score++;
-
-    const levels = ["Very Weak", "Weak", "Medium", "Strong", "Very Strong"];
-    passwordStrength.textContent = "Strength: " + levels[score];
-});
-
-
-/* ============================================================
-   DARK MODE LOGIC
-============================================================ */
-
-function applyDarkModeSetting() {
-    const mode = localStorage.getItem("darkMode");
-    if (mode === "on") {
-        document.body.classList.add("dark");
-        darkModeToggle.textContent = "Light Mode";
-    } else {
-        document.body.classList.remove("dark");
-        darkModeToggle.textContent = "Dark Mode";
-    }
-}
-
-darkModeToggle.addEventListener("click", () => {
-    const isDark = document.body.classList.toggle("dark");
-    localStorage.setItem("darkMode", isDark ? "on" : "off");
-    darkModeToggle.textContent = isDark ? "Light Mode" : "Dark Mode";
-});
-
-applyDarkModeSetting();
-
-
-/* ============================================================
-   LANDING PAGE
-============================================================ */
-
-function showLandingPage() {
-    const session = getSession();
-    if (!session) return;
-
-    burtronicsHeaderUser.textContent = session.displayName;
-
-    landingPage.style.display = "block";
-    courseList.style.display = "none";
-    coursePlayer.style.display = "none";
-
-    landingWelcome.textContent = `Welcome back, ${session.displayName}!`;
-
-    renderContinueLearning();
-    renderRecommendedForYou();
-    renderRoleShortcuts();
-}
-
-
-/* ============================================================
-   CONTINUE LEARNING
-============================================================ */
-
-function renderContinueLearning() {
-    const session = getSession();
-    const email = session.email;
-
-    const progress = getProgress()[email] || { courses: {}, externalCourses: {} };
-    const courses = getCourses();
-
-    let html = `<div class="sectionTitle">Continue Learning</div>`;
-    let found = false;
-
-    courses.forEach(course => {
-        let pct = 0;
-
-        if (course.courseType === "internal") {
-            pct = progress.courses?.[course.id]?.percent || 0;
-        } else {
-            const ext = progress.externalCourses?.[course.id];
-            if (ext && !ext.completed) pct = 50; // placeholder
-        }
-
-        if (pct > 0 && pct < 100) {
-            found = true;
-            html += `
-                <div class="sectionCard">
-                    <div><strong>${course.title}</strong></div>
-                    <div>Progress: ${pct}%</div>
-                    <button class="btn" onclick="openCourse('${course.id}')">Resume</button>
-                </div>
-            `;
-        }
-    });
-
-    if (!found) {
-        html += `
-            <div class="sectionCard">
-                <div>No courses in progress.</div>
-            </div>
-        `;
-    }
-
-    continueLearningSection.innerHTML = html;
-}
-
-
-/* ============================================================
-   RECOMMENDED FOR YOU
-============================================================ */
-
-function renderRecommendedForYou() {
-    const session = getSession();
-    const user = getUsers().find(u => u.email === session.email);
-
-    const role = user.role;
-
-    const roleMap = {
-        "IT Account Executive / Outside Sales": rec_IT_Sales,
-        "Managed Print Services (MPS) Specialist": rec_MPS,
-        "Strategic / Regional Account Manager": rec_AccountManager,
-        "Sales Enablement & Support": rec_SalesSupport,
-        "Customer Service & Support": rec_CustomerService,
-        "Warehouse & Logistics": rec_Warehouse,
-        "Field Service Technician": rec_FieldTech,
-        "Leadership & Management": rec_Leadership,
-        "Administrator": rec_Admin
-    };
-
-    const rec = roleMap[role];
-
-    let html = `<div class="sectionTitle">Recommended for You</div>`;
-
-    if (!rec) {
-        html += `<div class="sectionCard">No recommendations available.</div>`;
-        recommendedSection.innerHTML = html;
-        return;
-    }
-
-    const courses = getCourses();
-
-    rec.internal.forEach(title => {
-        const course = courses.find(c => c.title === title);
-        if (course) {
-            html += `
-                <div class="sectionCard">
-                    <div><strong>${course.title}</strong></div>
-                    <div>Internal Course</div>
-                    <button class="btn" onclick="openCourse('${course.id}')">Start</button>
-                </div>
-            `;
-        }
-    });
-
-    rec.external.forEach(title => {
-        const course = courses.find(c => c.title === title);
-        if (course) {
-            html += `
-                <div class="sectionCard">
-                    <div><strong>${course.title}</strong></div>
-                    <div>External Course (${course.provider})</div>
-                    <button class="btn" onclick="openCourse('${course.id}')">Start</button>
-                </div>
-            `;
-        }
-    });
-
-    recommendedSection.innerHTML = html;
-}
-
-
-/* ============================================================
-   ROLE SHORTCUTS
-============================================================ */
-
-function renderRoleShortcuts() {
-    const session = getSession();
-    const user = getUsers().find(u => u.email === session.email);
-
-    roleShortcutsSection.innerHTML = `
-        <div class="sectionTitle">Your Role: ${user.role}</div>
-        <div class="sectionCard">
-            <button class="btn" onclick="loadCourseList()">View All Courses</button>
-            <button class="btn-secondary" onclick="showLandingPage()">Home</button>
-        </div>
-    `;
-}
-
-
-/* ============================================================
-   COURSE LIST RENDERING
-============================================================ */
-
-function loadCourseList() {
-    landingPage.style.display = "none";
-    courseList.style.display = "block";
-    coursePlayer.style.display = "none";
-
-    const courses = getCourses();
-    let html = "";
-
-    courses.forEach(course => {
-        html += `
-            <div class="course-card">
-                <h3>${course.title}</h3>
-                <p>${course.description}</p>
-                <button class="btn" onclick="openCourse('${course.id}')">Open</button>
-            </div>
-        `;
-    });
-
-    courseListContainer.innerHTML = html;
-}
-</script>
-<script>
-/* ============================================================
-   COURSE PLAYER — OPEN COURSE
-============================================================ */
-
-function openCourse(courseId) {
-    const courses = getCourses();
-    const course = courses.find(c => c.id === courseId);
-
-    if (!course) {
-        alert("Course not found.");
-        return;
-    }
-
-    landingPage.style.display = "none";
-    courseList.style.display = "none";
-    coursePlayer.style.display = "block";
-
-    coursePlayerTitle.textContent = course.title;
-
-    renderCourseLesson(courseId, 0);
-}
-
-
-/* ============================================================
-   COURSE PLAYER — RENDER LESSON
-============================================================ */
-
-function renderCourseLesson(courseId, lessonIndex) {
-    const courses = getCourses();
-    const course = courses.find(c => c.id === courseId);
-
-    const lesson = course.lessons[lessonIndex];
-
-    coursePlayerContent.innerHTML = `
-        <h3>${lesson.title}</h3>
-        <p>${lesson.body}</p>
-        <div><strong>Duration:</strong> ${lesson.duration}</div>
-    `;
-
-    renderLessonQuiz(courseId, lessonIndex);
-}
-
-
-/* ============================================================
-   COURSE PLAYER — QUIZ
-============================================================ */
-
-function renderLessonQuiz(courseId, lessonIndex) {
-    const courses = getCourses();
-    const course = courses.find(c => c.id === courseId);
-    const lesson = course.lessons[lessonIndex];
-
-    const quiz = lesson.quiz;
-
-    let html = `
-        <h3>Quiz</h3>
-        <p>${quiz.question}</p>
-    `;
-
-    quiz.options.forEach((opt, i) => {
-        html += `
-            <button class="btn" onclick="submitQuiz('${courseId}', ${lessonIndex}, ${i})">
-                ${opt.text}
-            </button><br><br>
-        `;
-    });
-
-    coursePlayerQuiz.innerHTML = html;
-}
-
-
-/* ============================================================
-   COURSE PLAYER — SUBMIT QUIZ ANSWER
-============================================================ */
-
-function submitQuiz(courseId, lessonIndex, optionIndex) {
-    const courses = getCourses();
-    const course = courses.find(c => c.id === courseId);
-    const lesson = course.lessons[lessonIndex];
-
-    const correct = lesson.quiz.options[optionIndex].correct;
-
-    if (!correct) {
-        alert("Incorrect. Try again.");
-        return;
-    }
-
-    // Mark lesson complete
-    const session = getSession();
-    const email = session.email;
-
-    const progress = getProgress();
-    if (!progress[email]) progress[email] = { courses: {}, externalCourses: {} };
-
-    if (!progress[email].courses[courseId]) {
-        progress[email].courses[courseId] = { percent: 0 };
-    }
-
-    const totalLessons = course.lessons.length;
-    const completedLessons = lessonIndex + 1;
-
-    const pct = Math.round((completedLessons / totalLessons) * 100);
-    progress[email].courses[courseId].percent = pct;
-
-    saveProgress(progress);
-
-    if (pct === 100) {
-        alert("Course completed!");
-        openCertificate(courseId);
-        exitCoursePlayer();
-        return;
-    }
-
-    renderCourseLesson(courseId, lessonIndex + 1);
-}
-
-
-/* ============================================================
-   EXIT COURSE PLAYER
-============================================================ */
-
-function exitCoursePlayer() {
-    coursePlayer.style.display = "none";
-    showLandingPage();
-}
-
-
-/* ============================================================
-   EXTERNAL COURSE TRACKING (Placeholder)
-============================================================ */
-
-function markExternalCourseComplete(courseId) {
-    const session = getSession();
-    const email = session.email;
-
-    const progress = getProgress();
-    if (!progress[email]) progress[email] = { courses: {}, externalCourses: {} };
-
-    progress[email].externalCourses[courseId] = {
-        completed: true
-    };
-
-    saveProgress(progress);
-}
-
-
-/* ============================================================
-   CERTIFICATE LAUNCHER
-============================================================ */
-
-function openCertificate(courseId) {
-    const session = getSession();
-    const user = session.displayName;
-
-    const courses = getCourses();
-    const course = courses.find(c => c.id === courseId);
-
-    const certId = "CERT-" + Math.floor(Math.random() * 999999);
-
-    const date = new Date().toLocaleDateString("en-US", {
-        year: "numeric",
-        month: "long",
-        day: "numeric"
-    });
-
-    const url = `certificate.html?user=${encodeURIComponent(user)}&course=${encodeURIComponent(course.title)}&date=${encodeURIComponent(date)}&id=${encodeURIComponent(certId)}`;
-
-    window.open(url, "_blank");
-}
-
-
-/* ============================================================
-   FORGOT PASSWORD
-============================================================ */
-
-function forgotPassword() {
-    const email = prompt("Enter your email:");
-
-    const users = getUsers();
-    const user = users.find(u => u.email === email);
-
-    if (!user) {
-        alert("No account found.");
-        return;
-    }
-
-    const newPass = Math.random().toString(36).slice(2, 10);
-    user.password = newPass;
-
-    saveUsers(users);
-
-    alert("Your temporary password is: " + newPass + "\nPlease log in and change it.");
-}
-
-
-/* ============================================================
-   SESSION TIMEOUT
-============================================================ */
-
-let sessionTimer;
-
-function resetSessionTimer() {
-    clearTimeout(sessionTimer);
-    sessionTimer = setTimeout(() => {
-        alert("Session expired. Please log in again.");
-        logout();
-    }, 30 * 60 * 1000); // 30 minutes
-}
-
-document.addEventListener("mousemove", resetSessionTimer);
-document.addEventListener("keydown", resetSessionTimer);
-
-resetSessionTimer();
-
-
-/* ============================================================
-   OPTIONAL ENCRYPTION LAYER (Disabled by default)
-============================================================ */
-
-const ENC_KEY = "BURTRONICS_KEY_2026";
-
-function encrypt(data) {
-    return btoa(JSON.stringify(data + ENC_KEY));
-}
-
-function decrypt(data) {
-    try {
-        const decoded = JSON.parse(atob(data));
-        return decoded.replace(ENC_KEY, "");
-    } catch {
-        return null;
-    }
-}
-
-
-/* ============================================================
-   INITIALIZATION
-============================================================ */
-
-(function init() {
-    const session = getSession();
-    if (session) {
-        loginScreen.style.display = "none";
-        showLandingPage();
-    }
-})();
-</script>
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BURTRONICS LMS — Admin Panel</title>
-
-    <!-- ============================================================
-         GLOBAL BRAND VARIABLES
-    ============================================================ -->
-    <style>
-        :root {
-            --brand-blue: #0A66C2;
-            --brand-blue-accent: #1D9BF0;
-            --brand-black: #111111;
-            --brand-dark: #111827;
-            --brand-white: #FFFFFF;
-            --brand-light-bg: #F3F6F9;
-            --brand-card-bg: #FFFFFF;
-            --brand-border: #D0D7E2;
-        }
-
-        * {
-            transition: background 0.25s ease, color 0.25s ease, border-color 0.25s ease;
-        }
-
-        body {
-            background: var(--brand-light-bg);
-            color: var(--brand-black);
-            font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-            margin: 0;
-            padding: 0;
-        }
-
-        /* ============================================================
-           HEADER BAR
-        ============================================================ */
-        #burtronicsHeader {
-            width: 100%;
-            background: var(--brand-dark);
-            color: var(--brand-white);
-            padding: 16px 24px;
-            font-size: 18px;
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        #burtronicsHeaderLogo {
-            font-size: 20px;
-            font-weight: 800;
-        }
-
-        #burtronicsHeaderUser {
-            font-size: 14px;
-            opacity: 0.85;
-        }
-
-        /* ============================================================
-           BUTTONS
-        ============================================================ */
-        .btn,
-        button {
-            background: var(--brand-blue);
-            color: var(--brand-white);
-            border: none;
-            border-radius: 8px;
-            padding: 10px 16px;
-            font-size: 14px;
-            font-weight: 600;
-            cursor: pointer;
-        }
-
-        .btn:hover,
-        button:hover {
-            background: var(--brand-blue-accent);
-        }
-
-        .btn-secondary {
-            background: var(--brand-dark);
-        }
-
-        .btn-secondary:hover {
-            background: var(--brand-black);
-        }
-
-        .btn-danger {
-            background: #d93025;
-        }
-
-        .btn-danger:hover {
-            background: #b1271b;
-        }
-
-        /* ============================================================
-           INPUTS
-        ============================================================ */
-        input, select, textarea {
-            border: 1px solid var(--brand-border);
-            border-radius: 8px;
-            padding: 12px;
-            font-size: 14px;
-            width: 100%;
-            box-sizing: border-box;
-        }
-
-        /* ============================================================
-           ADMIN LAYOUT
-        ============================================================ */
-        #adminShell {
-            display: grid;
-            grid-template-columns: 260px 1fr;
-            height: calc(100vh - 70px);
-        }
-
-        #adminSidebar {
-            background: var(--brand-white);
-            border-right: 1px solid var(--brand-border);
-            padding: 20px;
-            overflow-y: auto;
-        }
-
-        .admin-nav-item {
-            padding: 12px;
-            margin-bottom: 8px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 600;
-        }
-
-        .admin-nav-item:hover {
-            background: var(--brand-light-bg);
-        }
-
-        #adminMain {
-            padding: 30px;
-            overflow-y: auto;
-        }
-
-        .admin-section {
-            display: none;
-        }
-
-        /* ============================================================
-           CARDS
-        ============================================================ */
-        .card,
-        .dashboardCard,
-        .editorLessonCard {
-            background: var(--brand-card-bg);
-            border: 1px solid var(--brand-border);
-            border-radius: 12px;
-            padding: 20px;
-            margin-bottom: 20px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.06);
-        }
-
-        /* ============================================================
-           ADVANCED COURSE EDITOR
-        ============================================================ */
-        .editorLessonCard h3 {
-            margin-top: 0;
-        }
-
-        .editorQuizCard {
-            background: var(--brand-light-bg);
-            border-radius: 8px;
-            padding: 12px;
-            margin-top: 10px;
-        }
-
-        .dragHandle {
-            cursor: grab;
-            font-size: 20px;
-            margin-right: 10px;
-            color: var(--brand-blue);
-        }
-
-        /* ============================================================
-           REPORTING DASHBOARD
-        ============================================================ */
-        .chartBar {
-            height: 20px;
-            background: var(--brand-blue);
-            border-radius: 6px;
-            margin: 6px 0;
-        }
-
-        .chartLabel {
-            font-size: 14px;
-            margin-bottom: 4px;
-            color: var(--brand-dark);
-        }
-
-        .chartRow {
-            margin-bottom: 12px;
-        }
-
-        /* ============================================================
-           DARK MODE
-        ============================================================ */
-        body.dark {
-            --brand-blue: #1D9BF0;
-            --brand-blue-accent: #4AB3F4;
-            --brand-black: #E5E7EB;
-            --brand-dark: #0D1117;
-            --brand-white: #1A1F24;
-            --brand-light-bg: #0D1117;
-            --brand-card-bg: #1A1F24;
-            --brand-border: #2D333B;
-            background: var(--brand-light-bg);
-            color: var(--brand-black);
-        }
-
-        body.dark #adminSidebar {
-            background: #1A1F24;
-            border-color: var(--brand-border);
-        }
-
-        body.dark .card,
-        body.dark .dashboardCard,
-        body.dark .editorLessonCard {
-            background: var(--brand-card-bg);
-            border-color: var(--brand-border);
-        }
-
-        /* ============================================================
-           MOBILE SIDEBAR
-        ============================================================ */
-        @media (max-width: 768px) {
-            #adminShell {
-                grid-template-columns: 1fr;
-            }
-
-            #adminSidebar {
-                position: fixed;
-                top: 0;
-                left: -260px;
-                width: 240px;
-                height: 100vh;
-                background: var(--brand-white);
-                border-right: 1px solid var(--brand-border);
-                padding: 20px;
-                transition: left 0.3s ease;
-                z-index: 999;
-            }
-
-            #adminSidebar.open {
-                left: 0;
-            }
-
-            #mobileMenuBtn {
-                position: fixed;
-                top: 16px;
-                left: 16px;
-                background: var(--brand-blue);
-                color: var(--brand-white);
-                border: none;
-                border-radius: 8px;
-                padding: 10px 14px;
-                z-index: 1000;
-                font-size: 16px;
-                font-weight: 700;
-            }
-
-            #adminMain {
-                padding: 16px;
-            }
-
-            table {
-                font-size: 12px;
-            }
-
-            th, td {
-                padding: 8px;
-            }
-
-            .btn,
-            .btn-secondary,
-            .btn-danger {
-                width: 100%;
-                margin-top: 6px;
-            }
-        }
-    </style>
-</head>
-<body>
-
-    <!-- ============================================================
-         MOBILE MENU BUTTON (for small screens)
-    ============================================================ -->
-    <button id="mobileMenuBtn" onclick="toggleAdminSidebar()">☰ Menu</button>
-
-    <!-- ============================================================
-         HEADER BAR
-    ============================================================ -->
-    <div id="burtronicsHeader">
-        <div id="burtronicsHeaderLogo">BURTRONICS ADMIN</div>
-        <div id="burtronicsHeaderUser"></div>
-        <button id="darkModeToggle" class="btn-secondary">Dark Mode</button>
-    </div>
-
-    <!-- ============================================================
-         ADMIN SHELL (Sidebar + Main)
-    ============================================================ -->
-    <div id="adminShell">
-
-        <!-- ============================================================
-             SIDEBAR NAVIGATION
-        ============================================================ -->
-        <div id="adminSidebar">
-
-            <div class="admin-nav-item" onclick="showAdminSection('dashboardHome')">
-                Dashboard Home
-            </div>
-
-            <div class="admin-nav-item" onclick="showAdminSection('userManager')">
-                User Manager
-            </div>
-
-            <div class="admin-nav-item" onclick="showAdminSection('courseManager')">
-                Internal Courses
-            </div>
-
-            <div class="admin-nav-item" onclick="showAdminSection('externalCourseManager')">
-                External Courses
-            </div>
-
-            <div class="admin-nav-item" onclick="showAdminSection('roleAssignment')">
-                Role Assignment
-            </div>
-
-            <div class="admin-nav-item" onclick="showAdminSection('reportingDashboard')">
-                Reporting Dashboard
-            </div>
-
-            <div class="admin-nav-item" onclick="logout()">
-                Logout
-            </div>
-
+    <!-- Policies Step -->
+    <div id="step_policies" class="card" style="display:none;">
+        <h2>California Policies & Acknowledgments</h2>
+        <p>Please review and acknowledge the following required policies.</p>
+
+        <div>
+            <input type="checkbox" id="pol_mealrest">
+            <label for="pol_mealrest">
+                I acknowledge the California Meal & Rest Break Policy.
+            </label>
         </div>
 
-        <!-- ============================================================
-             MAIN ADMIN CONTENT
-        ============================================================ -->
-        <div id="adminMain">
+        <div>
+            <input type="checkbox" id="pol_overtime">
+            <label for="pol_overtime">
+                I acknowledge the California Overtime Policy.
+            </label>
+        </div>
 
-            <!-- ============================================================
-                 DASHBOARD HOME
-            ============================================================ -->
-            <div id="dashboardHome" class="admin-section">
-                <h1>Admin Dashboard</h1>
-                <div class="card">
-                    <p>Welcome to the BURTRONICS LMS Admin Panel.</p>
-                    <p>Use the navigation menu to manage users, courses, roles, and reporting.</p>
-                </div>
-            </div>
+        <div>
+            <input type="checkbox" id="pol_wage">
+            <label for="pol_wage">
+                I acknowledge receipt of the Wage Theft Prevention Act Notice (Labor Code 2810.5).
+            </label>
+        </div>
 
-            <!-- ============================================================
-                 USER MANAGER
-            ============================================================ -->
-            <div id="userManager" class="admin-section">
-                <h1>User Manager</h1>
+        <div>
+            <input type="checkbox" id="pol_atwill">
+            <label for="pol_atwill">
+                I acknowledge that my employment is at‑will.
+            </label>
+        </div>
 
-                <div class="card">
-                    <h2>Add User</h2>
-                    <input id="newUserName" placeholder="Full Name">
-                    <input id="newUserEmail" placeholder="Email">
-                    <input id="newUserPassword" placeholder="Password">
-                    <select id="newUserRole">
-                        <option>IT Account Executive / Outside Sales</option>
-                        <option>Managed Print Services (MPS) Specialist</option>
-                        <option>Strategic / Regional Account Manager</option>
-                        <option>Sales Enablement & Support</option>
-                        <option>Customer Service & Support</option>
-                        <option>Warehouse & Logistics</option>
-                        <option>Field Service Technician</option>
-                        <option>Leadership & Management</option>
-                        <option>Administrator</option>
-                    </select>
-                    <button class="btn" onclick="addUser()">Add User</button>
-                </div>
+        <div>
+            <input type="checkbox" id="pol_handbook">
+            <label for="pol_handbook">
+                I acknowledge receipt of the BURTRONICS Employee Handbook.
+            </label>
+        </div>
 
-                <div class="card">
-                    <h2>All Users</h2>
-                    <table id="userTable" border="1" width="100%" cellspacing="0">
-                        <thead>
-                            <tr>
-                                <th>Name</th>
-                                <th>Email</th>
-                                <th>Role</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody id="userTableBody"></tbody>
-                    </table>
-                </div>
-            </div>
+        <button class="btn" onclick="completePolicies()">Save Policy Acknowledgments</button>
+    </div>
 
-            <!-- ============================================================
-                 INTERNAL COURSE MANAGER
-            ============================================================ -->
-            <div id="courseManager" class="admin-section">
-                <h1>Internal Courses</h1>
+    <!-- Harassment Training Step -->
+    <div id="step_harassment" class="card" style="display:none;">
+        <h2>California Sexual Harassment Prevention Training</h2>
+        <p>
+            California (SB 1343) requires harassment prevention training for employees within
+            6 months of hire. Supervisors must complete 2 hours; non‑supervisors 1 hour.
+        </p>
 
-                <div class="card">
-                    <h2>Add Internal Course</h2>
-                    <input id="courseTitle" placeholder="Course Title">
-                    <textarea id="courseDescription" placeholder="Course Description"></textarea>
-                    <input id="courseCategory" placeholder="Category">
-                    <input id="courseDuration" placeholder="Duration (e.g., 45 minutes)">
-                    <button class="btn" onclick="addInternalCourse()">Add Course</button>
-                </div>
+        <label>Your Role</label>
+        <select id="har_role">
+            <option value="">Select...</option>
+            <option>Non‑supervisor (1 hour)</option>
+            <option>Supervisor / Manager (2 hours)</option>
+        </select>
 
-                <div class="card">
-                    <h2>All Internal Courses</h2>
-                    <table id="courseTable" border="1" width="100%" cellspacing="0">
-                        <thead>
-                            <tr>
-                                <th>Title</th>
-                                <th>Category</th>
-                                <th>Duration</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody id="courseTableBody"></tbody>
-                    </table>
-                </div>
-            </div>
+        <label>Training Completion Date</label>
+        <input id="har_date" type="date">
 
-            <!-- ============================================================
-                 EXTERNAL COURSE MANAGER
-            ============================================================ -->
-            <div id="externalCourseManager" class="admin-section">
-                <h1>External Courses</h1>
+        <label>Training Provider / Platform</label>
+        <input id="har_provider" placeholder="e.g., BURTRONICS LMS, External Vendor">
 
-                <div class="card">
-                    <h2>Add External Course</h2>
-                    <input id="extCourseTitle" placeholder="Course Title">
-                    <input id="extCourseProvider" placeholder="Provider (e.g., Alison)">
-                    <input id="extCourseURL" placeholder="Course URL">
-                    <button class="btn" onclick="addExternalCourse()">Add External Course</button>
-                </div>
+        <button class="btn" onclick="completeHarassmentTraining()">Record Training Completion</button>
+    </div>
 
-                <div class="card">
-                    <h2>All External Courses</h2>
-                    <table id="externalCourseTable" border="1" width="100%" cellspacing="0">
-                        <thead>
-                            <tr>
-                                <th>Title</th>
-                                <th>Provider</th>
-                                <th>URL</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody id="externalCourseTableBody"></tbody>
-                    </table>
-                </div>
-            </div>
+    <!-- Privacy (CCPA) Step -->
+    <div id="step_privacy" class="card" style="display:none;">
+        <h2>California Privacy Notice (CCPA)</h2>
+        <p>
+            California law requires that employees receive a notice describing how their personal
+            information is collected, used, and shared.
+        </p>
 
-            <!-- ============================================================
-                 ROLE ASSIGNMENT
-            ============================================================ -->
-            <div id="roleAssignment" class="admin-section">
-                <h1>Role Assignment</h1>
+        <p>
+            By checking below, you acknowledge receipt of the BURTRONICS California Employee
+            Privacy Notice.
+        </p>
 
-                <div class="card">
-                    <h2>Assign Courses to Roles</h2>
-                    <table id="roleAssignmentTable" border="1" width="100%" cellspacing="0">
-                        <thead>
-                            <tr>
-                                <th>Course</th>
-                                <th>Roles</th>
-                            </tr>
-                        </thead>
-                        <tbody id="roleAssignmentBody"></tbody>
-                    </table>
+        <div>
+            <input type="checkbox" id="privacy_ack">
+            <label for="privacy_ack">
+                I acknowledge receipt of the California Employee Privacy Notice (CCPA).
+            </label>
+        </div>
 
-                    <button class="btn" onclick="autoAssignRecommendedCourses()">
-                        Auto‑Assign Recommended Courses
-                    </button>
-                </div>
-            </div>
+        <button class="btn" onclick="completePrivacy()">Save Privacy Acknowledgment</button>
+    </div>
 
-            <!-- ============================================================
-                 REPORTING DASHBOARD
-            ============================================================ -->
-            <div id="reportingDashboard" class="admin-section">
-                <h1>Reporting Dashboard</h1>
-                <div id="dashboardContainer"></div>
-            </div>
+    <!-- Summary Step -->
+    <div id="step_summary" class="card" style="display:none;">
+        <h2>Onboarding Summary</h2>
+        <p>Review your completion status for all California onboarding requirements.</p>
 
-            <!-- ============================================================
-                 ADVANCED COURSE EDITOR
-            ============================================================ -->
-            <div id="advancedCourseEditor" class="admin-section">
-                <h1>Advanced Course Editor</h1>
+        <div id="summaryContent"></div>
 
-                <div id="editorCourseHeader"></div>
-                <div id="editorLessonList"></div>
-                <div id="editorAddLesson"></div>
-                <div id="editorPublishControls"></div>
-            </div>
-
-        </div> <!-- end adminMain -->
-
-    </div> <!-- end adminShell -->
+        <button class="btn" onclick="generateOnboardingRecord()">Generate Onboarding Record</button>
+    </div>
 
 </body>
